@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Patient Search Page</title>
+<link href="html_layout_styles.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="myscript.js"> </script> 
+
+<!-- Search Icon Link-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+</head>
+<body>
+	<!-- Header -->
+    <nav>
+        <ul class="nav_option_list">
+            <li class="nav_option"><a class="nav_link" href="./practitioner_home_page.html"> Home </a></li>
+            <li class="nav_option"><a class="nav_link" href="./patient_search_page.html">Patients</a></li>
+            <li class="nav_option"><a class="nav_link" href="./generate_reports_page.html">Reports</a></li>
+        </ul>		
+
+    </nav>
+
+		<h1 class="page_title" align="center"> Welcome to the Info Sis Nursing Home Online System</h1>
+													  
+	</header>
+
+	<!-- Main Content -->
+	<main>
+		<section id="venue">
+			<div class="container">
+				<div class="row">
+					<h3 class="section_title"> </h3>
+						<div class="information">
+						</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="search_patients_section">
+			<div class="container">
+				<div class="row">
+					<h2 class="section_title"> Current Patients </h2> <br>
+					
+                    <form class="search_patients" action="action_page.php">
+                        <input type="text" placeholder="Search..." name="search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+
+                    <br><br><br>
+
+                    <table id="patient_list" align="left" width="700" border="1" cellpadding="5"> 
+                        <tr> <th width="20%" valign="middle"> Patient Image </th> <th valign="middle"> Patient Details </th> 
+                        <tr> <td valign="middle"><img class="patient_pic" src="/images/old_man.jpg" alt="old man"></td> <td align="laft" valign="left">John Sutton (PA003) <br> Room Number: 3</td> </tr>
+                        <tr> <td valign="middle"><img class="patient_pic" src="/images/old_man.jpg" alt="old man"></td> <td align="laft" valign="left">John Sutton (PA003) <br> Room Number: 3</td> </tr>
+                        <!-- Will need to add in the info with php but for now an example-->
+                        <!-- Make each row clickable like a link-->
+                        
+                    </table>
+				</div>
+			</div>
+		</section>
+
+
+	</main>
+	
+	<!-- End Main Content -->
+	
+	<!-- Footer -->
+	<div class="row footer_row">
+		<a href="#" class="footer_anchor">
+			<figure class="footer_logo">
+				<img src="static/images/HMCDC logo__.png" class="footer_logo_img" alt="HMCDC Logo">
+			</figure>
+		</a>
+		<div class="footer_copyright">Copyright © 2021 Info Sis Association </div>
+	</div>
+
+
+</body>
+</html>
