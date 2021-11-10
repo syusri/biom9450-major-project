@@ -151,12 +151,13 @@ li {
     font-weight: bold;
 }
 
-/* Main content section */
+/* MAIN CONTENT SECTION */
 .main {
     margin-left: 15%;
     padding: 20px;
 }
 
+/* Breadcrumbs */
 .page--previous {
     font-weight: bold;
 }
@@ -164,4 +165,51 @@ li {
 .page--current {
     font-weight: bold;
     color: var(--primary);
+}
+
+/* Dashboard */
+.form__container {
+    height: 75vh;
+    width: 50vw;
+    background-color: #f8f8f8;
+    margin: auto;
+    border-radius: 50px;
+    filter: drop-shadow(4px 4px 4px #00000025)
+}
+
+.form__content {
+    padding: 50px;
+    text-align: center;
+}
+
+.form__subheading, label {
+    font-weight: bold;
+    /* color: var(--text-grey); */
+}
+
+.form__submit {
+    background-color: var(--primary);
+    color: var(--text-white);
+    font-weight: bold;
+    padding: 4px;
+}
+
+.input__container {
+    padding: 20px;
+    height: 15vh;
+}
+
+input, select, option {
+    /* display: block; */
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 30vw;
+    height: 5vh;
+    border-style: none;
+    filter: drop-shadow(4px 4px 4px #00000025);
+}
+
+input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
+    cursor: pointer;
 }
