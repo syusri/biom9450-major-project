@@ -12,8 +12,8 @@
 	<!-- Header -->
     <nav>
         <ul class="nav_option_list">
-            <li class="nav_option"><a class="nav_link" href="./login.html"> Login </a></li>
-            <li class="nav_option"><a class="nav_link" href="./register.html">Register</a></li>
+            <li class="nav_option"><a class="nav_link" href="./login.php"> Login </a></li>
+            <li class="nav_option"><a class="nav_link" href="./register.php">Register</a></li>
         </ul>		
 
     </nav>

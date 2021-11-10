@@ -1,25 +1,25 @@
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Patient Profile Page</title>
-<link href="html_layout_styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="myscript.js"> </script> 
+<html lang="en">
 
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Patient Profile Summary</title>
+	<link rel="stylesheet" href="css/style_sheet.css">
+	<script type="text/javascript" src="js/myscript.js"> </script> 
+	<!-- <link href="css/html_layout_styles.css" rel="stylesheet" type="text/css"> -->
+	<!-- <script src="js/main.js"></script> -->
+</head>
 
 </head>
 <body>
 	<!-- Header -->
+    <?php
+        include 'index.html';
+    ?>
     <div class="wrapper">
 
     <header class="header">
-    <nav>
-        <ul class="nav_option_list">
-            <li class="nav_option"><a class="nav_link" href="./login.html"> Login </a></li>
-            <li class="nav_option"><a class="nav_link" href="./register.html">Register</a></li>
-        </ul>		
-
-    </nav>
 
 		<h1 class="page_title" align="center"> Patient Summary</h1>
 													  
@@ -28,17 +28,39 @@
 	<!-- Main Content -->
     <article class="main">
 	<main>
-        <!--
-		<section id="venue">
-			<div class="container">
-				<div class="row">
-					<h3 class="section_title"> </h3>
-						<div class="information">
-						</div>
-				</div>
-			</div>
-		</section>
-        -->
+
+        <?php
+            $patient_number = "001";
+            echo "<br> <p align=\"center\"> Patient ID is PA".$patient_number." </p> <br>"
+
+            // $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+								
+			// $sql = "SELECT * FROM Patient";
+
+			// //Used to check the connection to the database was successful
+								
+		    // if(!$conn){ 
+			// 	exit("Connection Failed: ". $conn); 
+			// } else { 
+			// 	echo ("<p align=\"center\"> Connection Successful! </p>");
+			// }
+								
+			// //Executing the sql command and getting the result in rs
+			// $rs = odbc_exec($conn,$sql);
+
+            // //While loop as a counter to determine the amount of rows were returned
+			// //If result is zero then they are a new registrant and if not the system will either check for whether they are banned or just a duplicate 
+			// $items = 0;
+			// while ($row = odbc_fetch_array($rs)){
+			// 	$items++;                          
+			// } 
+			// echo "<br><p align=\"center\">total No. of rows:".$items."</p>";
+
+            // odbc_close($conn);
+
+        ?>
+
+
 
 		<section id="patient_details_section">
 			<div class="container">
@@ -105,13 +127,16 @@
 	<!-- End Main Content -->
 	
 	<!-- Footer -->
-	<div class="footer">
+	<div class="row footer_row">
+		<!-- Need to work out how to get the footer to the bottom of the page-->
+		
 		<a href="#" class="footer_anchor">
 			<figure class="footer_logo">
-				<img src="static/images/HMCDC logo__.png" class="footer_logo_img" alt="HMCDC Logo">
+				<img src="./img/logo.png" class="footer_logo_img" alt="Logo"> 
 			</figure>
 		</a>
-		<div class="footer_copyright">Copyright © 2021 Info Sis Association </div>
+		<br>
+		<div class="footer_copyright" align="center" >Copyright © 2021 Info Sis Association </div>
 	</div>
 
     </div>

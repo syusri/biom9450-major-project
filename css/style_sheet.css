@@ -25,6 +25,7 @@ html {
 
 body {
   background-color: var(--background);
+  /* background-color: pink; */
 }
 
 h1,
@@ -160,9 +161,14 @@ li {
 }
 
 /* Main content section */
+main {
+  /* margin-left: 15%; */
+  padding: 20px;
+  min-height: calc(100vh - 370px);
+}
+
 .main {
   margin-left: 15%;
-  padding: 20px;
 }
 
 .page--previous {
@@ -185,9 +191,9 @@ label {
   vertical-align: top;
 }
 /*
-form {
-}
-*/
+  form {
+  }
+  */
 
 input,
 select {
@@ -198,24 +204,26 @@ select {
 }
 
 button {
-  padding: 300px 600px;
+  padding: 3px 6px;
 }
 
 /* Tried to add styling for the footer - failed miserably*/
-/*
+
 .row {
   width: 100%;
-  max-width: 1200px;
+  max-width: 85vw;
   margin: 0 auto;
   padding: 0 12px;
 }
 
-.row footer_row { */
-/*position: absolute;
+/*
+.row footer_row {
+  position: absolute;
   bottom: 10px;
   width: 50%;
-  border: 3px solid #8ac007;*/ /*
+  border: 3px solid #8ac007;
 }
+*/
 
 .footer_row {
   display: flex;
@@ -226,10 +234,10 @@ button {
 }
 
 .footer_logo {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto; */
-/*position: absolute;*/ /*
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  /*position: absolute;*/
   overflow: hidden;
 }
 
@@ -240,4 +248,3 @@ button {
 .footer_copyright {
   color: black;
 }
-*/
