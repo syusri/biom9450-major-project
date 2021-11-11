@@ -19,7 +19,7 @@
 				<div class="form__content">
 					<p class="form__subheading">Choose which medications and diet regimes to display.</p>
 					<!-- Actual form -->
-					<form id="form--dashboard" class="" action="">
+					<form id="form--dashboard" class="" action="results.php">
 						<!-- Date -->
 						<div class="input__container">
 							<label for="date" type="date">Date</label><br>

@@ -158,6 +158,10 @@ li {
 }
 
 /* Breadcrumbs */
+.breadcrumb {
+    margin-bottom: 30px;
+}
+
 .page--previous {
     font-weight: bold;
 }
@@ -212,4 +216,54 @@ input, select, option {
 
 input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
     cursor: pointer;
+}
+
+/* Results */
+.patient__container {
+    height: 20vh;
+    width: 80vw;
+    background-color: #f8f8f8;
+    border-radius: 25px;
+    filter: drop-shadow(4px 4px 4px #00000025)
+}
+
+.patient__container--highlight {
+    height: 20vh;
+    width: 40vw;
+    background-color: var(--primary);
+    border-radius: 25px;
+    filter: drop-shadow(4px 4px 4px #00000025)
+}
+
+.patient__content {
+    display: flex;
+    padding: 30px;
+}
+
+.patient__picture {
+    width: 100%;
+}
+
+.patient__picture--mask {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	overflow: hidden;
+	/* margin-bottom: 28px; */
+}
+
+#patient-name {
+    color: var(--text-white);
+}
+
+.patient__bio--brief {
+    color: var(--text-white);
+    margin-left: 30px;
+}
+
+/* Use CSS grid for the table */
+.patient__bio--quick-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 }
