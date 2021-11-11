@@ -46,6 +46,10 @@ a {
 	position: relative;
 }
 
+a:visited {
+    text-decoration: none;
+}
+
 li {
 	list-style-type: none;
 }
@@ -168,6 +172,7 @@ section {
 
 .page--previous {
     font-weight: bold;
+    color: var(--text-black);
 }
 
 .page--current {
@@ -183,6 +188,10 @@ section {
     margin: auto;
     border-radius: 50px;
     filter: drop-shadow(4px 4px 4px #00000025)
+}
+
+.form__container--mini {
+    display: flex;
 }
 
 .form__content {
@@ -207,12 +216,17 @@ section {
     height: 15vh;
 }
 
+.input__container--small {
+    margin: 12px 48px 12px 4px;
+    width: 180px;
+}
+
 input, select, option {
     /* display: block; */
+    width: 30vw;
     margin: 20px;
     padding: 10px;
     border-radius: 10px;
-    width: 30vw;
     height: 5vh;
     border-style: none;
     filter: drop-shadow(4px 4px 4px #00000025);
@@ -403,3 +417,5 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
     grid-column: 3;
     grid-row: 1;
 }
+
+/* Form at the top */

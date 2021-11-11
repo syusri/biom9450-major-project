@@ -17,7 +17,29 @@
 		<div class="main">
 			<!-- Breadcrumb -->
 			<div class="breadcrumb">
-					<p><span class="page--previous">Dashboard</span> > <span class="page--current">Medications and Diet Regimes</span></p>
+					<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Medications and Diet Regimes</span></p>
+			</div>
+			<!-- Actual form -->
+			<div class="form__container--mini">
+				<form class="" action="results.php">
+					<!-- Date -->
+						<label for="date" type="date">Date</label>
+						<input type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05" class="input__container--small">
+					<!-- Dropdown List of Time of Day -->
+						<label for="time">Time of Day</label>
+						<select name="dropdown--time" id="dropdown--time" class="input__container--small">
+							<option value="Morning">Morning</option>
+							<option value="Afternoon">Afternoon</option>
+							<option value="Evening">Evening</option>
+						</select>
+					<!-- Dropdown List of Patients -->
+						<label for="patient">Patient</label>
+						<select name="dropdown--patients" id="dropdown--patients" class="input__container--small">
+							<option value="Margaret">Margaret</option>
+							<option value="Bob">Bob</option>
+						</select>
+						<input type="submit" value="Go" class="form__submit input__container--small">
+				</form>
 			</div>
 			<!-- Patient Summary -->
 			<section id="patient">
@@ -114,7 +136,7 @@
 		<!-- JavaScript to change PHP template -->
 		<script type="text/javascript">
 			document.getElementById("dashboard").classList.add("sidenav__link--anchor-primary");
-			document.getElementById("heading").innerText = "Dashboard";
+			document.getElementById("heading").innerText = "Medication and Diet Regime";
 			document.getElementById("practitioner").innerText = "Dr. Rosalind Franklin";
 		</script>
 </body>
