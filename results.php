@@ -27,14 +27,14 @@
 						<input type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05" class="input__container--small">
 					<!-- Dropdown List of Time of Day -->
 						<label for="time">Time of Day</label>
-						<select name="dropdown--time" id="dropdown--time" class="input__container--small">
+						<select name="timeOfDay" id="dropdown--time" class="input__container--small">
 							<option value="Morning">Morning</option>
 							<option value="Afternoon">Afternoon</option>
 							<option value="Evening">Evening</option>
 						</select>
 					<!-- Dropdown List of Patients -->
 						<label for="patient">Patient</label>
-						<select name="dropdown--patients" id="dropdown--patients" class="input__container--small">
+						<select name="patient" id="dropdown--patients" class="input__container--small">
 							<option value="Margaret">Margaret</option>
 							<option value="Bob">Bob</option>
 						</select>

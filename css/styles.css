@@ -211,6 +211,11 @@ section {
     padding: 4px;
 }
 
+.form__submit:hover {
+    background-color: var(--secondary);
+    transition: 300ms ease;
+}
+
 .input__container {
     padding: 20px;
     height: 15vh;
