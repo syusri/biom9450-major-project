@@ -11,12 +11,11 @@
 	<!-- <script src="js/main.js"></script> -->
 </head>
 
-</head>
 <body>
 	<!-- Header -->
     <?php
         include 'index.html';
-    ?>
+    ?> 
     <div class="wrapper">
 
     <header class="header">
@@ -27,13 +26,15 @@
 
 	<!-- Main Content -->
     <article class="main">
-	<main>
+	
 
         <?php
             $patient_number = "001";
             echo "<br> <p align=\"center\"> Patient ID is PA".$patient_number." </p> <br>"
 
             // $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+
+            // echo $conn;
 								
 			// $sql = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
 
@@ -117,7 +118,7 @@
 			</div>
 		</section>
 		
-	</main>
+	
     </article>
     <aside class="aside aside-1">
         Aside 1 <br> <br>
@@ -127,17 +128,17 @@
 	<!-- End Main Content -->
 	
 	<!-- Footer -->
-	<div class="row footer_row">
-		<!-- Need to work out how to get the footer to the bottom of the page-->
-		
-		<a href="#" class="footer_anchor">
-			<figure class="footer_logo">
-				<img src="./img/logo.png" class="footer_logo_img" alt="Logo"> 
-			</figure>
-		</a>
-		<br>
-		<div class="footer_copyright" align="center" >Copyright © 2021 Info Sis Association </div>
-	</div>
+        <div class="row footer_row">
+            <!-- Need to work out how to get the footer to the bottom of the page-->
+            
+            <a href="#" class="footer_anchor">
+                <figure class="footer_logo">
+                    <img src="./img/logo.png" class="footer_logo_img" alt="Logo"> 
+                </figure>
+            </a>
+            <br>
+            <div class="footer_copyright" align="center" >Copyright © 2021 Info Sis Association </div>
+        </div>
 
     </div>
 </body>

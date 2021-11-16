@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+	
 	<nav>
 	</nav>
 
@@ -143,7 +143,7 @@
 									echo "<br><br><p align=\"center\"> Database!  <br> Username: ".$dbusername."<br> Password: ".$dbpassword."</p>";
 								
 									if($practitioner_number == $dbusername && $password_login == $dbpassword)  {  
-										odbc_close($conn);
+										// odbc_close($conn);
 										session_start();  
 										$_SESSION["session_practitioner"]=$practitioner_number;  
 										
@@ -152,13 +152,13 @@
 										
 									} else {  
 										echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";  
-										odbc_close($conn);
+										// odbc_close($conn);
 									}
 								}  else {
 									echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";
-									odbc_close($conn);
+									// odbc_close($conn);
 								}
-								
+								// odbc_close($conn);
 								
 							} else {  
 								echo "<p align=\"center\"> <br> All fields are required! </p> <br>";

@@ -24,8 +24,8 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  /* background-color: pink; */
+  /* background-color: var(--background); */
+  background-color: pink;
 }
 
 h1,
@@ -115,8 +115,6 @@ section {
   transition: all 300ms ease;
 }
 
-/* Side navigation for login page */
-
 /* Company logo */
 .company__logo {
   display: flex;
@@ -146,7 +144,7 @@ section {
 .topnav {
   height: 80px;
   width: 100%;
-  max-width: 80vw;
+  max-width: 84vw;
   margin-left: 15%;
   display: flex;
   justify-content: space-between;
@@ -168,13 +166,7 @@ section {
   font-weight: bold;
 }
 
-/* Main content section */
-main {
-  /* margin-left: 15%; */
-  padding: 20px;
-  min-height: calc(100vh - 370px);
-}
-
+/* MAIN CONTENT SECTION */
 .main {
   margin-left: 15%;
   padding: 20px;
@@ -194,77 +186,6 @@ main {
   font-weight: bold;
   color: var(--secondary);
 }
-
-/*General Form styling*/
-/*https://developpaper.com/how-to-align-text-boxes-in-multiple-forms-with-html/*/
-label {
-  cursor: pointer;
-  display: inline-block;
-  /*padding: 3px 6px;*/
-  text-align: left;
-  width: 165px;
-  vertical-align: top;
-}
-/*
-  form {
-  }
-  */
-
-input,
-select {
-  width: 250px;
-  padding: 2px 4px;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-button {
-  padding: 3px 6px;
-}
-
-/* Tried to add styling for the footer - failed miserably*/
-
-.row {
-  width: 100%;
-  max-width: 85vw;
-  margin: 0 auto;
-  padding: 0 12px;
-}
-
-/*
-.row footer_row {
-  position: absolute;
-  bottom: 10px;
-  width: 50%;
-  border: 3px solid #8ac007;
-}
-*/
-
-.footer_row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4% 0;
-}
-
-.footer_logo {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto;
-  /*position: absolute;*/
-  overflow: hidden;
-}
-
-.footer_logo_img {
-  width: 100%;
-}
-
-.footer_copyright {
-  color: black;
-}
-
-/* Shabrina's code for laying out the Patient Summary Page with alterations*/
 
 /* Dashboard */
 .form__container {
@@ -296,6 +217,11 @@ label {
   color: var(--text-white);
   font-weight: bold;
   padding: 4px;
+}
+
+.form__submit:hover {
+  background-color: var(--secondary);
+  transition: 300ms ease;
 }
 
 .input__container {
@@ -348,7 +274,7 @@ select:hover,
 
 .section__container {
   display: flex;
-  height: 160px;
+  height: 300px;
   width: 80vw;
   background-color: #f8f8f8;
   border-radius: 25px;
@@ -359,7 +285,7 @@ select:hover,
 /* Patient Summary */
 /* Green part - patient highlight */
 .patient__container--highlight {
-  height: 160px;
+  height: 300px;
   width: 40vw;
   background-color: var(--primary);
   border-radius: 25px;
@@ -383,41 +309,60 @@ select:hover,
 }
 
 .patient__picture--mask {
-  width: 100px;
-  height: 100px;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   overflow: hidden;
   grid-column: 1;
-  grid-row: 1/3;
+  grid-row: 1/5;
   background-color: pink;
+  grid-auto-columns: 200px;
 }
 
 .patient__name {
-  grid-column: 2/4;
+  /* grid-column: 2/4; */
+  grid-column: 3/5;
   grid-row: 1;
   font-weight: bold;
 }
 
 .patient__room--label {
-  grid-column: 2;
+  /* grid-column: 2; */
+  grid-column: 3;
   grid-row: 2;
   font-weight: bold;
 }
 
 .patient__room--number {
-  grid-column: 3;
+  /* grid-column: 3; */
+  grid-column: 4;
   grid-row: 2;
 }
 
 .patient__prac--label {
-  grid-column: 2;
+  /* grid-column: 2; */
+  grid-column: 3;
   grid-row: 3;
   font-weight: bold;
 }
 
 .patient__prac--name {
-  grid-column: 3;
+  /* grid-column: 3; */
+  grid-column: 4;
   grid-row: 3;
+}
+
+.patient__diet--label {
+  /* grid-column: 2; */
+  grid-column: 3;
+  grid-row: 4;
+  font-weight: bold;
+}
+
+.patient__diet--name {
+  /* grid-column: 3; */
+  grid-column: 4;
+  grid-row: 4;
 }
 
 /* White part of patient box */
@@ -425,7 +370,7 @@ select:hover,
   display: grid;
   padding: 30px;
   grid-template-rows: 40px 30px 30px;
-  column-gap: 80px;
+  column-gap: 60px;
 }
 
 .patient__details--box {
@@ -482,9 +427,208 @@ select:hover,
   grid-row: 3;
 }
 
+/* Medicare and Emergency contact section */
+.top__container {
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
+}
+
+.section__container--first {
+  display: flex;
+  height: 200px;
+  width: 39vw;
+  background-color: #f8f8f8;
+  border-radius: 25px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  margin-top: 12px;
+  padding: 10px;
+}
+
+.section__container--second {
+  display: flex;
+  height: 200px;
+  width: 39vw;
+  background-color: #f8f8f8;
+  border-radius: 25px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  margin-top: 12px;
+  padding: 10px;
+}
+
+/* Setting up the Grid for the emergency contact section */
+.details__highlight--emergency {
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 100px 150px 150px;
+  grid-template-rows: 35px 35px 35px;
+  column-gap: 20px;
+}
+
+.details__highlight--box {
+  color: black;
+}
+
+.EC__name--label {
+  grid-column: 1/4;
+  grid-row: 1/5;
+  font-weight: bold;
+}
+
+.EC__name--number {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.EC__relation--label {
+  grid-column: 1;
+  grid-row: 2;
+  font-weight: bold;
+}
+
+.EC__relation--name {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.EC__number--label {
+  grid-column: 1;
+  grid-row: 3;
+  font-weight: bold;
+}
+
+.EC__number--name {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.EC__email--label {
+  grid-column: 1;
+  grid-row: 4;
+  font-weight: bold;
+}
+
+.EC__email--name {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+/* Setting up the Grid for the Medicare section */
+/* Setting up the Grid for the emergency contact section */
+.details__highlight--medicare {
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 200px 150px 150px;
+  grid-template-rows: 35px 35px 35px;
+  column-gap: 20px;
+}
+
+.Medicare__Number--label {
+  grid-column: 1/4;
+  grid-row: 1/5;
+  font-weight: bold;
+}
+
+.Medicare__Number--number {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.Medicare__Reference--label {
+  grid-column: 1;
+  grid-row: 2;
+  font-weight: bold;
+}
+
+.Medicare__Reference--name {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.Medicare_Expiry--label {
+  grid-column: 1;
+  grid-row: 3;
+  font-weight: bold;
+}
+
+.Medicare_Expiry--name {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* Medications Table */
+.section__container--medications {
+  display: flex;
+  height: 350px;
+  width: 80vw;
+  background-color: #f8f8f8;
+  border-radius: 25px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  margin-top: 12px;
+}
+
+#MDName {
+  width: 12%;
+  text-align: left;
+}
+
+#MDDosage {
+  text-align: left;
+  width: 5%;
+}
+
+#MDRoute {
+  text-align: left;
+}
+
+#MDType {
+  text-align: left;
+}
+
+#MDFreq {
+  width: 12%;
+  text-align: left;
+}
+
+#MDIngredient {
+  width: 13%;
+  text-align: left;
+}
+
+#MDCondition {
+  width: 18%;
+  text-align: left;
+}
+
+#MDInstructions {
+  width: 23%;
+  text-align: left;
+}
+
+/* .specific_patient_med_table {
+} */
+
+th,
+td {
+  height: 60px;
+  padding: 15px;
+  /* vertical-align: bottom; */
+}
+
+/* Notes box */
+.section__container--notes {
+  display: flex;
+  height: 160px;
+  width: 80vw;
+  background-color: #f8f8f8;
+  border-radius: 25px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  margin-top: 12px;
+}
+
 /* Medications */
 .section__table {
-  padding: 12px;
+  padding: 30px;
   display: grid;
   grid-template-columns: repeat(3, 30vh);
   column-gap: 10vh;
@@ -508,3 +652,5 @@ select:hover,
   grid-column: 3;
   grid-row: 1;
 }
+
+/* Form at the top */
