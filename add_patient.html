@@ -2,24 +2,75 @@
 <html>
 
 <head>
-<title>Add a Patient</title>
+	<title>Add a Patient</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style_sheet.css">
+	<script src="add_patient_validation.js"></script>
 </head>
 
 <body>
-    <div class="container">
-		<h1>Website Header goes here</h1>
-		<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Practitioner1 (icon)
-		</h2>
-		<p class="paragraph">
-			<form>
-				First Name: <input type="text" id="firstName" name="firstName" value=""/>
+	<!-- Top navigation bar -->
+	<nav>
+	</nav>
+
+	<!-- Side navigation bar -->
+    <div class="sidenav">
+        <div class="company__logo">
+			<figure class="company__logo--img">
+				<img src="./img/logo.png" class="company__logo--pic" alt="Logo">
+			</figure>
+			<a href="index.html" class="company__logo--text">
+				AgedCare
+			</a>
+		</div>
+        <ul class="sidenav__link--list">
+			<li class="sidenav__link">
+				<!-- <a href="#" class="sidenav__link--anchor sidenav__link--anchor-primary">Dashboard</a> -->
+				<a href="dashboard.php" class="sidenav__link--anchor" id="dashboard">Dashboard</a>
+				<!-- Whatever page you're on, add sidenav__link--anchor-primary as a class-->
+			</li>
+			<li class="sidenav__link">
+				<a href="#" class="sidenav__link--anchor" id="patients">Patients</a>
+			</li>
+			<li class="sidenav__link">
+				<a href="#" class="sidenav__link--anchor" id="reports">Reports</a>
+			</li>
+			</li>
+		</ul>
+    </div>
+
+    <!-- Top bar where heading, practitioner and logout are -->
+    <div class="topnav">
+        <h1 id="heading"><!-- Place heading here --></h1> 
+        <ul class="nav__link--list">
+            <li id="practitioner" class="nav__link--anchor">
+                <!-- Name of Practitioner -->
+            </li>
+            <li class="nav__link--anchor">
+                <a href="#" class="nav__link--anchor">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <!-- <div class="main">
+        <div class="breadcrumb">
+            <p><span class="page--previous">Dashboard</span> > <span class="page--current">Medications and Diet Regimes</span></p>
+        </div>
+    </div> -->
+	<div class="main">
+		<p>
+			<form class="" id="registrantInfo" onSubmit="return validInfo()" method="POST" 
+			action="">
+				<div class="error" id="error_firstName"></div>
+				First Name: <input type="text" id="firstName" name="firstName" value="" 
+				onchange="First_Name()"/>
 				<br></br>
-				Last Name: <input type="text" id="lastName" name="lastName" value=""/>
+				<div class="error" id="error_lastName"></div>
+				Last Name: <input type="text" id="lastName" name="lastName" value=""
+				onchange="Last_Name()"/>
 				<br></br>
 				Gender: <select id="gender" name="gender">
 					<option value="Male">Male</option>
@@ -35,11 +86,15 @@
 					<option value="5">5</option>
 				</select>
 				<br></br>
-				Date of Birth: <input type="date" id="dateofbirth" name="dateofbirth" value=""/>
+				<div class="error" id="error_dateofbirth"></div>
+				Date of Birth: <input type="date" id="dateofbirth" name="dateofbirth" value=""
+				onchange="DOB()"/>
 				<br></br>
 				Upload image: <input type="file" id="patient_image" name="patient_image" value=""/>
 				<br></br>
-				Weight: <input type="number" id="weight" name="weight" value=""/>
+				<div class="error" id="error_weight"></div>
+				Weight: <input type="number" id="weight" name="weight" value=""
+				onchange="Weight()"/>
 				<br></br>
 				Diet: <select id="diet" name="diet">
 					<option value="normal">Normal</option>
@@ -50,7 +105,8 @@
 				<br></br>
 				Additional notes:<br></br> <textarea name="notes" id="notes" cols="45" rows="5"></textarea>
 				<br></br>
-				<input type="submit" value="submit" name="submit" id="submit"/>
+				<div class="error" id="submit_check"></div>
+				<input type="submit" value="Submit" name="submit" id="submit"/>
 			</form>
 		</p>
 	</div>
