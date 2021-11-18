@@ -46,7 +46,9 @@ function DOB() {
 }
 
 function Weight() {
+    //get weight from input, it will already be a number
     weight = document.getElementById("weight").value;
+    //check weight is at least 45kg and no more than 300kg
     if (weight < 45) {
         document.getElementById("error_weight").innerHTML="Please enter correct weight";
         return false;
@@ -60,15 +62,22 @@ function Weight() {
 }
 
 function validInfo() {
+    test = 0;
     if (First_Name()) {
-        if (Last_Name()) {
-            if (DOB()) {
-                if (Weight()) {
-                    return true;
-                }
-            }
-        }
+        test += 1;
     }
-    document.getElementById("submit_check").innerHTML="FAILED - please fix the above errors";
+    if (Last_Name()) {
+        test += 1;
+    }
+    if (DOB()) {
+        test += 1;
+    }
+    if (Weight()) {
+        test += 1;
+    }
+    if (test == 4) {
+        return true;
+    }
+    document.getElementById("submit_check").innerHTML="FAILED - please fix errors";
     return false;
 }
