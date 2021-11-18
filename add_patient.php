@@ -17,11 +17,11 @@
 	<div class="main">
 		<!-- Breadcrumb -->
 		<div class="breadcrumb">
-				<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Medications and Diet Regimes</span></p>
+				<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Add Patient</span></p>
 		</div>
 		<!-- Actual form -->
 		<div class="form__container--mini">
-			<form class="form--dashboard" onSubmit="return validInfo()" action="add_success.php">
+			<form class="form--dashboard" onSubmit="return validInfo()" action="add_success.php", method="POST">
 			<div class="error" id="error_firstName"></div>
 				First Name: <input type="text" id="firstName" name="firstName" value="" 
 				onchange="First_Name()"/>
@@ -67,7 +67,6 @@
 				<input type="submit" value="Go" class="form__submit input__container--small">
 			</form>
 		</div>
-		
 	</div>
 	<!-- JavaScript to change PHP template -->
 	<script type="text/javascript">
