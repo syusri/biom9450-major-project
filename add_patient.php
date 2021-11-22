@@ -22,7 +22,9 @@
 		<!-- Actual form -->
 		<div class="form__container--mini">
 			<form class="form--dashboard" onSubmit="return validInfo()" action="add_success.php", method="POST">
-			<div class="error" id="error_firstName"></div>
+				<div class="error" id="error_firstName"></div>
+				<!-- Patient Details -->
+				<h3>Patient Information</h3>
 				First Name: <input type="text" id="firstName" name="firstName" value="" 
 				onchange="First_Name()"/>
 				<br></br>
@@ -61,9 +63,44 @@
 					<option value="gluten_free">Gluten Free</option>
 				</select>
 				<br></br>
+
+				<!-- Emergency Contact Information -->
+				<h3>Emergency Contact</h3>
+				<div class="error" id="error_first_contact"></div>
+				First Name: <input type="text" id="firstName_contact" name="firstName_contact" value="" 
+				onchange="First_Name_Contact()"/>
+				<br></br>
+				<div class="error" id="error_last_contact"></div>
+				Last Name: <input type="text" id="lastName_contact" name="lastName_contact" value="" 
+				onchange="Last_Name_Contact()"/>
+				<br></br>
+				<div class="error" id="error_phone"></div>
+				Phone Number: <input type="number" id="phone" name="phone" value=""
+				onchange="Phone()"/>
+				<br></br>
+				<div class="error" id="error_relationship"></div>
+				Relationship to patient: <input type="text" id="relationship" name="relationship" value="" 
+				onchange="Relationship()"/>
+				<br></br>
+
+				<!-- Medicare Details -->
+				<h3>Medicare Information</h3>
+				<div class="error" id="error_medicare"></div>
+				Medicare Number: <input type="number" id="medicare" name="medicare" value=""
+				onchange="Medicare()"/>
+				<br></br>
+				<div class="error" id="error_IRN"></div>
+				Individual Reference Number: <input type="number" id="IRN" name="IRN" value="" 
+				onchange="IRN()"/>
+				<br></br>
+				<div class="error" id="error_expiry"></div>
+				Expiry date: <input type="date" id="expiry" name="expiry" value=""
+				onchange="Medicare_Expiry()"/>
+				<br></br>
 				Additional notes:<br></br> <textarea name="notes" id="notes" cols="45" rows="5"></textarea>
 				<br></br>
 				<div class="error" id="submit_check"></div>
+				<!-- Submit Button-->
 				<input type="submit" value="Go" class="form__submit input__container--small">
 			</form>
 		</div>
