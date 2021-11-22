@@ -25,13 +25,21 @@
 				<!-- Patient Details -->
 				<h3>Patient Information</h3>
 				<?php
+					// Grab the patient ID from the summary page 
+					if (!$_POST["submit_edit_patient_ID"]) {
+						// If this page is not directed from the search page so a patient ID has not come through it will show the page for patient PA001
+						$patient_number = "1";
+					} else {
+						$patient_number = $_POST["submit_edit_patient_ID"];
+					}
+
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
 						echo "$conn->connect_error";
 						die("Connection Failed\n");
 					}
 					//get full name of practitioners
-					$sql_PATIENT = "SELECT * FROM Patient WHERE PatientID=1";
+					$sql_PATIENT = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
 					$rs = odbc_exec($conn, $sql_PATIENT);
 					if(!$rs) {
 						exit("Error in SQL"); 

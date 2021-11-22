@@ -160,6 +160,10 @@
 			<!-- Patient Summary -->
 			<section id="patient">
 				<h2>Patient Summary</h2>
+                <!-- Fix form issue -->
+                <form class="section__heading--edit" action="./edit_patient.php" method="POST"> 
+                <button class="edit_patient_button" type="submit" id="submit_edit_patient_ID" name="submit_edit_patient_ID" value="<?php echo $patient_number;?>">
+                    Edit </button> </form>
 				<div class="section__container">
 					<div class="patient__container--highlight">
 						<div class="patient__highlight">
@@ -216,7 +220,7 @@
                 <section id="emergency_contact">
                     <div class="section__heading">
                         <h2 class="subheading">Emergency Contact Details</h2>
-                        <p class="section__heading--edit">Edit</p>
+                        <p class="section__heading--edit">Edit </a></p>
                     </div>
                     <div class="section__container--first">
                         <div class="details__highlight--emergency">

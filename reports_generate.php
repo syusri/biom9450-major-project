@@ -113,7 +113,7 @@
 	</div>
 	<!-- JavaScript to change PHP template -->
 	<script type="text/javascript">
-		document.getElementById("dashboard").classList.add("sidenav__link--anchor-primary");
+		document.getElementById("reports").classList.add("sidenav__link--anchor-primary");
 		document.getElementById("heading").innerText = "Generate Report";
 		document.getElementById("practitioner").innerText = "Dr. Rosalind Franklin";
 	</script>

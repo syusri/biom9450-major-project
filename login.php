@@ -140,7 +140,7 @@
 										$_SESSION["session_practitioner"]=$practitioner_number;  
 										
 										/* Redirect browser */  
-										header("Location: login_success.php");  
+										header("Location: dashboard.php");  
 										
 									} else {  
 										echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";  

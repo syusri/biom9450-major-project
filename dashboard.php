@@ -13,6 +13,11 @@
 <body>
 	<?php
 		include_once 'index.html';
+
+		session_start();
+		$practitioner_number = $_SESSION["session_practitioner"];
+
+		// Shabrina grabs the practitioner name and save it in the session to be passed along
 	?>
 		<div class="main">
 			<div class="form__container">

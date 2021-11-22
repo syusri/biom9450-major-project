@@ -12,7 +12,7 @@
 </head>
 <body>
 	<?php
-		include_once 'index2.html';
+		include_once 'index.html';
 		// session assigned in the login page 
 		session_start();
 		$practitioner_number = $_SESSION["session_practitioner"];
@@ -50,6 +50,9 @@
 			<div class="container">
 				<div class="row">
 					<h2 class="section_title"> Current Patients </h2> <br>
+					<form class="section__heading--edit" action="./add_patient.php" method="POST"> 
+                	<button class="add_patient_button" type="submit" id="submit_add_patient_ID" name="submit_add_patient_ID">
+                    Add Patients </button> </form>
 					<h3 class="section_title"> Search Patient ID (PA000) or Patient Name </h3> <br>
 					
                     <form class="search_patients" method="POST">
