@@ -13,18 +13,40 @@
 <body>
 	<?php
 		include_once 'index2.html';
+        //Grab information of the patient ID from the search page
 	?>
 		<div class="main">
 			<!-- Breadcrumb -->
 			<div class="breadcrumb">
 					<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Patient Summary</span></p>
 			</div>
-
             <?php
-                $patient_number = "001";
-                // echo "<br> <p align=\"center\"> Patient ID is PA".$patient_number." </p> <br>";
-
                 $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+
+                session_start();
+		        $practitioner_number = $_SESSION["session_practitioner"];
+
+                $sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+                $rs = odbc_exec($conn,$sql);
+                // Finds the practitioner that is logged in
+
+                // Get the practitioner name that is logged in
+                while ($row = odbc_fetch_array($rs)){
+                    $practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
+                } 
+                // session_start();
+                // $practitioner_number = $_SESSION["session_practitioner"];
+                // $patient_number = $_SESSION["selected_patient"];
+                if (!$_POST["submit_search_ID"]) {
+                    // If this page is not directed from the search page so a patient ID has not come through it will show the page for patient PA001
+                    $patient_number = "1";
+                } else {
+                    $patient_number = $_POST["submit_search_ID"];
+                }
+		        // $patient_number = $_POST["submit_search_ID"];
+                // $patient_number = "001";
+                // echo "<br> <p align=\"center\"> Patient ID is PA00".$patient_number."</p> <br>";
+
                 $sql = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
 
 
@@ -87,7 +109,7 @@
                 } 
 
                 // Practitioner and Diet Regime join 
-                $sql = "SELECT Practitioner.FirstName AS PAFirstName, Practitioner.LastName AS PALastName, DietRegime.DietName AS PADietName FROM 
+                $sql = "SELECT Practitioner.FirstName AS PRFirstName, Practitioner.LastName AS PRLastName, DietRegime.DietName AS PADietName FROM 
                 ((Patient INNER JOIN Practitioner ON Patient.PractitionerID=Practitioner.PractitionerID) INNER JOIN DietRegime ON Patient.DietRegimeID=DietRegime.DietRegimeID) 
                 WHERE PatientID={$patient_number}";
 
@@ -96,7 +118,7 @@
 
                 //While loop to grab the results
                 while ($row = odbc_fetch_array($rs)){
-                    $PR_Name_db = $row["PAFirstName"]." ".$row["PALastName"];
+                    $PR_Name_db = $row["PRFirstName"]." ".$row["PRLastName"];
                     $DR_Name_db = $row["PADietName"];
                     //Get PR Name and DR Name after connecting the Databases
                     
@@ -148,6 +170,12 @@
 							<h2 class="patient__highlight--box patient__name">
                                 <?php echo $Full_Name; ?>
 							</h2>
+                            <p class="patient__highlight--box patient__number--label">
+								Patient ID
+							</p>
+							<p class="patient__highlight--box patient__number--number">
+                                <?php echo "PA00".$patient_number; ?>
+							</p>
 							<p class="patient__highlight--box patient__room--label">
 								Room number
 							</p>
@@ -249,8 +277,8 @@
                     </div>
                 </section>
             </div>
-			<!-- Diet Regime -->
-			<section id="diet-regime">
+			<!-- Medications -->
+			<section id="medications">
 				<div class="section__heading">
 					<h2 class="subheading">Medications</h2>
 					<p class="section__heading--edit">Edit</p>
@@ -350,7 +378,8 @@
 		<script type="text/javascript">
 			document.getElementById("patients").classList.add("sidenav__link--anchor-primary");
 			document.getElementById("heading").innerText = "Patient Summary";
-			document.getElementById("practitioner").innerText = "Dr. Rosalind Franklin";
+			// Change this PR Name to the PR that is logged in 
+			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name_loggedin;?>";
 		</script>
 </body>
 

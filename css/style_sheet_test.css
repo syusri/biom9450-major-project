@@ -24,8 +24,8 @@ html {
 }
 
 body {
-  /* background-color: var(--background); */
-  background-color: pink;
+  background-color: var(--background);
+  /* background-color: pink; */
 }
 
 h1,

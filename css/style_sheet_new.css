@@ -166,10 +166,37 @@ section {
   font-weight: bold;
 }
 
+/* For the login page to ensure the copyright logo is at the bottom of the page */
+main {
+  /* margin-left: 15%; */
+  /* padding: 20px; */
+  min-height: calc(100vh - 350px);
+}
+
 /* MAIN CONTENT SECTION */
 .main {
   margin-left: 15%;
   padding: 20px;
+}
+
+/* Login page */
+.login_input {
+  width: 20vw;
+  cursor: text;
+}
+
+.login_button {
+  width: 6%;
+  margin: 20px;
+  padding: 8px;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  height: 5vh;
+  border-style: none;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  cursor: pointer;
 }
 
 /* Breadcrumbs */
@@ -325,37 +352,48 @@ select:hover,
   font-weight: bold;
 }
 
-.patient__room--label {
+.patient__number--label {
   grid-column: 2;
   grid-row: 2;
+  font-weight: bold;
+}
+
+.patient__number--number {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.patient__room--label {
+  grid-column: 2;
+  grid-row: 3;
   font-weight: bold;
 }
 
 .patient__room--number {
   grid-column: 3;
-  grid-row: 2;
+  grid-row: 3;
 }
 
 .patient__prac--label {
   grid-column: 2;
-  grid-row: 3;
+  grid-row: 4;
   font-weight: bold;
 }
 
 .patient__prac--name {
   grid-column: 3;
-  grid-row: 3;
+  grid-row: 4;
 }
 
 .patient__diet--label {
   grid-column: 2;
-  grid-row: 4;
+  grid-row: 5;
   font-weight: bold;
 }
 
 .patient__diet--name {
   grid-column: 3;
-  grid-row: 4;
+  grid-row: 5;
 }
 
 /* White part of patient box */
@@ -453,7 +491,7 @@ select:hover,
 .details__highlight--emergency {
   display: grid;
   padding: 20px;
-  grid-template-columns: 100px 150px 150px;
+  grid-template-columns: 100px 250px 150px;
   grid-template-rows: 35px 35px 35px;
   column-gap: 20px;
 }
@@ -661,6 +699,8 @@ form.search_patients input[type="text"] {
   height: 6vh;
   background: #ffffff;
   border-right: none;
+  cursor: text;
+  border: none;
 }
 
 /* Style the submit button */
@@ -701,6 +741,102 @@ form.search_patients::after {
   height: 120px;
 }
 
+/* Search page boxes design */
+.section__container--search {
+  display: flex;
+  height: 160px;
+  width: 40vw;
+  background-color: #f8f8f8;
+  border-radius: 25px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  margin-top: 12px;
+}
+
+.search__highlight {
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 150px 150px 300px;
+  grid-template-rows: 40px 30px 30px 30px;
+  column-gap: 20px;
+}
+
+.search__picture {
+  width: 100%;
+}
+
+.search__picture--mask {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  grid-column: 1;
+  grid-row: 1/5;
+  background-color: pink;
+  grid-auto-columns: 200px;
+}
+
+.search__name {
+  grid-column: 2/4;
+  grid-row: 1;
+  font-weight: bold;
+  justify-self: start;
+}
+
+.search__room--label {
+  grid-column: 2;
+  grid-row: 2;
+  font-weight: bold;
+  justify-self: start;
+}
+
+.search__room--number {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: start;
+}
+
+.search__prac--label {
+  grid-column: 2;
+  grid-row: 3;
+  font-weight: bold;
+  justify-self: start;
+}
+
+.search__prac--name {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: start;
+}
+
+/* .search__diet--label {
+  grid-column: 2;
+  grid-row: 4;
+  font-weight: bold;
+}
+
+.search__diet--name {
+  grid-column: 3;
+  grid-row: 4;
+} */
+
+/* Search form submit button with no formatting */
+.select_patient_button {
+  background: #f6f6f6;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+}
+
+.select_patient_button:hover {
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+  cursor: pointer;
+  background-color: var(--primary);
+  border-radius: 10px;
+  transition: all 300ms ease;
+}
+
 /* Form at the top */
 
 /* Footer */
@@ -709,7 +845,7 @@ form.search_patients::after {
   width: 100%;
   max-width: 85vw;
   margin: 0 auto;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 /*
@@ -727,6 +863,8 @@ form.search_patients::after {
   align-items: center;
   justify-content: center;
   padding: 4% 0;
+  position: relative;
+  left: 7.5%;
 }
 
 .footer_logo {

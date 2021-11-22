@@ -71,6 +71,32 @@
 						session_start();
 						$practitioner_number = $_SESSION["session_practitioner"];
 						echo "<p align=\"center\"> Your practitioner ID is PR".$practitioner_number."</p>";
+
+						// Test the image
+						$patient_number = "001";
+		
+						$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+						$sql = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
+
+						//Used to check the connection to the database was successful								
+						if(!$conn){ 
+						    exit("Connection Failed: ". $conn); 
+						} else { 
+						    echo ("<p align=\"center\"> Connection Successful! </p>");
+						}
+		
+						$rs = odbc_exec($conn,$sql);
+
+						while ($row = odbc_fetch_array($rs)){
+							$items++;
+
+
+							$PA_Image = $row["Image"];
+							echo "<img src=\"data:image/jpeg;base64,".base64_encode($PA_Image)."\"/>";
+							echo "<p align=\"center\"> Hello</p>";
+							header("Content-type: image/jpeg");
+ 							// echo $PA_Image;
+						}
 					?>
 
 				</div>

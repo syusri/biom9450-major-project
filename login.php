@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
-	<link rel="stylesheet" href="css/style_sheet.css">
+	<link rel="stylesheet" href="css/style_sheet_new.css">
 	<script type="text/javascript" src="js/myscript.js"> </script> 
 	<!-- <link href="css/html_layout_styles.css" rel="stylesheet" type="text/css"> -->
 	<!-- <script src="js/main.js"></script> -->
@@ -50,27 +50,19 @@
     <div class="topnav">
         <h1><!-- Place heading here --></h1> 
         <ul class="nav__link--list">
+			<!-- Could potentially remove the login link if we are just doing a login page  -->
             <li class="nav__link--anchor">
                 <a class="nav_link" href="./login.php"> Login </a></li>
             </li>
-            <li class="nav__link--list">
+			<!-- Add in register button if we decide to includde the page  -->
+            <!-- <li class="nav__link--list">
 				<a class="nav_link" href="./register.php">Register</a>
-            </li>
+            </li> -->
         </ul>
     </div>
 
 	<!-- Main Content -->
 	<main>
-		<section id="venue">
-			<div class="container">
-				<div class="row">
-					<h3 class="section_title"> </h3>
-						<div class="information">
-						</div>
-				</div>
-			</div>
-		</section>
-
 		<section id="form_requirements">
 			<div class="main">
 				<div class="row">
@@ -79,16 +71,16 @@
 					<!-- Form -->
 					<form id="login_form"  method="POST" align="center">
 						<label for="practitioner_ID">Username:</label> 
-						<input type="text" id="practitioner_ID" name="practitioner_ID" placeholder="PR000">
+						<input type="text" id="practitioner_ID" name="practitioner_ID" class="login_input" placeholder="PR000">
 						<!-- <p id="username_result" class="result_message"> </p> <br> -->
                         <br><br>
 						<label for="password">Password:</label>
-						<input type="password" id="password" name="password" placeholder="Enter Password">
+						<input type="password" id="password" name="password" class="login_input" placeholder="Enter Password">
 						<!-- <p id="password_result" class="result_message"> </p> <br> --> <br> <br>
 
 						
 						<!-- Submit buttons -->
-						<button type="submit" id="submit" name="submit" value="Login">Login</button>
+						<button type="submit" id="submit" name="submit" class="login_button" value="Login"> <b>Login</b></button>
 
 					</form>
 
