@@ -38,8 +38,15 @@
 						<div class="input__container">
 							<label for="patient">Patient</label><br>
 							<select name="dropdown--patients" id="dropdown--patients">
-								<option value="Margaret">Margaret</option>
-								<option value="Bob">Bob</option>
+								<!-- <option value="Margaret">Margaret</option>
+								<option value="Bob">Bob</option> -->
+								<?php
+									// Obtain list of patients from database
+									$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+									$sql = "SELECT * FROM Patients WHERE (lcase(EmailAddress)='{$email}') OR (lcase(FirstName)='{$first_name}' AND lcase(LastName)='{$last_name}')";
+									$rs = odbc_exec($conn,$sql);
+									$row = odbc_fetch_array($rs);
+								?>
 							</select>
 						</div>
 						<div class="input__container">
