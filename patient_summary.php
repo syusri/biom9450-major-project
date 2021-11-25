@@ -29,6 +29,7 @@
 
                 session_start();
 		        $practitioner_number = $_SESSION["session_practitioner"];
+		        $practitioner_name = $_SESSION["session_practitioner_name"];
 
                 $sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
                 $rs = odbc_exec($conn,$sql);
@@ -393,7 +394,7 @@
 			document.getElementById("patients").classList.add("sidenav__link--anchor-primary");
 			document.getElementById("heading").innerText = "Patient Summary";
 			// Change this PR Name to the PR that is logged in 
-			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name_loggedin;?>";
+			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name;?>";
 		</script>
 </body>
 
