@@ -11,36 +11,29 @@
 </head>
 
 <body>
-	<?php
-		include_once 'index.html';
+		<?php
+			include 'index.html';
+			session_start();
+			$practitioner_number = $_SESSION["session_practitioner"];
+			$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+			$rs = odbc_exec($conn,$sql);
 
-		session_start();
-		$practitioner_number = $_SESSION["session_practitioner"];
-		
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+			while ($row = odbc_fetch_array($rs)){
+				$_SESSION["session_practitioner_name"] = $row["FirstName"]." ".$row["LastName"];
+			} 
+		?> 
 
-		$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
-		$rs = odbc_exec($conn,$sql);
-		// Finds the practitioner that is logged in
-
-		// Get the practitioner name that is logged in
-		while ($row = odbc_fetch_array($rs)){
-			$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
-		} 
-		// Shabrina grabs the practitioner name and save it in the session to be passed along
-		// echo "<p align=\"center\">". $practitioner_name_loggedin. "</p>";
-		$_SESSION["session_practitioner_name"] = $practitioner_name_loggedin;
-	?>
 		<div class="main">
 			<div class="form__container">
 				<div class="form__content">
 					<p class="form__subheading">Choose which medications and diet regimes to display.</p>
 					<!-- Actual form -->
-					<form id="form--dashboard" class="" action="results.php">
+					<form id="form--dashboard" class="" method="POST">
 						<!-- Date -->
 						<div class="input__container">
 							<label for="date" type="date">Date</label><br>
-							<input type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05">
+							<input id="date" type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05">
 						</div>
 						<!-- Dropdown List of Time of Day -->
 						<div class="input__container">
@@ -55,28 +48,42 @@
 						<div class="input__container">
 							<label for="patient">Patient</label><br>
 							<select name="dropdown--patients" id="dropdown--patients">
-								<!-- <option value="Margaret">Margaret</option>
-								<option value="Bob">Bob</option> -->
+								<!-- Obtain list of patients from database -->
 								<?php
-									// Obtain list of patients from database
-									
-									$sql = "SELECT * FROM Patients WHERE (lcase(EmailAddress)='{$email}') OR (lcase(FirstName)='{$first_name}' AND lcase(LastName)='{$last_name}')";
+									ob_start();
+									$sql = "SELECT * FROM Patient";
 									$rs = odbc_exec($conn,$sql);
-									$row = odbc_fetch_array($rs);
+									while ($row = odbc_fetch_array($rs)) {
+										$name = $row["FirstName"]." ".$row["LastName"];
+										$_SESSION[$name] = $row["PatientID"]; 
+										echo "<option value='$name'>$name</option>";
+									}
 								?>
 							</select>
 						</div>
 						<div class="input__container">
-							<input type="submit" value="Go" class="form__submit">
+							<input type="submit" value="Go" class="form__submit" name="dash_submit">
 						</div>
 					</form>
+
+					<!-- Bring information to results.php with PHP after form submission -->
+					<?php
+						if (isset($_POST["dash_submit"])) {
+							$_SESSION["date"] = strtotime($_POST["date"]); 
+							$_SESSION["time"] = $_POST["dropdown--time"];
+							$_SESSION["patient"] = $_POST["dropdown--patients"];
+							header("Location: results.php"); 
+							ob_end_flush();
+						}
+					?>
+
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
 			document.getElementById("dashboard").classList.add("sidenav__link--anchor-primary");
 			document.getElementById("heading").innerText = "Dashboard";
-			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name_loggedin;?> ";
+			document.getElementById("practitioner").innerText = "Dr. <?php echo $_SESSION["session_practitioner_name"];?> ";
 		</script>
 </body>
 
