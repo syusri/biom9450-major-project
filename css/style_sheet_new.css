@@ -310,6 +310,47 @@ select:hover,
 }
 
 /* Patient Summary */
+/* Edit Patient Button in Patient Summary */
+/* .top_container {
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
+} */
+
+.sect__container--first {
+  display: flex;
+  /* height: 200px; */
+  width: 70vw;
+  /* border-radius: 25px; */
+  margin-top: 50px;
+  /*padding: 10px; */
+}
+
+.sect__container--second {
+  display: flex;
+  /* height: 200px;
+  width: 39vw;
+  background-color: #f8f8f8;*/
+  /* border-radius: 25px; */
+  /* margin-top: 12px; */
+  /*padding: 10px; */
+}
+
+.edit_patient_button {
+  width: 20vh;
+  margin: 20px;
+  padding: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 10px;
+  height: 6vh;
+  border-style: none;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  cursor: pointer;
+}
+
 /* Green part - patient highlight */
 .patient__container--highlight {
   height: 300px;
@@ -684,6 +725,48 @@ td {
   grid-row: 1;
 }
 
+/* Add Patients Button in Patient Search Page */
+.add_patient_button {
+  width: 30vh;
+  margin: 20px;
+  padding: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 10px;
+  height: 8vh;
+  border-style: none;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  cursor: pointer;
+}
+
+/* Sectioning so that the add patient button is in line with the search bar */
+.top_container {
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
+}
+
+.middle__container--first {
+  display: flex;
+  /* height: 200px; */
+  width: 70vw;
+  /* border-radius: 25px; */
+  margin-top: 12px;
+  /*padding: 10px; */
+}
+
+.middle__container--second {
+  display: flex;
+  /* height: 200px;
+  width: 39vw;
+  background-color: #f8f8f8;*/
+  border-radius: 25px;
+  /* margin-top: 12px; */
+  /*padding: 10px; */
+}
+
 /* Search bar design in Patient Search page*/
 /*https://www.w3schools.com/howto/howto_css_search_button.asp*/
 * {
@@ -695,7 +778,7 @@ form.search_patients input[type="text"] {
   padding: 20px;
   font-size: 17px;
   float: left;
-  width: 30%;
+  width: 45vh;
   height: 6vh;
   background: #ffffff;
   border-right: none;
@@ -705,7 +788,7 @@ form.search_patients input[type="text"] {
 
 /* Style the submit button */
 form.search_patients button {
-  width: 6%;
+  width: 10vh;
   margin: 20px;
   padding: 10px;
   background: var(--primary);
