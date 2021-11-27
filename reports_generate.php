@@ -16,7 +16,7 @@
         session_start();
         if(! isset($_SESSION["session_practitioner"])) {
             header("Location:login.php");
-        }	
+        }
 	?>
 
 	<div class="main">
@@ -24,6 +24,22 @@
 		<div class="breadcrumb">
 				<p><span class="page--current">Generate Report</span></p>
 		</div>
+		<?php 
+			$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+
+			session_start();
+			$practitioner_number = $_SESSION["session_practitioner"];
+			$practitioner_name = $_SESSION["session_practitioner_name"];
+
+			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+			$rs = odbc_exec($conn,$sql);
+			// Finds the practitioner that is logged in
+
+			// Get the practitioner name that is logged in
+			while ($row = odbc_fetch_array($rs)){
+				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
+			} 
+		?>
 		<!-- Actual form -->
 		<div>
 			<form class="form--dashboard" action="reports_display.php" method="POST">
