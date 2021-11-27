@@ -89,7 +89,6 @@
 					$dob = new DateTime($dob);
 					odbc_close($conn);
 				?>
-
 				<div class='error' id='error_firstName'></div>
 				First Name: <input type='text' id='firstName' name='firstName' value='<?php echo $first;?>'  
 				onchange='First_Name()'/>
@@ -199,7 +198,7 @@
 					$expiry = new DateTime($expiry);
 				?>
 				<div class="error" id="error_medicare"></div>
-				Medicare Number: <input type='number' id='medicare' name='medicare' value='<?php echo $number;?>'
+				Medicare Number: <input type='number' id='number' name='number' value='<?php echo $number;?>'
 				onchange='Medicare()'/>
 				<br></br>
 
