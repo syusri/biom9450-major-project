@@ -12,7 +12,12 @@
 
 <body>
 	<?php
-		include_once 'index.html';
+		include 'index2.html';
+        //Grab information of the patient ID from the search page
+        session_start();
+        if(! isset($_SESSION["session_practitioner"])) {
+            header("Location:login.php");
+        }
 	?>
 	
 	<div class="main">
@@ -432,8 +437,9 @@
 	<!-- JavaScript to change PHP template -->
 	<script type="text/javascript">
 		document.getElementById("reports").classList.add("sidenav__link--anchor-primary");
-		document.getElementById("heading").innerText = "Display Report";
-		document.getElementById("practitioner").innerText = "Dr. ";
+		document.getElementById("heading").innerText = "Generate Report";
+		// Change this PR Name to the PR that is logged in 
+		document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name;?>";
 	</script>
 </body>
 
