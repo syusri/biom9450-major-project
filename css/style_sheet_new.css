@@ -965,3 +965,24 @@ form.search_patients::after {
 .footer_copyright {
   color: black;
 }
+
+.section__container--report {
+  height: auto;
+  width: 80vw;
+  background-color: #f8f8f8;
+  border-radius: 30px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+  margin-top: 15px;
+}
+
+.report__container--highlight {
+  height: 160px;
+  width: 40vw;
+  background-color: var(--primary);
+  border-radius: 25px;
+  filter: drop-shadow(4px 4px 4px #00000025);
+}
+
+.diet_table{
+  font-size: 10px;
+}
