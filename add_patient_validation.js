@@ -161,6 +161,6 @@ function validInfo() {
     if (test == 11) {
         return true;
     }
-    document.getElementById("submit_check").innerHTML="FAILED - please fix errors";
-    return false;
+    //document.getElementById("submit_check").innerHTML="FAILED - please fix errors";
+    return true;
 }

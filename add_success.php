@@ -30,12 +30,19 @@
 			$gender = $_POST['gender'];
 			$roomNumber = $_POST['room_number'];
 			$dob = $_POST['dateofbirth'];
-			$patientImage = $_POST['patient_image'];
+			//$patientImage = $_POST['patient_image'];
 			$weight = $_POST['weight'];
 			$diet = $_POST['diet'];
 			$notes = $_POST['notes'];
 
-			//add new patient to database
+			//save picture
+			save_string_to_database("images/" . $_FILES["patient_image"]["name"]);
+			if ($_FILES["file"]["error"] > 0) {
+				echo "Error: " . $_FILES["patient_image"]["error"] . "<br>";
+			} else {
+				move_uploaded_file($_FILES["patient_image"]["tmp_name"],
+					"images/PA006.jpg";
+			}
 
 		?>
     	<!-- Top bar where heading, practitioner and logout are -->
