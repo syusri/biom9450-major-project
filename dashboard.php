@@ -16,8 +16,20 @@
 
 		session_start();
 		$practitioner_number = $_SESSION["session_practitioner"];
+		
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
 
+		$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+		$rs = odbc_exec($conn,$sql);
+		// Finds the practitioner that is logged in
+
+		// Get the practitioner name that is logged in
+		while ($row = odbc_fetch_array($rs)){
+			$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
+		} 
 		// Shabrina grabs the practitioner name and save it in the session to be passed along
+		// echo "<p align=\"center\">". $practitioner_name_loggedin. "</p>";
+		$_SESSION["session_practitioner_name"] = $practitioner_name_loggedin;
 	?>
 		<div class="main">
 			<div class="form__container">
@@ -47,7 +59,7 @@
 								<option value="Bob">Bob</option> -->
 								<?php
 									// Obtain list of patients from database
-									$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+									
 									$sql = "SELECT * FROM Patients WHERE (lcase(EmailAddress)='{$email}') OR (lcase(FirstName)='{$first_name}' AND lcase(LastName)='{$last_name}')";
 									$rs = odbc_exec($conn,$sql);
 									$row = odbc_fetch_array($rs);
@@ -64,7 +76,7 @@
 		<script type="text/javascript">
 			document.getElementById("dashboard").classList.add("sidenav__link--anchor-primary");
 			document.getElementById("heading").innerText = "Dashboard";
-			document.getElementById("practitioner").innerText = "Dr. Rosalind Franklin";
+			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name_loggedin;?> ";
 		</script>
 </body>
 

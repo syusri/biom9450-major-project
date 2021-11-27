@@ -12,8 +12,12 @@
 
 <body>
 	<?php
-		include_once 'index2.html';
+		include 'index2.html';
         //Grab information of the patient ID from the search page
+        session_start();
+        if(! isset($_SESSION["session_practitioner"])) {
+            header("Location:login.php");
+        }
 	?>
 		<div class="main">
 			<!-- Breadcrumb -->
@@ -25,6 +29,7 @@
 
                 session_start();
 		        $practitioner_number = $_SESSION["session_practitioner"];
+		        $practitioner_name = $_SESSION["session_practitioner_name"];
 
                 $sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
                 $rs = odbc_exec($conn,$sql);
@@ -159,11 +164,17 @@
             ?>
 			<!-- Patient Summary -->
 			<section id="patient">
-				<h2>Patient Summary</h2>
-                <!-- Fix form issue -->
-                <form class="section__heading--edit" action="./edit_patient.php" method="POST"> 
-                <button class="edit_patient_button" type="submit" id="submit_edit_patient_ID" name="submit_edit_patient_ID" value="<?php echo $patient_number;?>">
-                    Edit </button> </form>
+                <div class="top_container">
+					<div class="sect__container--first">
+				        <h2>Patient Summary</h2>
+                    </div>
+                    <div class="sect__container--second">
+                        <form class="section__heading--edit" action="./edit_patient.php" method="POST"> 
+                        <button class="edit_patient_button" type="submit" id="submit_edit_patient_ID" name="submit_edit_patient_ID" value="<?php echo $patient_number;?>">
+                            Edit Patient </button> </form>
+                    </div>
+                </div>
+
 				<div class="section__container">
 					<div class="patient__container--highlight">
 						<div class="patient__highlight">
@@ -220,7 +231,7 @@
                 <section id="emergency_contact">
                     <div class="section__heading">
                         <h2 class="subheading">Emergency Contact Details</h2>
-                        <p class="section__heading--edit">Edit </a></p>
+                        <!-- <p class="section__heading--edit">Edit </a></p> -->
                     </div>
                     <div class="section__container--first">
                         <div class="details__highlight--emergency">
@@ -255,7 +266,7 @@
                 <section id="medicare">
                     <div class="section__heading">
                         <h2 class="subheading">Medicare</h2>
-                        <p class="section__heading--edit">Edit</p>
+                        <!-- <p class="section__heading--edit">Edit</p> -->
                     </div>
                     <div class="section__container--second">
                         <div class="details__highlight--medicare">
@@ -285,7 +296,7 @@
 			<section id="medications">
 				<div class="section__heading">
 					<h2 class="subheading">Medications</h2>
-					<p class="section__heading--edit">Edit</p>
+					<!-- <p class="section__heading--edit">Edit</p> -->
 				</div>
 				<div class="section__container--medications">
 					<!-- <div class="section__table">
@@ -355,7 +366,7 @@
 			<section id="patient_notes">
 				<div class="section__heading">
 					<h2 class="subheading">Notes</h2>
-					<p class="section__heading--edit">Edit</p>
+					<!-- <p class="section__heading--edit">Edit</p> -->
 				</div>
 				<div class="section__container--notes">
 					<div class="section__table">
@@ -383,7 +394,7 @@
 			document.getElementById("patients").classList.add("sidenav__link--anchor-primary");
 			document.getElementById("heading").innerText = "Patient Summary";
 			// Change this PR Name to the PR that is logged in 
-			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name_loggedin;?>";
+			document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name;?>";
 		</script>
 </body>
 
