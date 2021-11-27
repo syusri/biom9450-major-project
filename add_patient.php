@@ -12,18 +12,37 @@
 
 <body>
 	<?php
-		include_once 'index.html';
+		include 'index2.html';
+        //Grab information of the patient ID from the search page
+        session_start();
+        if(! isset($_SESSION["session_practitioner"])) {
+            header("Location:login.php");
+        }
 	?>
 	<div class="main">
 		<!-- Breadcrumb -->
 		<div class="breadcrumb">
-				<p><a href="patient_summary.php" class="page--previous">Patient Summary</a> > <span class="page--current">Add Patient</span></p>
+				<p><a href="patient_search_age.php" class="page--previous">Patient Search</a> > <span class="page--current">Add Patient</span></p>
 		</div>
+		<?php 
+			$conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
+
+			session_start();
+			$practitioner_number = $_SESSION["session_practitioner"];
+			$practitioner_name = $_SESSION["session_practitioner_name"];
+
+			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+			$rs = odbc_exec($conn,$sql);
+			// Finds the practitioner that is logged in
+
+			// Get the practitioner name that is logged in
+			while ($row = odbc_fetch_array($rs)){
+				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
+			} 
+		?>
 		<!-- Actual form -->
 		<div class="form__container--mini">
-			<form class="form--dashboard" onSubmit="return validInfo()" action="add_success.php", 
-			method="POST">
-			<!-- , enctype="multipart/form-data"-->
+			<form action="add_success.php" onSubmit="return validInfo()" method="POST">
 				<div class='section__container--report'>
 					<!-- Patient Details -->
 					<h3>Patient Information</h3>
@@ -54,6 +73,11 @@
 						<option value="3">3</option>
 						<option value="4">4</option>
 						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
 					</select>
 					</p>
 					
@@ -64,11 +88,6 @@
 					</p>
 					
 					<p>
-					Upload image: <input type="file" id="patient_image" name="patient_image" value=""
-					accept="image/*"/>
-					</p>
-					
-					<p>
 					<div class="error" id="error_weight"></div>
 					Weight (kg): <input type="number" id="weight" name="weight" value=""
 					onchange="Weight()"/>
@@ -76,10 +95,10 @@
 					
 					<p>
 					Diet: <select id="diet" name="diet">
-						<option value="normal">Normal</option>
-						<option value="weight_reduction">Weight Reduction</option>
-						<option value="diabetes">Diabetes</option>
-						<option value="gluten_free">Gluten Free</option>
+						<option value="Normal">Normal</option>
+						<option value="Weight reduction">Weight Reduction</option>
+						<option value="Diabetes">Diabetes</option>
+						<option value="Glutenfree">Gluten Free</option>
 					</select>
 					</p>
 					
@@ -148,7 +167,7 @@
 
 				<div class="error" id="submit_check"></div>
 				<!-- Submit Button-->
-				<input type="submit" value="Go" class="form__submit input__container--small">
+				<input type="submit" value="Go" class="form__submit input__container--small"/>
 			</form>
 		</div>
 	</div>
@@ -156,7 +175,7 @@
 	<script type="text/javascript">
 		document.getElementById("patients").classList.add("sidenav__link--anchor-primary");
 		document.getElementById("heading").innerText = "Add Patient";
-		document.getElementById("practitioner").innerText = "Dr. Rosalind Franklin";
+		document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name;?>";
 	</script>
 </body>
 

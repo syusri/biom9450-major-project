@@ -6,22 +6,43 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/style_sheet.css">
+	<link rel="stylesheet" href="css/style_sheet_new.css">
 	<script src="add_patient_validation.js"></script>
 </head>
 
 <body>
-	<?php
-		include_once 'index.html';
+<?php
+		include 'index2.html';
+        //Grab information of the patient ID from the search page
+        session_start();
+        if(! isset($_SESSION["session_practitioner"])) {
+            header("Location:login.php");
+        }
 	?>
 	<div class="main">
 		<!-- Breadcrumb -->
 		<div class="breadcrumb">
 				<p><a href="patient_summary.php" class="page--previous">Patient Summary</a> > <span class="page--current">Edit Patient</span></p>
 		</div>
+		<?php 
+			$conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
+
+			session_start();
+			$practitioner_number = $_SESSION["session_practitioner"];
+			$practitioner_name = $_SESSION["session_practitioner_name"];
+
+			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+			$rs = odbc_exec($conn,$sql);
+			// Finds the practitioner that is logged in
+
+			// Get the practitioner name that is logged in
+			while ($row = odbc_fetch_array($rs)){
+				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
+			} 
+		?>
 		<!-- Actual form -->
 		<div class="form__container--mini">
-			<form class="form--dashboard" onSubmit="return validInfo()" action="edit_success.php", method="POST">
+			<form class="form--dashboard" onSubmit="return validInfo()" action="edit_success.php" method="POST">
 				<!-- Patient Details -->
 				<h3>Patient Information</h3>
 				<?php
@@ -57,7 +78,14 @@
 						$medicare = odbc_result($rs,"MedicareID");
 						$notes = odbc_result($rs,"Notes");
 					}
-									
+					
+					$sql_diet = "SELECT DietName FROM DietRegime WHERE DietRegimeID=$diet_id";
+					$ds = odbc_exec($conn, $sql_diet);
+					if (!$ds) {
+						exit ("Error in SQL diet");
+					}
+					odbc_fetch_row($ds);
+					$diet_name = odbc_result($ds, "DietName");
 					$dob = new DateTime($dob);
 					odbc_close($conn);
 				?>
@@ -66,21 +94,24 @@
 				First Name: <input type='text' id='firstName' name='firstName' value='<?php echo $first;?>'  
 				onchange='First_Name()'/>
 				<br></br>
-				
 				<div class='error' id='error_lastName'></div>
 				Last Name: <input type='text' id='lastName' name='lastName' value='<?php echo $last;?>'
 				onchange='Last_Name()'/>
 				<br></br>
 
 				Room Number: <select id='room_number' name='room_number'>
-				<option value='1'>1</option>
-				<option value='2'>2</option>
-				<option value='3'>3</option>
-				<option value='4'>4</option>
-				<option value='5'>5</option>
+				<option value='1'<?php if ($room == 1) echo ' selected="selected"'; ?>>1</option>
+				<option value='2'<?php if ($room == 2) echo ' selected="selected"'; ?>>2</option>
+				<option value='3'<?php if ($room == 3) echo ' selected="selected"'; ?>>3</option>
+				<option value='4'<?php if ($room == 4) echo ' selected="selected"'; ?>>4</option>
+				<option value='5'<?php if ($room == 5) echo ' selected="selected"'; ?>>5</option>
+				<option value="6"<?php if ($room == 6) echo ' selected="selected"'; ?>>6</option>
+				<option value="7"<?php if ($room == 7) echo ' selected="selected"'; ?>>7</option>
+				<option value="8"<?php if ($room == 8) echo ' selected="selected"'; ?>>8</option>
+				<option value="9"<?php if ($room == 9) echo ' selected="selected"'; ?>>9</option>
+				<option value="10"<?php if ($room == 10) echo ' selected="selected"'; ?>>10</option>
 				</select>
 				<br></br>
-
 				<div class="error" id="error_dateofbirth"></div>
 				Date of Birth: <input type="text" id="dateofbirth" name="dateofbirth"
 				value='<?php echo $dob->format("d/m/Y");?>' onchange="DOB()"/>
@@ -92,10 +123,10 @@
 				<br></br>
 
 				Diet: <select id='diet' name='diet'>
-				<option value='normal'>Normal</option>
-				<option value='weight_reduction'>Weight Reduction</option>
-				<option value='diabetes'>Diabetes</option>
-				<option value='gluten_free'>Gluten Free</option>
+				<option value='Normal'<?php if ($diet_name == "Normal") echo ' selected="selected"'; ?>>Normal</option>
+				<option value='Weight reduction'<?php if ($diet_name == "Weight reduction") echo ' selected="selected"'; ?>>Weight reduction</option>
+				<option value='Diabetes'<?php if ($diet_name == "Diabetes") echo ' selected="selected"'; ?>>Diabetes</option>
+				<option value='Gluten free'<?php if ($diet_name == "Gluten free") echo ' selected="selected"'; ?>>Gluten free</option>
 				</select>
 				<br></br>
 
@@ -141,7 +172,7 @@
 				
 				<div class='error' id='error_relationship'></div>
 				Relationship to patient: <input type='text' id='relationship' name='relationship' 
-				value='$relationship' onchange='Relationship()'/>
+				value='<?php echo $relationship;?>' onchange='Relationship()'/>
 				<br></br>
 
 				<!-- Medicare Details -->
@@ -182,7 +213,7 @@
 				onchange='Medicare_Expiry()'/>
 				<br></br>
 
-				Additional notes:<br></br> <textarea name='notes' id='notes' cols='45' rows='5' value='<?php echo $notes;?>'></textarea>
+				Additional notes:<br></br> <textarea name='notes' id='notes' cols='45' rows='5' value=''><?php echo $notes;?></textarea>
 				<br></br>
 
 				<!-- Submit Button-->
@@ -193,9 +224,9 @@
 	</div>
 	<!-- JavaScript to change PHP template -->
 	<script type="text/javascript">
-		document.getElementById("patient").classList.add("sidenav__link--anchor-primary");
-		document.getElementById("heading").innerText = "Edit Patient";
-		document.getElementById("practitioner").innerText = "Dr. Rosalind Franklin";
+		document.getElementById("patients").classList.add("sidenav__link--anchor-primary");
+		document.getElementById("heading").innerText = "Add Patient";
+		document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name;?>";
 	</script>
 </body>
 
