@@ -111,124 +111,320 @@
 				$dr_full = ($dr_first . ' ' . $dr_last);
 				//check if each patient was ticked or not
 				if ($p["$patient_id"] == "1") { //on
-					//echo "<div class='section__container--report'>";
-					//echo "$first $last ($patient_id) DR = $dr_full<br>";
-						echo "<div class='patient__container--highlight'>";
-							echo "<div class='patient__highlight'>";
-								//insert image of patient
-								echo "<figure class='patient__highlight--box patient__picture--mask'>";
-									echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
-								echo "</figure>";
-								//header for patient name
-								echo "<h2 class='patient__highlight--box patient__name'>$first $last</h2>";
-								//patient id
-								echo "<p class='patient__highlight--box patient__number--label'>Patient ID</p>";
-								echo "<p class='patient__highlight--box patient__number--number'>PA00$patient_id</p>";
-								//practitioner name
-								echo "<p class='patient__highlight--box patient__prac--label'>Practitioner</p>";
-								echo "<p class='patient__highlight--box patient__number--number'><br>Dr. $dr_full</p>";
-							echo "</div>";
+					echo "<div class='patient__container--highlight'>";
+						echo "<div class='patient__highlight'>";
+							//insert image of patient
+							echo "<figure class='patient__highlight--box patient__picture--mask'>";
+								echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
+							echo "</figure>";
+							//header for patient name
+							echo "<h2 class='patient__highlight--box patient__name'>$first $last</h2>";
+							//patient id
+							echo "<p class='patient__highlight--box patient__number--label'>Patient ID</p>";
+							echo "<p class='patient__highlight--box patient__number--number'>PA00$patient_id</p>";
+							//practitioner name
+							echo "<p class='patient__highlight--box patient__prac--label'>Practitioner</p>";
+							echo "<p class='patient__highlight--box patient__number--number'><br>Dr. $dr_full</p>";
 						echo "</div>";
-						$check = new DateTime('2021-11-28');
-						if ($Diet = "1") { //on
-							$i = 1;
-							echo "<h2>Diet</h2>";
-							//get diet information
-							if ($Last == 1) { //last week information
-								echo "<div class='section__container--report'>";
-									echo "<h3>Last Week (22/11/2021-28/11/2021)</h3>";
-									echo "<table class='report_table'";
-										//customise column widths
-										echo "<col style='width:5%'>";
-										echo "<col style='width:30%'>";
-										echo "<col style='width:30%'>";
-										echo "<col style='width:35%'>";
-										echo "<tr><th>Date</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>";
-										//sql query to get last week's diet information
-										$SQL_meals_last = "SELECT Meal, DateOfMeal FROM Meal
-										WHERE DietRegimeID=$meal_id";
-										$ls = odbc_exec($conn, $SQL_meals_last);
-										if(!$ls) {
-											exit("Error in SQL_meals_last"); 
-										}
-										while (odbc_fetch_row($ls)) {
-											$Meal = odbc_result($ls,"Meal");
-											$date = odbc_result($ls, "DateOfMeal");
-											$today = new DateTime($date);
-											
-											if ($today <= $check) {
-												if ($i == 1) {
-													echo "<tr><td>";
-													//print day
-													echo $today->format('d/m/Y');
-													echo "</td>";
-												} elseif ($i == 3) {
-													echo "</tr>";
-													$i = 0;
-												}
-												//print meal
-												echo "<td>$Meal</td>";
+					echo "</div>";
+					$check = new DateTime('2021-11-28');
+					if ($Diet == 1) { //on
+						$i = 1;
+						echo "<h2>Diet</h2>";
+						//get diet information
+						if ($Last == 1) { //last week information
+							echo "<div class='section__container--report'>";
+								echo "<h3>Last Week (22/11/2021-28/11/2021)</h3>";
+								echo "<table class='specific_patient_med_table'>";
+									//customise column widths
+									echo "<col style='width:5%'>";
+									echo "<col style='width:15%'>";
+									echo "<col style='width:15%'>";
+									echo "<col style='width:15%'>";
+									echo "<tr><th>Date</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>";
+									//sql query to get last week's diet information
+									$SQL_meals_last = "SELECT Meal, DateOfMeal FROM Meal
+									WHERE DietRegimeID=$meal_id";
+									$ls = odbc_exec($conn, $SQL_meals_last);
+									if(!$ls) {
+										exit("Error in SQL_meals_last"); 
+									}
+									while (odbc_fetch_row($ls)) {
+										$Meal = odbc_result($ls,"Meal");
+										$date = odbc_result($ls, "DateOfMeal");
+										$today = new DateTime($date);
+										//check if date is before 28/11/2021
+										if ($today <= $check) {
+											if ($i == 1) {
+												echo "<tr><td>";
+												//print day
+												echo $today->format('d/m/Y');
+												echo "</td>";
+											} elseif ($i == 4) {
+												echo "</tr>";
+												$i = 0;
 											}
-											//echo "</p>";
-											$i += 1;
+											//print meal
+											echo "<td>$Meal</td>";
 										}
+										if ($i == 3) {
+											$i = 0;
+										}
+										$i += 1;
+									}
+									
+								echo "</table>";
+							echo "</div>";
+							echo "<br>";
+						}
+						if ($This == 1) { //upcoming week information
+							$i = "1";
+							echo "<div class='section__container--report'>";
+								echo "<h3>This Week (29/11/2021-05/12/2021)</h3>";
+								echo "<table class='specific_patient_med_table'>";
+									echo "<col style='width:5%'>";
+									echo "<col style='width:15%'>";
+									echo "<col style='width:15%'>";
+									echo "<col style='width:15%'>";
+									echo "<tr><th>Date</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>";
+									//sql query to get last week's diet information
+									$SQL_meals_this = "SELECT Meal, DateOfMeal FROM Meal
+									WHERE DietRegimeID=$meal_id";
+									$ts = odbc_exec($conn, $SQL_meals_this);
+									if(!$ts) {
+										exit("Error in SQL_meals_this"); 
+									}
+									$j = 1;
+									while (odbc_fetch_row($ts)) {
+										$Meal = odbc_result($ts,"Meal");
+										$date = odbc_result($ts, "DateOfMeal");
+										$today = new DateTime($date);
+										$checks = new DateTime('2021-11-28');
 										
-									echo "</table>";
-								echo "</div>";
-								echo "<br>";
-							}
-							if ($This == 1) { //upcoming week information
-								$i = "1";
-								
-								echo "<div class='section__container--report'>";
-									echo "<h3>This Week (29/11/2021-05/12/2021)</h3>";
-									echo "<table class='specific_patient_med_table'>";
-										echo "<col style='width:5%'>";
-										echo "<col style='width:15%'>";
-										echo "<col style='width:15%'>";
-										echo "<col style='width:15%'>";
-										echo "<tr><th>Date</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>";
-										//sql query to get last week's diet information
-										$SQL_meals_this = "SELECT Meal, DateOfMeal FROM Meal
-										WHERE DietRegimeID=$meal_id";
-										$ts = odbc_exec($conn, $SQL_meals_this);
-										if(!$ts) {
-											exit("Error in SQL_meals_this"); 
-										}
-										$j = 1;
-										while (odbc_fetch_row($ts)) {
-											$Meal = odbc_result($ts,"Meal");
-											$date = odbc_result($ts, "DateOfMeal");
-											$today = new DateTime($date);
-											$checks = new DateTime('2021-11-28');
-											
-											if ($today > $checks) {
-												//echo "<p class='diet_table'>";
-												if ($j == 1) {
-													echo "<tr><td>";				
-													echo $today->format('d/m/Y');
-													echo "</td>";
-												} elseif ($j == 3) {
-													echo "</tr>";
-													$j = 0;
-												}
-												echo "<td>$Meal</td>";
-											}
-											//echo "</p>";
-											if ($j == 3) {
+										if ($today > $checks) {
+											//print the date and meals for that day
+											if ($j == 1) {
+												echo "<tr><td>";				
+												echo $today->format('d/m/Y');
+												echo "</td>";
+											} elseif ($j == 4) {
+												echo "</tr>";
 												$j = 0;
 											}
-											$j += 1;
-										}	
-									echo "</table>";
-								echo "</div>";
-								echo "<br>";
-							}
+											echo "<td>$Meal</td>";
+										}
+										if ($j == 3) {
+											$j = 0;
+										}
+										$j += 1;
+									}	
+								echo "</table>";
+							echo "</div>";
+							echo "<br>";
+						}
+						
+					}
+					if ("$Medication" == 1) { //print patient medications information if this box is ticked
+						echo "<h2>Medications</h2>";
+						if ($Last == 1) {
+							echo "<div class='section__container--report'>";
+								echo "<h3>Last Week (22/11/2021-28/11/2021)</h3>";
+								
+								$SQL_medication = "SELECT Medications.MedicationName, PatientMedications.Date, PatientMedications.TimeOfDay, 
+								PatientMedications.MedicationPacked, PatientMedications.StatusOfMedication
+								FROM PatientMedications 
+								INNER JOIN Medications ON PatientMedications.MedicationID=Medications.MedicationID
+								WHERE PatientID=$patient_id";
+								$med = odbc_exec($conn, $SQL_medication);
+								if(!$med) {
+									exit("Error in SQL_patient"); 
+								}
+								$cur_date = New DateTime('2021-11-21');
+								while (odbc_fetch_row($med)) {
+									$Med_Name = odbc_result($med, "MedicationName");
+									$Date = odbc_result($med, "Date");
+									//new date
+									$Date = new DateTime($Date);
+
+									$Time = odbc_result($med,"TimeOfDay");
+									$Packed = odbc_result($med,"MedicationPacked");
+									$Status = odbc_result($med,"StatusOfMedication");
+									//check date and print only last week
+									if ($Date <= $check) {
+										if ($Date == $cur_date) {
+												//print information
+												echo "<tr><td>$Med_Name</td>";
+												//set times
+												if ($Time == "Morning") {
+													$Time = "9:00am";
+												} elseif ($Time == "Afternoon") {
+													$Time = "1:00pm";
+												} elseif ($Time == "Evening") {
+													$Time = "6:00pm";
+												} else {
+													$Time = "As required";
+												}
+												echo "<td>$Time</td>";
+												//checkbox for packed
+												if ($Packed == 1) {
+													echo "<td><input type='checkbox' checked/></td>";
+												} else {
+													echo "<td><input type='checkbox'/></td>";
+												}
+												echo "<td>$Status</td></tr>";
+												$cur_date = $Date;
+										} else {
+											//close previous day's table
+											echo "</table>";
+											echo "<br><br>";
+											//print new date
+											echo "<h4>";
+											echo $Date->format('d/m/Y');
+											echo "</h4>";
+											//open new table
+											echo "<table class='specific_patient_med_table'>";
+												//customise column widths
+												echo "<col style='width:15%'>";
+												echo "<col style='width:15%'>";
+												echo "<col style='width:5%'>";
+												echo "<col style='width:15%'>";
+												echo "<tr><th>Medication Name</th><th>Time</th><th>Packed</th><th>Status</th></tr>";		
+											
+											//print information
+											echo "<tr><td>$Med_Name</td>";
+											//set times
+											if ($Time == "Morning") {
+												$Time = "9:00am";
+											} elseif ($Time == "Afternoon") {
+												$Time = "1:00pm";
+											} elseif ($Time == "Evening") {
+												$Time = "6:00pm";
+											} else {
+												$Time = "As required";
+											}
+											echo "<td>$Time</td>";
+											//checkbox for packed
+											if ($Packed == 1) {
+												echo "<td><input type='checkbox' checked/></td>";
+											} else {
+												echo "<td><input type='checkbox'/></td>";
+											}
+											//make status red if "missed"
+											if ($Status == "Missed") {
+												echo "<td>$Status</td></tr>";
+											} else {
+												echo "<td>$Status</td></tr>";
+											}
+											$cur_date = $Date;
+										}
+									}
+								}
+							echo "</table>";
+							echo "</div>";
+							echo "<br>";
 							
 						}
+						if ($This == 1) {
+							echo "<div class='section__container--report'>";
+								echo "<h3>This Week (29/11/2021-05/12/2021)</h3>";
 								
-						
-					//echo "</div>";
+								//first we want to get the list of patients
+								//sql to determine patient names
+								$SQL_medication = "SELECT Medications.MedicationName, PatientMedications.Date, PatientMedications.TimeOfDay, 
+								PatientMedications.MedicationPacked, PatientMedications.StatusOfMedication
+								FROM PatientMedications 
+								INNER JOIN Medications ON PatientMedications.MedicationID=Medications.MedicationID
+								WHERE PatientID=$patient_id";
+								$med = odbc_exec($conn, $SQL_medication);
+								if(!$med) {
+									exit("Error in SQL_patient"); 
+								}
+								while (odbc_fetch_row($med)) {
+									$Med_Name = odbc_result($med, "MedicationName");
+									$Date = odbc_result($med, "Date");
+									//new date
+									$Date = new DateTime($Date);
+
+									$Time = odbc_result($med,"TimeOfDay");
+									$Packed = odbc_result($med,"MedicationPacked");
+									$Status = odbc_result($med,"StatusOfMedication");
+									//check date and print only last week
+									if ($Date > $check) {
+										if ($Date == $cur_date) {
+												//print information
+												echo "<tr><td>$Med_Name</td>";
+												//set times
+												if ($Time == "Morning") {
+													$Time = "9:00am";
+												} elseif ($Time == "Afternoon") {
+													$Time = "1:00pm";
+												} elseif ($Time == "Evening") {
+													$Time = "6:00pm";
+												} else {
+													$Time = "As required";
+												}
+												echo "<td>$Time</td>";
+												//checkbox for packed
+												if ($Packed == 1) {
+													echo "<td><input type='checkbox' checked/></td>";
+												} else {
+													echo "<td><input type='checkbox'/></td>";
+												}
+												echo "<td>$Status</td></tr>";
+												$cur_date = $Date;
+										} else {
+											//close previous day's table
+											echo "</table>";
+											echo "<br><br>";
+											//print new date
+											echo "<h4>";
+											echo $Date->format('d/m/Y');
+											echo "</h4>";
+											//open new table
+											echo "<table class='specific_patient_med_table'>";
+												//customise column widths
+												echo "<col style='width:15%'>";
+												echo "<col style='width:15%'>";
+												echo "<col style='width:5%'>";
+												echo "<col style='width:15%'>";
+												echo "<tr><th>Medication Name</th><th>Time</th><th>Packed</th><th>Status</th></tr>";		
+											$cur_date = $Date;
+											//print information
+											echo "<tr><td>$Med_Name</td>";
+											//set times
+											if ($Time == "Morning") {
+												$Time = "9:00am";
+											} elseif ($Time == "Afternoon") {
+												$Time = "1:00pm";
+											} elseif ($Time == "Evening") {
+												$Time = "6:00pm";
+											} else {
+												$Time = "As required";
+											}
+											echo "<td>$Time</td>";
+											//checkbox for packed
+											if ($Packed == 1) {
+												echo "<td><input type='checkbox' checked/></td>";
+											} else {
+												echo "<td><input type='checkbox'/></td>";
+											}
+											//make status red if "missed"
+											if ($Status == "Missed") {
+												echo "<td>$Status</td></tr>";
+											} else {
+												echo "<td>$Status</td></tr>";
+											}
+											
+										}
+									}
+								}
+							echo "</table>";
+							echo "</div>";
+							echo "<br>";
+							
+						}
+
+					}
 				}
 			}
 		?>

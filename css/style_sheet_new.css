@@ -972,7 +972,7 @@ form.search_patients::after {
   background-color: #f8f8f8;
   border-radius: 30px;
   filter: drop-shadow(4px 4px 4px #00000025);
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .report__container--highlight {
