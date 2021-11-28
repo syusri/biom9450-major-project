@@ -13,19 +13,19 @@
 <body>
 	<?php
 		include_once 'index.html';
-		include_once 'helper.php';
+		include 'helper.php';
 	?>
 	<div class="main">
 		<!-- Breadcrumb -->
 		<div class="breadcrumb">
-				<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Medications and Diet Regimes</span></p>
+				<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Medication and Diet Regime</span></p>
 		</div>
 		<!-- Actual form -->
 		<div class="form__container--mini">
 			<form class="" action="results.php">
 				<!-- Date -->
 					<label for="date" type="date">Date</label>
-					<input type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05" class="input__container--small">
+					<input type="date" value="<?php echo $_SESSION["date"] ?>"  min="2021-11-22" max="2021-12-05" class="input__container--small">
 				<!-- Dropdown List of Time of Day -->
 					<label for="time">Time of Day</label>
 					<select name="timeOfDay" id="dropdown--time" class="input__container--small">
@@ -72,7 +72,7 @@
 							Practitioner
 						</p>
 						<p class="patient__highlight--box patient__prac--name">
-							<?php echo $patients_prac;?>
+							<?php echo "Dr. ", $_SESSION["patients_prac"];?>
 						</p>
 					</div>
 				</div>
@@ -96,16 +96,15 @@
 				<p class="section__heading--edit">Edit</p>
 			</div>
 			<div class="section__container">
-				<div class="section__table">
-					<div class="section__table--heading-1">
-						<p class="section__table--heading">Medication Name</p>
-					</div>
-					<div class="section__table--heading-2">
-						<p class="section__table--heading">Dosage</p>	
-					</div>
-					<div class="section__table--heading-3">
-						<p class="section__table--heading">Route</p>
-					</div>
+				<div class="med__table">
+					<div class="section__table--heading"><p>Time of Day</p></div>
+					<div class="section__table--heading"><p>Medication Name</p></div>
+					<div class="section__table--heading"><p>Dosage</p></div>
+					<div class="section__table--heading"><p>Route</p></div>
+					<div class="section__table--heading"><p>Instructions</p></div>
+					<div class="section__table--heading"><p>Packed?</p></div>
+					<div class="section__table--heading"><p>Status</p></div>
+					<?php getPatientMeds($_SESSION["time"]); ?>
 				</div>
 			</div>
 		</section>
@@ -116,16 +115,11 @@
 				<p class="section__heading--edit">Edit</p>
 			</div>
 			<div class="section__container">
-				<div class="section__table">
-					<div class="section__table--heading-1">
-						<p class="section__table--heading">Diet Regime</p>
-					</div>
-					<div class="section__table--heading-2">
-						<p class="section__table--heading">Description</p>	
-					</div>
-					<div class="section__table--heading-3">
-						<p class="section__table--heading">Exercise Recommendations</p>
-					</div>
+				<div class="diet__table">
+					<div class="section__table--heading"><p>Diet Regime</p></div>
+					<div class="section__table--heading"><p>Description</p>	</div>
+					<div class="section__table--heading"><p>Exercise Recommendations</p></div>
+					<?php getDietRegime(); ?>
 				</div>
 			</div>
 		</section>
@@ -136,8 +130,8 @@
 				<p class="section__heading--edit">Edit</p>
 			</div>
 			<div class="section__container">
-				<div class="section__table">
-				Eggs and toast
+				<div class="meal__table">
+					<?php getMeal(); ?>
 				</div>
 			</div>
 		</section>
