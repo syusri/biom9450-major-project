@@ -191,7 +191,7 @@
 									echo "<div class=\"section__container--search\">";
 										echo "<div class=\"search__highlight\">";
 											echo "<figure class=\"search__highlight--box search__picture--mask\">";
-												echo "<img src=\"./img/old_man.jpg\" class=\"search__picture\" alt=\"Picture of patient\"></figure>";
+												echo "<img src=\"./images/".$PA_ID.".jpg\" class=\"search__picture\" alt=\"Picture of patient\"></figure>";
 
 											echo "<h2 class=\"search__highlight--box search__name\">".$Full_Name." (".$PA_ID.")</h2>";
 											echo "<p class=\"search__highlight--box search__room--label\"> Room number </p>";
