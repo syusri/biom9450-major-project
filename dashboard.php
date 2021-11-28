@@ -32,8 +32,8 @@
 					<form id="form--dashboard" class="" method="POST">
 						<!-- Date -->
 						<div class="input__container">
-							<label for="date" type="date">Date</label><br>
-							<input id="date" type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05">
+							<label for="inputDate" type="date">Date</label><br>
+							<input name="inputDate" id="inputDate" type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05">
 						</div>
 						<!-- Dropdown List of Time of Day -->
 						<div class="input__container">
@@ -69,7 +69,7 @@
 					<!-- Bring information to results.php with PHP after form submission -->
 					<?php
 						if (isset($_POST["dash_submit"])) {
-							$_SESSION["date"] = strtotime($_POST["date"]); 
+							$_SESSION["inputDate"] = $_POST["inputDate"]; 
 							$_SESSION["time"] = $_POST["dropdown--time"];
 							$_SESSION["patient"] = $_POST["dropdown--patients"];
 							header("Location: results.php"); 
