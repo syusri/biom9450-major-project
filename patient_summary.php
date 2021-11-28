@@ -15,9 +15,13 @@
 		include 'index2.html';
         //Grab information of the patient ID from the search page
         session_start();
+        
         if(! isset($_SESSION["session_practitioner"])) {
             header("Location:login.php");
         }
+        
+        $practitioner_number = $_SESSION["session_practitioner"];
+		$practitioner_name = $_SESSION["session_practitioner_name"];
 	?>
 		<div class="main">
 			<!-- Breadcrumb -->
@@ -27,10 +31,6 @@
             <?php
                 $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
 
-                session_start();
-		        $practitioner_number = $_SESSION["session_practitioner"];
-		        $practitioner_name = $_SESSION["session_practitioner_name"];
-
                 $sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
                 $rs = odbc_exec($conn,$sql);
                 // Finds the practitioner that is logged in
@@ -39,12 +39,12 @@
                 while ($row = odbc_fetch_array($rs)){
                     $practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
                 } 
-                // session_start();
-                // $practitioner_number = $_SESSION["session_practitioner"];
-                // $patient_number = $_SESSION["selected_patient"];
+
                 if (!$_POST["submit_search_ID"]) {
                     // If this page is not directed from the search page so a patient ID has not come through it will show the page for patient PA001
                     $patient_number = "1";
+                    // If no patient number is submitted with the form it will direct back to the patient search page so a patient can be chosen
+                    header("Location: ./patient_search_page.php");
                 } else {
                     $patient_number = $_POST["submit_search_ID"];
                 }
@@ -57,14 +57,20 @@
 
                 //Used to check the connection to the database was successful
                                                 
-                // if(!$conn){ 
-                //     exit("Connection Failed: ". $conn); 
-                // } else { 
-                //     echo ("<p align=\"center\"> Connection Successful! </p>");
-                // }
+                if(!$conn){
+                    echo "<script type=\"text/javascript\"> alert('Error with database connection. Please call admin.')</script>";
+                    // exit("Connection Failed: ". $conn); 
+                } else { 
+                    // echo ("<p align=\"center\"> Connection Successful! </p>");
+                }
 
                 //Executing the sql command and getting the result in rs
                 $rs = odbc_exec($conn,$sql);
+
+                if(!$rs){
+                    echo "<script type=\"text/javascript\"> alert('Error with database connection. Please call admin.')</script>";
+                    exit("Connection Failed: ". $conn); 
+                } 
 
                 //While loop as a counter to determine the amount of rows were returned
                 //If result is zero then they are a new registrant and if not the system will either check for whether they are banned or just a duplicate 
@@ -179,8 +185,9 @@
 					<div class="patient__container--highlight">
 						<div class="patient__highlight">
 							<figure class="patient__highlight--box patient__picture--mask">
-								<img src="./img/old_man.jpg" class="patient__picture" alt="Picture of patient">
+								<!-- <img src="./img/old_man.jpg" class="patient__picture" alt="Picture of patient"> -->
                                 <!-- <img src="<?php //echo $PA_Image; ?>" class="patient__picture" alt="Picture of Margaret"> -->
+                                <img src="./images/<?php echo "PA00".$patient_number; ?>.jpg" class='patient__picture' alt='Picture of patient'>
 							</figure>
 							<h2 class="patient__highlight--box patient__name">
                                 <?php echo $Full_Name; ?>
