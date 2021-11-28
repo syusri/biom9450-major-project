@@ -14,6 +14,7 @@
 		<?php
 			include 'index.html';
 			session_start();
+			if(!isset($_SESSION["session_practitioner"])) { header("Location:login.php");}
 			$practitioner_number = $_SESSION["session_practitioner"];
 			$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";

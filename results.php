@@ -14,6 +14,7 @@
 	<?php
 		include_once 'index.html';
 		include 'results_helper.php';
+		if(!isset($_SESSION["session_practitioner"])) { header("Location:login.php");}
 	?>
 	<div class="main">
 		<!-- Breadcrumb -->
