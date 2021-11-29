@@ -986,3 +986,7 @@ form.search_patients::after {
 .diet_table{
   font-size: 10px;
 }
+
+.patient_report_picture {
+  width: 100%;
+}
