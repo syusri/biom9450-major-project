@@ -192,6 +192,7 @@ section {
 
 .form__container--mini {
     display: flex;
+    justify-content: space-evenly;
 }
 
 .form__content {
@@ -221,15 +222,17 @@ section {
     height: 15vh;
 }
 
+.input__container--dash {
+    margin: 20px;
+    width: 30vw;
+}
+
 .input__container--small {
-    margin: 12px 48px 12px 4px;
+    margin: 12px 4px 12px 4px;
     width: 180px;
 }
 
-input, select, option {
-    /* display: block; */
-    width: 30vw;
-    margin: 20px;
+input[type=date], input[type=text], input[type=submit], select, option {
     padding: 10px;
     border-radius: 10px;
     height: 5vh;
@@ -273,7 +276,7 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
 /* Patient Summary */
 /* Green part - patient highlight */
 .patient__container--highlight {
-    height: 160px;
+    min-height: 100px;
     width: 40vw;
     background-color: var(--primary);
     border-radius: 25px;
@@ -283,8 +286,10 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
 .patient__highlight {
     display: grid;
     padding: 30px;
-    grid-template-columns: 100px 150px 150px;
+    /* grid-template-columns: 100px 150px 200px; */
+    grid-template-columns: repeat(3, auto);
     grid-template-rows: 40px 30px 30px;
+    /* grid-template-rows: repeat(3, auto); */
     column-gap: 20px;
 }
 
@@ -338,8 +343,9 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
 .patient__details {
     display: grid;
     padding: 30px;
+    grid-template-columns: repeat(4, auto);
     grid-template-rows: 40px 30px 30px;
-    column-gap: 80px;
+    column-gap: 20px;
 }
 
 .patient__details--box {
@@ -400,8 +406,9 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
 .med__table {
     padding: 12px;
     display: grid;
-    grid-template-columns: repeat(7, auto);
-    column-gap: 4vh;
+    grid-template-columns: repeat(6, auto);
+    column-gap: 40px;
+    row-gap: 10px;
     grid-auto-flow: row;
 }
 
@@ -409,18 +416,29 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
     font-weight: bold;
 }
 
+#select__med--status {
+    border-radius: 10px;
+    height: 5vh;
+    border-style: none;
+    filter: drop-shadow(4px 4px 4px #00000025);
+}
+
 /* Diet Regimes Table */
 .diet__table {
     padding: 12px;
     display: grid;
     grid-template-columns: repeat(3, auto);
-    column-gap: 4vh;
+    column-gap: 4vw;
     grid-auto-flow: row;
 }
 
 /* Meal Table */
 .meal__table {
     padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 4vw;
+    grid-auto-flow: row;
 }
 
 /* Form at the top */
@@ -457,4 +475,12 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
 
 #checkboxes label:hover {
     background-color: #1e90ff;
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
+.checkbox--center {
+    text-align: center;
 }
