@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<title>Display Report</title>
 	<meta charset="UTF-8">
@@ -148,8 +147,8 @@
 							echo "<p class='patient__highlight--box patient__number--label'>Patient ID</p>";
 							echo "<p class='patient__highlight--box patient__number--number'>PA00$patient_id</p>";
 							//practitioner name
-							echo "<p class='patient__highlight--box patient__prac--label'>Practitioner</p>";
-							echo "<p class='patient__highlight--box patient__number--number'><br>Dr. $dr_full</p>";
+							echo "<p class='patient__highlight--box patient__number--label'><br><br>Practitioner</p>";
+							echo "<p class='patient__highlight--box patient__number--number'><br><br>Dr. $dr_full</p>";
 						echo "</div>";
 					echo "</div>";
 					$check = new DateTime('2021-11-28');
@@ -159,8 +158,9 @@
 						//get diet information
 						if ($Last == 1) { //last week information
 							echo "<div class='section__container--report'>";
-								echo "<h3>Last Week (22/11/2021-28/11/2021)</h3>";
-								echo "<table class='specific_patient_med_table'>";
+								echo "<div class='report'>";
+								echo "<h2>Last Week (22/11/2021-28/11/2021)</h2>";
+								echo "<table class='specific_patient_med_table' style='text-align:left'>";
 									//customise column widths
 									echo "<col style='width:5%'>";
 									echo "<col style='width:15%'>";
@@ -199,14 +199,15 @@
 									}
 									
 								echo "</table>";
+								echo "</div>";
 							echo "</div>";
 							echo "<br>";
 						}
 						if ($This == 1) { //upcoming week information
 							$i = "1";
 							echo "<div class='section__container--report'>";
-								echo "<h3>This Week (29/11/2021-05/12/2021)</h3>";
-								echo "<table class='specific_patient_med_table'>";
+								echo "<h2>This Week (29/11/2021-05/12/2021)</h2>";
+								echo "<table class='specific_patient_med_table' style='text-align:left'>";
 									echo "<col style='width:5%'>";
 									echo "<col style='width:15%'>";
 									echo "<col style='width:15%'>";
@@ -253,7 +254,7 @@
 						echo "<h2>Medications</h2>";
 						if ($Last == 1) {
 							echo "<div class='section__container--report'>";
-								echo "<h3>Last Week (22/11/2021-28/11/2021)</h3>";
+								echo "<h2>Last Week (22/11/2021-28/11/2021)</h2>";
 								
 								$SQL_medication = "SELECT Medications.MedicationName, PatientMedications.Date, PatientMedications.TimeOfDay, 
 								PatientMedications.MedicationPacked, PatientMedications.StatusOfMedication
@@ -292,9 +293,9 @@
 												echo "<td>$Time</td>";
 												//checkbox for packed
 												if ($Packed == 1) {
-													echo "<td><input type='checkbox' checked/></td>";
+													echo "<td>Yes</td>";
 												} else {
-													echo "<td><input type='checkbox'/></td>";
+													echo "<td>No</td>";
 												}
 												echo "<td>$Status</td></tr>";
 												$cur_date = $Date;
@@ -307,7 +308,7 @@
 											echo $Date->format('d/m/Y');
 											echo "</h4>";
 											//open new table
-											echo "<table class='specific_patient_med_table'>";
+											echo "<table class='specific_patient_med_table' style='text-align:left'>";
 												//customise column widths
 												echo "<col style='width:15%'>";
 												echo "<col style='width:15%'>";
@@ -330,9 +331,9 @@
 											echo "<td>$Time</td>";
 											//checkbox for packed
 											if ($Packed == 1) {
-												echo "<td><input type='checkbox' checked/></td>";
+												echo "<td>Yes</td>";
 											} else {
-												echo "<td><input type='checkbox'/></td>";
+												echo "<td>No</td>";
 											}
 											//make status red if "missed"
 											if ($Status == "Missed") {
@@ -345,13 +346,14 @@
 									}
 								}
 							echo "</table>";
+							echo "</p>";
 							echo "</div>";
 							echo "<br>";
 							
 						}
 						if ($This == 1) {
 							echo "<div class='section__container--report'>";
-								echo "<h3>This Week (29/11/2021-05/12/2021)</h3>";
+								echo "<h2>This Week (29/11/2021-05/12/2021)</h2>";
 								
 								//first we want to get the list of patients
 								//sql to determine patient names
@@ -391,9 +393,9 @@
 												echo "<td>$Time</td>";
 												//checkbox for packed
 												if ($Packed == 1) {
-													echo "<td><input type='checkbox' checked/></td>";
+													echo "<td>Yes</td>";
 												} else {
-													echo "<td><input type='checkbox'/></td>";
+													echo "<td>No</td>";
 												}
 												echo "<td>$Status</td></tr>";
 												$cur_date = $Date;
@@ -406,7 +408,7 @@
 											echo $Date->format('d/m/Y');
 											echo "</h4>";
 											//open new table
-											echo "<table class='specific_patient_med_table'>";
+											echo "<table class='specific_patient_med_table' style='text-align:left'>";
 												//customise column widths
 												echo "<col style='width:15%'>";
 												echo "<col style='width:15%'>";
@@ -429,9 +431,9 @@
 											echo "<td>$Time</td>";
 											//checkbox for packed
 											if ($Packed == 1) {
-												echo "<td><input type='checkbox' checked/></td>";
+												echo "<td>Yes</td>";
 											} else {
-												echo "<td><input type='checkbox'/></td>";
+												echo "<td>No</td>";
 											}
 											//make status red if "missed"
 											if ($Status == "Missed") {
