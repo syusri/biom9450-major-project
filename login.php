@@ -93,71 +93,63 @@
 								$username = $_POST["practitioner_ID"];
 								$password_login = $_POST["password"];
 
-								$practitioner_number = $username[2].$username[3].$username[4];
+								$PR_check = $username[0].$username[1];
 
-								// echo "<br><br><p align=\"center\">  Practitioner number is: ".$practitioner_number."<br></p>";
+								if ($PR_check == "PR" AND strlen($username) < 6) {
 
-						 		// echo "<br><br><p align=\"center\">  Username: ".$username."<br> Password: ".$password_login."</p>";
-								
-								$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
-								
-								$sql = "SELECT * FROM Practitioner WHERE (PractitionerID={$practitioner_number} AND Password='{$password_login}')";
+									$practitioner_number = $username[2].$username[3].$username[4];
 
-								//Used to check the connection to the database was successful
-								
-								// if(!$conn){ 
-								// 	exit("Connection Failed: ". $conn); 
-								// } else { 
-								// 	echo ("<p align=\"center\"> Connection Successful! </p>");
-								// }
-								
-								//Executing the sql command and getting the result in rs
-								$rs = odbc_exec($conn,$sql);
+									$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+									
+									$sql = "SELECT * FROM Practitioner WHERE (PractitionerID={$practitioner_number} AND Password='{$password_login}')";
 
-								//While loop as a counter to determine the amount of rows were returned
-								//If result is zero then they are a new registrant and if not the system will either check for whether they are banned or just a duplicate 
-								$items = 0;
-								while ($row = odbc_fetch_array($rs)){
-									$items++;                          
-								} 
-								// echo "<br><p align=\"center\">total No. of rows:".$items."</p>";
+									//Executing the sql command and getting the result in rs
+									$rs = odbc_exec($conn,$sql);
 
-								// https://www.c-sharpcorner.com/article/create-a-login-form-validation-using-php-and-wamp-xampp/
+									//While loop as a counter to determine the amount of rows were returned
+									//If result is zero then they are a new registrant and if not the system will either check for whether they are banned or just a duplicate 
+									$items = 0;
+									while ($row = odbc_fetch_array($rs)){
+										$items++;                          
+									} 
+									// echo "<br><p align=\"center\">total No. of rows:".$items."</p>";
 
-								$rs = odbc_exec($conn,$sql);
+									// https://www.c-sharpcorner.com/article/create-a-login-form-validation-using-php-and-wamp-xampp/
 
-								if($items!=0)  {  
-									while(odbc_fetch_row($rs))  {  
-										$dbusername=odbc_result($rs,"PractitionerID");;  
-										$dbpassword=odbc_result($rs,"Password");  
-									}  
+									$rs = odbc_exec($conn,$sql);
 
-									echo "<br><br><p align=\"center\"> Database!  <br> Username: ".$dbusername."<br> Password: ".$dbpassword."</p>";
-								
-									if($practitioner_number == $dbusername && $password_login == $dbpassword)  {  
-										// odbc_close($conn);
-										session_start();  
-										$_SESSION["session_practitioner"]=$practitioner_number;  
-										
-										/* Redirect browser */  
-										header("Location: dashboard.php");  
-										
-									} else {  
-										echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";  
+									if($items!=0)  {  
+										while(odbc_fetch_row($rs))  {  
+											$dbusername=odbc_result($rs,"PractitionerID");;  
+											$dbpassword=odbc_result($rs,"Password");  
+										}  
+
+										echo "<br><br><p align=\"center\"> Database!  <br> Username: ".$dbusername."<br> Password: ".$dbpassword."</p>";
+									
+										if($practitioner_number == $dbusername && $password_login == $dbpassword)  {  
+											// odbc_close($conn);
+											session_start();  
+											$_SESSION["session_practitioner"]=$practitioner_number;  
+											
+											/* Redirect browser */  
+											header("Location: dashboard.php");  
+											
+										} else {  
+											echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";  
+											// odbc_close($conn);
+										}
+									}  else {
+										echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";
 										// odbc_close($conn);
 									}
-								}  else {
-									echo "<p align=\"center\"> <br> Invalid username or password!</p> <br>";
 									// odbc_close($conn);
-								}
-								// odbc_close($conn);
 								
-							} else {  
-								echo "<p align=\"center\"> <br> All fields are required! </p> <br>";
+								} else {
+									echo "<p align=\"center\"> <br> Invalid username! </p> <br>"; 
+								}
+						 
 							}
-						}  
-						
-						
+						}
 						
 
 

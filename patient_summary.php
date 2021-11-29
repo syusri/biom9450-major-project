@@ -12,14 +12,17 @@
 
 <body>
 	<?php
+        // reference index2.html for styling, nav and logout features
 		include 'index2.html';
-        //Grab information of the patient ID from the search page
-        session_start();
         
+        //Grab information of the practitioner ID and name for the session
+        session_start();
+        // If no session practitioner has been set, then the website will direct to the login page as a secure login feature
         if(! isset($_SESSION["session_practitioner"])) {
             header("Location:login.php");
         }
         
+        // Grabbing the session details
         $practitioner_number = $_SESSION["session_practitioner"];
 		$practitioner_name = $_SESSION["session_practitioner_name"];
 	?>
@@ -29,66 +32,50 @@
 					<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Patient Summary</span></p>
 			</div>
             <?php
+                //Connecting to the database 
                 $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
 
-                $sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
-                $rs = odbc_exec($conn,$sql);
-                // Finds the practitioner that is logged in
-
-                // Get the practitioner name that is logged in
-                while ($row = odbc_fetch_array($rs)){
-                    $practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
+                //Used to check the connection to the database was successful, direct to error page if issue                            
+                if(!$conn){
+                    header("Location:error.php");
                 } 
 
+                // 
+                $sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
+                $rs = odbc_exec($conn,$sql);
+
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php"); 
+                } 
+
+                // Checks the form submission from the patient search page 
                 if (!$_POST["submit_search_ID"]) {
-                    // If this page is not directed from the search page so a patient ID has not come through it will show the page for patient PA001
-                    $patient_number = "1";
                     // If no patient number is submitted with the form it will direct back to the patient search page so a patient can be chosen
                     header("Location: ./patient_search_page.php");
                 } else {
                     $patient_number = $_POST["submit_search_ID"];
                 }
-		        // $patient_number = $_POST["submit_search_ID"];
-                // $patient_number = "001";
-                // echo "<br> <p align=\"center\"> Patient ID is PA00".$patient_number."</p> <br>";
 
+                // SQL Command to get all of the info for the specific pateient in the patient table via patient ID number
                 $sql = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
-
-
-                //Used to check the connection to the database was successful
-                                                
-                if(!$conn){
-                    echo "<script type=\"text/javascript\"> alert('Error with database connection. Please call admin.')</script>";
-                    // exit("Connection Failed: ". $conn); 
-                } else { 
-                    // echo ("<p align=\"center\"> Connection Successful! </p>");
-                }
 
                 //Executing the sql command and getting the result in rs
                 $rs = odbc_exec($conn,$sql);
 
                 if(!$rs){
-                    echo "<script type=\"text/javascript\"> alert('Error with database connection. Please call admin.')</script>";
-                    exit("Connection Failed: ". $conn); 
+                    // Error checking for SQL
+                    header("Location:error.php"); 
                 } 
 
-                //While loop as a counter to determine the amount of rows were returned
-                //If result is zero then they are a new registrant and if not the system will either check for whether they are banned or just a duplicate 
+                //While loop to fetch all of the information based off the above SQL statement
                 $items = 0;
-                $i;
-                // $array = array();
                 while ($row = odbc_fetch_array($rs)){
                     $items++;
-                    // foreach($row as $columnName => $value) {
-                    //     // echo "<br><p align=\"center\"> Rows:".$row."</p>"; 
-                    //     echo "<br><p align=\"center\"> Rows:".$columnName.$value."</p>"; 
-                                    
-                    // }
+                    
                     $Full_Name = $row["FirstName"]." ".$row["LastName"];
                     $Room_Number = $row["RoomNumber"];
                     $PR_ID = "PR00".$row["PractitionerID"];
-                    //Get PR Name and DR Name after connecting the Databases
-                    $PR_Name = "Julliette Smith";
                     $PA_DOB = $row["DOB"];
                     $PA_Gender = $row["Gender"];
                     $PA_Weight = $row["Weight"];
@@ -96,27 +83,22 @@
                     $PA_Image = $row["Image"];
                     $PA_Notes = $row["Notes"];
                     
-                    //Either change Gender in MA to full name or have an If statement to assign Male to M and Female to F
+                    //Assign Male fpr M and Female for F
                     if ($PA_Gender=="F") {
                         $PA_Gender="Female";
                     } elseif ($PA_Gender=="M") {
                         $PA_Gender="Male";
                     }
-                    //Change DOB date format --> how to echo it in the correct format
+
+                    //Change DOB date format
                     $PA_DOB_Date = new DateTime($PA_DOB);
                     // echo $PA_DOB_Date->format('d/m/Y')."<br>";
+                    
                     //Work out the age of the patient
                     $currentDate = date("d-m-Y");
                     $PA_Age = date_diff(date_create($PA_DOB), date_create($currentDate));
                     // echo "Current age is ".$PA_Age->format("%y");
-
-
-                    //Write code to deal with a 2 digit or 3 digit patient ID?
-                    // echo "<h2 class=\"section_title\" align = \"left\">".$row["FirstName"]." ".$row["LastName"]." (PA00".$row["PatientID"].") </h2> <br>";
-                    // echo "<p><b>Gender: </b>".$row["Gender"]."</p><br>";
-                    // echo "<p><b>Room Number: </b>".$row["RoomNumber"]."</p><br>";
-                    // echo "<p><b>Date of Birth: </b>".$row["DOB"]."</p><br>";
-                    //echo "<p><b>Patient Weight: </b>".$row["Gender"]."</p><br>";
+                    
                 } 
 
                 // Practitioner and Diet Regime join 
@@ -127,11 +109,15 @@
                 //Executing the sql command and getting the result in rs
                 $rs = odbc_exec($conn,$sql);
 
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php"); 
+                } 
+
                 //While loop to grab the results
                 while ($row = odbc_fetch_array($rs)){
                     $PR_Name_db = $row["PRFirstName"]." ".$row["PRLastName"];
                     $DR_Name_db = $row["PADietName"];
-                    //Get PR Name and DR Name after connecting the Databases
                     
                 } 
 
@@ -144,6 +130,11 @@
 
                 //Executing the sql command and getting the result in rs
                 $rs = odbc_exec($conn,$sql);
+
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php"); 
+                } 
 
                 //While loop to grab the results
                 while ($row = odbc_fetch_array($rs)){
@@ -160,21 +151,17 @@
 
                 //Set Medicare Expiry to M/Y
                 $Medicare_Expiry_Date = new DateTime($Medicare_Expiry);
-
-                // echo "<br><p align=\"center\">Practitioner Name: ".$PR_Name_db."(".$PR_ID.")</p>";
-                // echo "<br><p align=\"center\"> Diet Regime:".$DR_Name_db."</p>";
-                // echo "<br><p align=\"center\"> Emergency Contact Name: ".$EC_Name_db."</p>";
-                // echo "<br><p align=\"center\"> Medicare Number: ".$Medicare_Number."</p>";
-
                 odbc_close($conn);
             ?>
 			<!-- Patient Summary -->
 			<section id="patient">
                 <div class="top_container">
 					<div class="sect__container--first">
+                        <!-- Page title -->
 				        <h2>Patient Summary</h2>
                     </div>
                     <div class="sect__container--second">
+                        <!-- Edit Patient button as a form that sends the patient ID number to the Edit Patient Page -->
                         <form class="section__heading--edit" action="./edit_patient.php" method="POST"> 
                         <button class="edit_patient_button" type="submit" id="submit_edit_patient_ID" name="submit_edit_patient_ID" value="<?php echo $patient_number;?>">
                             Edit Patient </button> </form>
@@ -185,10 +172,17 @@
 					<div class="patient__container--highlight">
 						<div class="patient__highlight">
 							<figure class="patient__highlight--box patient__picture--mask">
-								<!-- <img src="./img/old_man.jpg" class="patient__picture" alt="Picture of patient"> -->
-                                <!-- <img src="<?php //echo $PA_Image; ?>" class="patient__picture" alt="Picture of Margaret"> -->
-                                <img src="./images/<?php echo "PA00".$patient_number; ?>.jpg" class='patient__picture' alt='Picture of patient'>
+                                <!-- 10 patient images were stored in the directory, 9 Patients with IDs and 1 default image. Therefore the following if statement
+                                        checks if the patient ID is greater than 9 and if so prints the default image so the website can run smoothly -->
+                                <?php 
+                                    if ($patient_number < 10) {
+                                        echo "<img src=\"./images/PA00".$patient_number.".jpg\" class=\"patient__picture\" alt=\"Picture of patient\">";
+                                    } else {
+                                        echo "<img src=\"./images/default.jpg\" class=\"patient__picture\" alt=\"Picture of patient\">";
+                                    }
+                                ?>
 							</figure>
+                            <!-- Prints the information of the patient in the green highlighted box to the left of the page -->
 							<h2 class="patient__highlight--box patient__name">
                                 <?php echo $Full_Name; ?>
 							</h2>
@@ -218,11 +212,13 @@
 							</p>
 						</div>
 					</div>
+                    <!-- Prints the profile details  -->
 					<div class="patient__details">
 						<h2 class="patient__details--box patient__profile">Profile</h2>
 						<p class="patient__details--box patient__age--label">Age</p>
-						<p class="patient__details--box patient__age--number"> 
-                            <?php echo $PA_Age->format("%y"); ?> </p>
+						<p class="patient__details--box patient__age--number">
+                             <!-- In order to get the age in the right format -->
+                            <?php echo $PA_Age->format("%y"); ?> </p>   
 						<p class="patient__details--box patient__gender--label">Gender</p>
 						<p class="patient__details--box patient__gender--gender"> <?php echo $PA_Gender; ?> </p>
 						<p class="patient__details--box patient__dob--label">Date of Birth</p>
@@ -238,7 +234,6 @@
                 <section id="emergency_contact">
                     <div class="section__heading">
                         <h2 class="subheading">Emergency Contact Details</h2>
-                        <!-- <p class="section__heading--edit">Edit </a></p> -->
                     </div>
                     <div class="section__container--first">
                         <div class="details__highlight--emergency">
@@ -273,7 +268,6 @@
                 <section id="medicare">
                     <div class="section__heading">
                         <h2 class="subheading">Medicare</h2>
-                        <!-- <p class="section__heading--edit">Edit</p> -->
                     </div>
                     <div class="section__container--second">
                         <div class="details__highlight--medicare">
@@ -303,41 +297,36 @@
 			<section id="medications">
 				<div class="section__heading">
 					<h2 class="subheading">Medications</h2>
-					<!-- <p class="section__heading--edit">Edit</p> -->
 				</div>
 				<div class="section__container--medications">
-					<!-- <div class="section__table">
-						<div class="section__table--heading-1">
-							<p class="section__table--heading">Diet Regime</p>
-						</div>
-						<div class="section__table--heading-2">
-							<p class="section__table--heading">Description</p>	
-						</div>
-						<div class="section__table--heading-3">
-							<p class="section__table--heading">Exercise Recommendations</p>
-						</div>
-					</div> -->
                     <?php
+                        // Connect to the database to gather information on the medications specific to this patient 
                         $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+
+                        if(!$conn){
+                            // Error checking for SQL
+                            header("Location:error.php"); 
+                        } 
+
+                        // Select the distinct patient medications from the patient medications table then grab the details of these medications from the Medications table 
                         $sql = "SELECT DISTINCT PatientMedications.MedicationID AS MedID, Medications.MedicationName AS MedName, Medications.RecommendedDosage AS MedDosage, 
                         Medications.Route AS MedRoute, Medications.Type AS MedType, Medications.RecommendedFrequency AS MedFreq, Medications.ActiveIngredient AS MedIngredient, 
                         Medications.Condition AS MedCondition, Medications.InstructionsForUse AS MedInstructions FROM PatientMedications 
                         INNER JOIN Medications ON PatientMedications.MedicationID=Medications.MedicationID WHERE PatientID={$patient_number}";
 
-                        //Used to check the connection to the database was successful                                
-                        // if(!$conn){ 
-                        //     exit("Connection Failed: ". $conn); 
-                        // } else { 
-                        //     echo ("<p align=\"center\"> Connection Successful! </p>");
-                        // }
-
                         //Executing the sql command and getting the result in rs
                         $rs = odbc_exec($conn,$sql);
+
+                        if(!$rs){
+                            // Error checking for SQL
+                            header("Location:error.php"); 
+                        } 
                         
-                        //Print out for all of the registered people in the form of a table
+                        //Print out for all of the medication details in the form of a table
                         echo "<table class=\"specific_patient_med_table\">";
                         echo "<tr><th id=\"MDName\"> Medication Name </th> <th id=\"MDDosage\"> Dosage  </th> <th id=\"MDRoute\">Route</th> <th id=\"MDType\">Type</th> <th id=\"MDFreq\">Frequency</th><th id=\"MDIngredient\"> Active Ingredient</th><th id=\"MDCondition\">Condition</th> <th id=\"MDInstructions\">Instructions for Use</th></tr>";
                         while (odbc_fetch_row($rs)) {
+                            // Fetching information
                             $Med_Name=odbc_result($rs,"MedName");
                             $Med_Dosage=odbc_result($rs,"MedDosage"); 
                             $Med_Route=odbc_result($rs,"MedRoute");
@@ -346,6 +335,7 @@
                             $Med_ActiveIngredient=odbc_result($rs,"MedIngredient");
                             $Med_Condition=odbc_result($rs,"MedCondition");
                             $Med_Instructions=odbc_result($rs,"MedInstructions");
+                            // Printing information
                             echo "<tr><td> $Med_Name </td>"; 
                             echo "<td> $Med_Dosage </td>"; 
                             echo "<td> $Med_Route </td>"; 
@@ -359,21 +349,12 @@
 
                         // odbc_close($conn);
                     ?>
-
-                    <!-- <table class="specific_patient_med_table" cellpadding=30px> 
-                        <tr> <th valign="middle">Medication Name </th> <th valign="middle"> Dosage </th> <th valign="middle"> Route</th><th valign="middle"> Type</th> <th valign="middle"> Frequency</th><th valign="middle"> Active Ingredient</th><th valign="middle"> Condition</th><th valign="middle"> Instructions for Use</th> </tr> 
-                        <tr> <td valign="middle">Panadol 500 mg</td> <td align="center" valign="middle">2</td> <td valign="middle">Oral tablet</td> 
-                                <td valign="middle">PRN</td> <td valign="middle">Every 4-6 hours as required </td> <td valign="middle">Paracetomol</td>
-                                <td valign="middle">Temporary relief of pains, aches and fevers</td><td valign="middle">Maximum 8 tablets in 24 hours</td> </tr> 
-                            
-                    </table> -->
 				</div>
 			</section>
-			<!-- Meal Plan -->
+			<!-- Patient Notes -->
 			<section id="patient_notes">
 				<div class="section__heading">
 					<h2 class="subheading">Notes</h2>
-					<!-- <p class="section__heading--edit">Edit</p> -->
 				</div>
 				<div class="section__container--notes">
 					<div class="section__table">
