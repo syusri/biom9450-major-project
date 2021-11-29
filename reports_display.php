@@ -135,7 +135,12 @@
 						echo "<div class='patient__highlight'>";
 							//insert image of patient
 							echo "<figure class='patient__highlight--box patient__picture--mask'>";
-								echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
+								if ($patient_id <= 5) {
+									echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
+								}
+								else {
+									echo "<img src='images/default.jpg' class='patient__picture' alt='Picture of patient'>";
+								}
 							echo "</figure>";
 							//header for patient name
 							echo "<h2 class='patient__highlight--box patient__name'>$first $last</h2>";
