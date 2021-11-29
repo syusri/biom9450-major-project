@@ -52,14 +52,113 @@
 		}
 	}
 	
+	// Get list of medication statuses
+	function getMedStatus($medStatus) {
+		echo "<select name='medStatus' id='select__med--status'>";
+		switch ($medStatus) {
+			case 'Given':
+				echo "<option selected id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'Due':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option selected id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'Missed':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option selected id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'Refused':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option selected id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'Fasting':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option selected id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'No stock':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option selected id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'Ceased':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option selected id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+			case 'Not required':
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option selected id='Not required' value='Not required'>Not required</option>";
+				break;
+			default:
+				echo "<option id='Given' value='Given'>Given</option>";
+				echo "<option id='Due' value='Due'>Due</option>";
+				echo "<option id='Missed' value='Missed'>Missed</option>";
+				echo "<option id='Refused' value='Refused'>Refused</option>";
+				echo "<option id='Fasting' value='Fasting'>Fasting</option>";
+				echo "<option id='No stock' value='No stock'>No stock</option>";
+				echo "<option id='Ceased' value='Ceased'>Ceased</option>";
+				echo "<option id='Not required' value='Not required'>Not required</option>";
+				break;
+		}
+		echo "</select>";
+	}
+
 	// Get patient medication details
-	function getPatientMeds($timee) {
+	function getPatientMeds() {
 		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 		$time=$_SESSION["time"];
 		$date = $_SESSION['inputDate'];
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$sql3 = 
-		"SELECT m.MedicationName, pm.TimeOfDay, m.RecommendedDosage, m.Route, m.InstructionsForUse, pa.FirstName, pm.Date, pm.MedicationPacked, pm.StatusOfMedication
+		"SELECT m.MedicationName, pm.TimeOfDay, m.RecommendedDosage, m.Route, m.InstructionsForUse,
+		pa.FirstName,pm.Date, pm.MedicationPacked, pm.StatusOfMedication, pm.PatientMedID
 		FROM (PatientMedications pm
 		INNER JOIN Patient pa
 		ON pm.PatientID = pa.PatientID) 
@@ -71,22 +170,56 @@
 		";
 		$rs3 = odbc_exec($conn,$sql3);
 		while ($row = odbc_fetch_array($rs3)){
-			$timeOfDay = $row["TimeOfDay"];
+			// $timeOfDay = $row["TimeOfDay"];
 			$medName = $row["MedicationName"];
 			$dosage = $row["RecommendedDosage"];
 			$route = $row["Route"];
 			$instructions = $row["InstructionsForUse"];
 			$medPacked = $row["MedicationPacked"] == 1 ? "Yes" : "No";
 			$medStatus = $row["StatusOfMedication"];
-
-			echo "<div><p>$time</p></div>";
+			$patientMedID = $row["PatientMedID"];
+			
+			// echo "<div><p>$time</p></div>";
 			echo "<div><p>$medName</p></div>";
 			echo "<div><p>$dosage</p></div>";
 			echo "<div><p>$route</p></div>";
 			echo "<div><p>$instructions</p></div>";
-			echo "<div><p>$medPacked</p></div>";
-			echo "<div><p>$medStatus</p></div>";
+			echo "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name='medPacked' value=$medPacked></p></div>";
+			getMedStatus($medStatus);
+			// echo "<div><p>$medStatus</p></div>";
+
 		} 
+	}
+	
+	function submitMeds() {
+		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$date = $_SESSION['inputDate'];
+		$time=$_SESSION["time"];
+		$patientID = $_SESSION[$_SESSION["patient"]];
+		if (isset($_POST["med_submit"])) {
+			// Update packed status
+			$medPacked = $_POST['medPacked'];
+			$sql_update = "UPDATE PatientMedications SET
+			MedicationPacked='$medPacked'
+			WHERE PatientID={$patientID}
+			AND Date=#$date#
+			AND TimeOfDay='$time'";
+			$add = odbc_exec($conn, $sql_update);
+			if(!$add) {
+				exit("Error in SQL update first"); 
+			}
+			// Update medication status
+			$medStatus = $_POST['medStatus'];
+			$sql_update = "UPDATE PatientMedications SET
+			StatusOfMedication='$medStatus'
+			WHERE PatientID=$patientID
+			AND Date=#$date#
+			AND TimeOfDay='$time'";
+			$add = odbc_exec($conn, $sql_update);
+			if(!$add) {
+				exit("Error in SQL update first"); 
+			}
+		}
 	}
 
 	// Get details for patient's meals
@@ -106,7 +239,7 @@
 			$desc = $row["Description"];
 			$exercise = $row["Exercise"];
 			$_SESSION["DietRegimeID"] = $row["DietRegimeID"];
-
+			
 			echo "<div><p>$dietName</p></div>";
 			echo "<div><p>$desc</p></div>";
 			echo "<div><p>$exercise</p></div>";
@@ -121,7 +254,7 @@
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$sql4 = 
-		"SELECT m.Meal
+		"SELECT m.Meal, m.MealPacked
 		FROM Meal m
 		INNER JOIN Patient pa
 		ON pa.DietRegimeID = m.DietRegimeID			
@@ -133,7 +266,11 @@
 		$rs4 = odbc_exec($conn,$sql4);
 		while ($row = odbc_fetch_array($rs4)){
 			$meal = $row["Meal"];
+			$mealPacked = $row["MealPacked"] == 1 ? "Yes" : "No";
+
 			echo "<div><p>$meal</p></div>";
+			// echo "<div><p>$mealPacked</p></div>";
+			echo "<div style=checkbox--center><p><input type='checkbox' id='mealPacked' name='mealPacked' value=$mealPacked></p></div>";
 		} 
 	}
 
