@@ -44,7 +44,7 @@
 		<div>
 			<form class="form--dashboard" action="reports_display.php" method="POST">
 				<div class="section__container--report">
-					<legend><h2>Patient</h2><legend>
+					<legend><h2>&nbsp;&nbsp;Patient</h2><legend>
 						<?php 
 							//connect to database
 							$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
@@ -77,7 +77,7 @@
 				
 
 				<div class="section__container--report">
-					<legend><h2>Information</h2><legend>
+					<legend><h2>&nbsp;&nbsp;Information</h2><legend>
 					<div>
 						<input type="checkbox" name="Medication"/>Medication
 						<br>
@@ -88,7 +88,7 @@
 
 				<div class="section__container--report">
 					<div>
-						<legend><h2>Week</h2><legend>
+						<legend><h2>&nbsp;&nbsp;Week</h2><legend>
 						<input type="checkbox" name="Last" id="Last"/>Last Week
 						<br>
 						<input type="checkbox" name="This" id="This"/>This Week
