@@ -219,7 +219,7 @@
 				WHERE PatientMedID={$medID}";
 				$add = odbc_exec($conn, $sql_update);
 				if(!$add) {
-					exit("Error in SQL update medication packed status"); 
+					header("Location:error.php");
 				}
 				// Update medication status
 				$name = 'medStatus'.$medID;
@@ -231,7 +231,7 @@
 					WHERE PatientMedID={$medID}";
 					$add = odbc_exec($conn, $sql_update);
 					if(!$add) {
-						exit("Error in SQL update medication packed status"); 
+						header("Location:error.php");
 					}
 				}
 			}
@@ -254,7 +254,7 @@
 			WHERE MealID={$mealID}";
 			$add = odbc_exec($conn, $sql_update);
 			if(!$add) {
-				exit("Error in SQL update - mealPacked"); 
+				header("Location:error.php"); 
 			}
 			echo $sql_update;
 			$mealPacked == 'TRUE' ? $test = "yes" : $test = "no";
