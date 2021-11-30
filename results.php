@@ -75,7 +75,6 @@
 		<section id="medications">
 			<div class="section__heading">
 				<h2 class="subheading">Medications</h2>
-				<p class="section__heading--edit">Edit</p>
 			</div>
 			<!-- <form class='' method='POST'> -->
 				<div class="section__container">
@@ -100,7 +99,6 @@
 		<section id="diet-regime">
 			<div class="section__heading">
 				<h2 class="subheading">Diet Regime</h2>
-				<p class="section__heading--edit">Edit</p>
 			</div>
 			<div class="section__container">
 				<div class="diet__table">
@@ -115,7 +113,6 @@
 		<section id="meal-plan">
 			<div class="section__heading">
 				<h2 class="subheading">Meal</h2>
-				<p class="section__heading--edit">Edit</p>
 			</div>
 			<!-- <form class='mealForm' method='POST'  onsubmit='displayMeal()'> -->
 				<div class="section__container" id='mealForm'>
