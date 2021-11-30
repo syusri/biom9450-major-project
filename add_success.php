@@ -55,7 +55,7 @@
 				$firstName_contact = $_POST['firstName_contact'];
 				$lastName_contact = $_POST['lastName_contact'];
 				$phone = $_POST['phone'];
-				$email = $_POST['email'];
+				$email = $_POST['email_contact'];
 				$relationship = $_POST['relationship'];
 
 				//medicare information
@@ -148,7 +148,7 @@
 				//add new patient
 				$sql_insert_patient = "INSERT INTO Patient (FirstName, LastName, Gender, RoomNumber, PractitionerID,
 				ContactID, DOB, Image, Weight, DietRegimeID, MedicareID, Notes)
-				VALUES ('$firstName', '$lastName', '$gender', '$roomNumber', '00$prac_id', '$contact_id', '$newDate', 'default', '$weight',
+				VALUES ('$firstName', '$lastName', '$gender', '$roomNumber', '00$prac_id', '00$contact_id', '$newDate', 'default', '$weight',
 				'00$diet_id', '$medicare_id', '$notes')";
 				$add = odbc_exec($conn, $sql_insert_patient);
 				if(!$add) {
