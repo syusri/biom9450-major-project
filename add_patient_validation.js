@@ -40,15 +40,20 @@ function Last_Name() {
 function DOB() {
     dob = document.getElementById("dateofbirth").value;
     dob = new Date(dob);
-    date_compare = new Date("2000");
-    //patient must be older than 18
+        //patient must be older than 18
+    date_compare = new Date("2003");
+    //patient must be younger than 121
+    date_compare_2 = new Date("1921");
     if (date_compare < dob) {
         document.getElementById("error_dateofbirth").innerHTML="Patient must be older than 18";
         return false;
-    } else {
-        document.getElementById("error_dateofbirth").innerHTML="Success";
-        return true;
-    }
+    } 
+    if (date_compare_2 > dob) {
+        document.getElementById("error_dateofbirth").innerHTML="Patient must be younger than 121";
+        return false;
+    } 
+    document.getElementById("error_dateofbirth").innerHTML="Success";
+    return true;
 }
 
 function Weight() {
