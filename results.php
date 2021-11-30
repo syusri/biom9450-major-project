@@ -75,7 +75,8 @@
 							<?php 
 								$patientImg = "<img src=\"./images/PA00".$patientID.".jpg\" class=\"patient__picture\" alt=\"Picture of patient\">";
 								$patientImgGeneric = "<img src=\"./images/default.jpg\" class=\"patient__picture\" alt=\"Picture of patient\">";
-								($patientID < 10) ? $patientImg : $patientImgGeneric;
+								($patientID < 10) ? $img = $patientImg : $img = $patientImgGeneric;
+								echo $img;
                             ?>
 						</figure>
 						<h2 class="patient__highlight--box patient__name">
@@ -85,7 +86,7 @@
 						<p class="patient__highlight--box patient__room--number"><?php echo $room;?></p>
 						<p class="patient__highlight--box patient__prac--label">Practitioner</p>
 						<p class="patient__highlight--box patient__prac--name">
-							<?php getPrac(); ?>
+							<?php echo "Dr. ", getPrac(); ?>
 						</p>
 					</div>
 				</div>

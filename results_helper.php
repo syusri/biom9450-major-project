@@ -35,7 +35,7 @@
 		while ($row = odbc_fetch_array($rs2)){
 			$practitioner = $row["FirstName"]." ".$row["LastName"];
 		} 
-		echo "Dr. ", $practitioner;
+		return $practitioner;
 	}
 
 	// Get list of patients

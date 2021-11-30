@@ -52,7 +52,8 @@
 								<!-- Obtain list of patients from database -->
 								<?php
 									ob_start();
-									$sql = "SELECT * FROM Patient";
+									$prac = $_SESSION["session_practitioner"];
+									$sql = "SELECT * FROM Patient WHERE PractitionerID=$prac";
 									$rs = odbc_exec($conn,$sql);
 									while ($row = odbc_fetch_array($rs)) {
 										$name = $row["FirstName"]." ".$row["LastName"];
