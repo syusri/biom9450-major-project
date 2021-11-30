@@ -96,11 +96,11 @@ function Last_Name_Contact() { //lastName_contact
       //check whether the last name has only allowed characters
       //We can compare "last" to a regular expression
     if (!regex.test(last)) {
-        document.getElementById("error_lastName").innerHTML="Last name should contain only letters, apostrophes, spaces and hyphens";
+        document.getElementById("error_last_contact").innerHTML="Last name should contain only letters, apostrophes, spaces and hyphens";
         return false;
     //We also need to make sure last name is not empty
     } else if (last == "") {
-        document.getElementById("error_lastName").innerHTML="Please enter a last name";
+        document.getElementById("error_last_contact").innerHTML="Please enter a last name";
         return false;
     //If we get to here, then the other tests have passed
     } else {

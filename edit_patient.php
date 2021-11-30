@@ -43,6 +43,7 @@
 		<!-- Actual form -->
 		<div class="form__container--mini">
 			<form class="form--dashboard" onSubmit="return validInfo()" action="edit_success.php" method="POST">
+				
 				<!-- Patient Details -->
 				<h3>Patient Information</h3>
 				<?php
@@ -53,7 +54,8 @@
 					} else {
 						$patient_number = $_POST["submit_edit_patient_ID"];
 					}
-
+					//hidden field for patient_number to send to next page
+					echo "<input type='hidden' name='patient_id' value=$patient_number>";
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
 						echo "$conn->connect_error";
@@ -89,6 +91,7 @@
 					$dob = new DateTime($dob);
 					odbc_close($conn);
 				?>
+
 				<div class='error' id='error_firstName'></div>
 				First Name: <input type='text' id='firstName' name='firstName' value='<?php echo $first;?>'  
 				onchange='First_Name()'/>
@@ -111,10 +114,7 @@
 				<option value="10"<?php if ($room == 10) echo ' selected="selected"'; ?>>10</option>
 				</select>
 				<br></br>
-				<div class="error" id="error_dateofbirth"></div>
-				Date of Birth: <input type="text" id="dateofbirth" name="dateofbirth"
-				value='<?php echo $dob->format("d/m/Y");?>' onchange="DOB()"/>
-				<br></br>
+				
 
 				<div class='error' id='error_weight'></div>
 				Weight (kg): <input type='number' id='weight' name='weight' value='<?php echo $weight;?>'
@@ -224,7 +224,7 @@
 	<!-- JavaScript to change PHP template -->
 	<script type="text/javascript">
 		document.getElementById("patients").classList.add("sidenav__link--anchor-primary");
-		document.getElementById("heading").innerText = "Add Patient";
+		document.getElementById("heading").innerText = "Edit Patient";
 		document.getElementById("practitioner").innerText = "Dr. <?php echo $practitioner_name;?>";
 	</script>
 </body>
