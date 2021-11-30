@@ -276,12 +276,12 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
 .result__container {
     display: flex;
     /* min-height: 140px; */
-    /* width: 80vw; */
+    max-width: 80vw;
     background-color: #f8f8f8;
     border-radius: 25px;
     filter: drop-shadow(4px 4px 4px #00000025);
     /* margin-top: 12px; */
-    padding: 10px
+    padding: 20px
 }
 
 /* Patient Summary */
