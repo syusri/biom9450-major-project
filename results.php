@@ -40,20 +40,8 @@
 					<select name="dropdown--patients" id="dropdown--patients" class="input__container--small">
 						<!-- Obtain list of patients from database -->
 						<?php 
-							getPatientList(); 
-							// $conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
-							// ob_start();
-							// $sql = "SELECT * FROM Patient";
-							// $rs = odbc_exec($conn,$sql);
-							// while ($row = odbc_fetch_array($rs)) {
-							// 	$name = $row["FirstName"]." ".$row["LastName"];
-							// 	if ($name == $_SESSION["patient"]) {
-							// 		echo "<option value='$name' selected>$name</option>";
-							// 	} else {
-							// 		echo "<option value='$name'>$name</option>";
-							// 	}
-							// }
-							// ob_end_flush();
+							getPatientList();
+							// ob_clean();
 						?>
 					</select>
 					<input type="submit" value="Go" class="form__submit input__container--small" name="page_submit">
@@ -114,13 +102,14 @@
 				</div>
 			</div>
 		</section>
+		<form class='' method='POST'>
 		<!-- Medications -->
 		<section id="medications">
 			<div class="section__heading">
 				<h2 class="subheading">Medications</h2>
 				<p class="section__heading--edit">Edit</p>
 			</div>
-			<form class='' method='POST'>
+			<!-- <form class='' method='POST'> -->
 				<div class="section__container">
 					<div class="med__table">
 						<!-- <div class="section__table--heading"><p>Time of Day</p></div> -->
@@ -133,10 +122,10 @@
 						<?php getPatientMeds(); ?>
 					</div>
 				</div> 
-				<input type='submit' value='Save' class='form__submit input__container--small' name='med_submit'>
-			</form>
+				<!-- <input type='submit' value='Save' class='form__submit input__container--small' name='med_submit'> -->
+			<!-- </form> -->
 			<?php 
-			submitMeds(getMedIDs());
+			// submitMeds(getMedIDs());
 			?>
 		</section>
 		<!-- Diet Regime -->
@@ -160,7 +149,7 @@
 				<h2 class="subheading">Meal</h2>
 				<p class="section__heading--edit">Edit</p>
 			</div>
-			<form class='mealForm' method='POST'  onsubmit='displayMeal()'>
+			<!-- <form class='mealForm' method='POST'  onsubmit='displayMeal()'> -->
 				<div class="section__container" id='mealForm'>
 					<div class="meal__table">
 						<div class="section__table--heading"><p>Meal</p></div>
@@ -168,14 +157,16 @@
 						<?php getMeal(); ?>
 					</div>
 				</div>
-				<input type='submit' value='Save' class='form__submit input__container--small' name='meal_submit'>
-			</form>
-			<!-- Bring information to results.php with PHP after form submission -->
-			<?php
-				submitMeal(getMealID());
-				// onsubmit="location.reload(true)
-			?>
-		</section>
+				<!-- <input type='submit' value='Save' class='form__submit input__container--small' name='meal_submit'> -->
+				<!-- Bring information to results.php with PHP after form submission -->
+			</section>
+			<input type='submit' value='Save' class='form__submit input__container--small' name='everything_submit'>
+		</form>
+		<?php
+			// submitMeal(getMealID());
+			submitEverything('everything_submit');
+		?>
+
 	</div>
 	<!-- JavaScript to change PHP template -->
 	<script type="text/javascript">

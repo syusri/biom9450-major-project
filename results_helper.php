@@ -1,6 +1,7 @@
 <?php
 	session_start();
 
+	ob_start();
 	$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 	$patientID = $_SESSION[$_SESSION["patient"]];
 	
@@ -199,12 +200,12 @@
 		} 
 	}
 	
-	function submitMeds($medIDArray) {
+	function submitMeds($medIDArray, $submit) {
 		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$patientID = $_SESSION[$_SESSION["patient"]];
-		if (isset($_POST["med_submit"])) {
+		if (isset($_POST["$submit"])) {
 			// $medPacked = $_POST['medPacked'];
 			foreach($medIDArray as $medID) {
 				// Update packed status
@@ -234,29 +235,17 @@
 					}
 				}
 			}
-			// // Update medication status
-			// $medStatus = $_POST['medStatus'];
-			// $sql_update = "UPDATE PatientMedications SET
-			// StatusOfMedication='$medStatus'
-			// WHERE PatientID=$patientID
-			// AND Date=#$date#
-			// AND TimeOfDay='$time'";
-			// $add = odbc_exec($conn, $sql_update);
-			// if(!$add) {
-			// 	exit("Error in SQL update first"); 
-			// }
-			// foreach($medIDArray as $medID) {
-
-			// }
+			header("Location: dashboard.php"); 
+			ob_end_flush();
 		}
 	}
 
-	function submitMeal($mealID) {
+	function submitMeal($mealID, $submit) {
 		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$patientID = $_SESSION[$_SESSION["patient"]];
-		if (isset($_POST["meal_submit"])) {
+		if (isset($_POST["$submit"])) {
 			
 			// Update packed status
 			(isset($_POST["mealPacked"])) ? $mealPacked = 'TRUE': $mealPacked = 'FALSE';
@@ -378,6 +367,11 @@
 			array_push($medIDArray, $row["PatientMedID"]);
 		} 
 		return $medIDArray;
+	}
+
+	function submitEverything($submit) {
+		submitMeds(getMedIDs(), $submit);
+		submitMeal(getMealID(), $submit);
 	}
 
 ?>
