@@ -46,11 +46,11 @@
 							$rs = odbc_exec($conn,$sql);
 							while ($row = odbc_fetch_array($rs)) {
 								$name = $row["FirstName"]." ".$row["LastName"];
-								// if ($name == $_SESSION["patient"]) {
-								// 	echo "<option value='$name' selected>$name</option>";
-								// } else {
+								if ($name == $_SESSION["patient"]) {
+									echo "<option value='$name' selected>$name</option>";
+								} else {
 									echo "<option value='$name'>$name</option>";
-								// }
+								}
 							}
 						?>
 					</select>
@@ -82,7 +82,11 @@
 				<div class="patient__container--highlight">
 					<div class="patient__highlight">
 						<figure class="patient__highlight--box patient__picture--mask">
-							<img src="./img/margaret.jpg" class="patient__picture" alt="Picture of Margaret">
+							<?php 
+								$patientImg = "<img src=\"./images/PA00".$patientID.".jpg\" class=\"patient__picture\" alt=\"Picture of patient\">";
+								$patientImgGeneric = "<img src=\"./images/default.jpg\" class=\"patient__picture\" alt=\"Picture of patient\">";
+								($patientID < 10) ? $patientImg : $patientImgGeneric;
+                            ?>
 						</figure>
 						<h2 class="patient__highlight--box patient__name">
 							<?php echo $_SESSION["patient"];?>
@@ -114,18 +118,24 @@
 				<h2 class="subheading">Medications</h2>
 				<p class="section__heading--edit">Edit</p>
 			</div>
-			<div class="section__container">
-				<div class="med__table">
-					<div class="section__table--heading"><p>Time of Day</p></div>
-					<div class="section__table--heading"><p>Medication Name</p></div>
-					<div class="section__table--heading"><p>Dosage</p></div>
-					<div class="section__table--heading"><p>Route</p></div>
-					<div class="section__table--heading"><p>Instructions</p></div>
-					<div class="section__table--heading"><p>Packed?</p></div>
-					<div class="section__table--heading"><p>Status</p></div>
-					<?php getPatientMeds($_SESSION["time"]); ?>
-				</div>
-			</div>
+			<form class='' method='POST'>
+				<div class="section__container">
+					<div class="med__table">
+						<!-- <div class="section__table--heading"><p>Time of Day</p></div> -->
+						<div class="section__table--heading"><p>Medication Name</p></div>
+						<div class="section__table--heading"><p>Dosage</p></div>
+						<div class="section__table--heading"><p>Route</p></div>
+						<div class="section__table--heading"><p>Instructions</p></div>
+						<div class="section__table--heading"><p>Packed?</p></div>
+						<div class="section__table--heading"><p>Status</p></div>
+						<?php getPatientMeds(); ?>
+					</div>
+				</div> 
+				<input type='submit' value='Save' class='form__submit input__container--small' name='med_submit'>
+			</form>
+			<?php 
+			// submitMeds();
+			?>
 		</section>
 		<!-- Diet Regime -->
 		<section id="diet-regime">
@@ -148,11 +158,16 @@
 				<h2 class="subheading">Meal</h2>
 				<p class="section__heading--edit">Edit</p>
 			</div>
-			<div class="section__container">
-				<div class="meal__table">
-					<?php getMeal(); ?>
+			<form class='' method='POST'>
+				<div class="section__container">
+					<div class="meal__table">
+						<div class="section__table--heading"><p>Diet Regime</p></div>
+						<div class="section__table--heading"><p>Packed?</p></div>
+						<?php getMeal(); ?>
+					</div>
 				</div>
-			</div>
+				<input type='submit' value='Save' class='form__submit input__container--small' name='meal_submit'>
+			</form>
 		</section>
 	</div>
 	<!-- JavaScript to change PHP template -->

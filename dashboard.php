@@ -34,12 +34,12 @@
 						<!-- Date -->
 						<div class="input__container">
 							<label for="inputDate" type="date">Date</label><br>
-							<input name="inputDate" id="inputDate" type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05">
+							<input class="input__container--dash" name="inputDate" id="inputDate" type="date" value="2021-11-22" min="2021-11-22" max="2021-12-05">
 						</div>
 						<!-- Dropdown List of Time of Day -->
 						<div class="input__container">
 							<label for="time">Time of Day</label><br>
-							<select name="dropdown--time" id="dropdown--time">
+							<select class="input__container--dash" name="dropdown--time" id="dropdown--time">
 								<option value="Morning">Morning</option>
 								<option value="Afternoon">Afternoon</option>
 								<option value="Evening">Evening</option>
@@ -48,7 +48,7 @@
 						<!-- Dropdown List of Patients -->
 						<div class="input__container">
 							<label for="patient">Patient</label><br>
-							<select name="dropdown--patients" id="dropdown--patients">
+							<select class="input__container--dash" name="dropdown--patients" id="dropdown--patients">
 								<!-- Obtain list of patients from database -->
 								<?php
 									ob_start();
@@ -63,7 +63,7 @@
 							</select>
 						</div>
 						<div class="input__container">
-							<input type="submit" value="Go" class="form__submit" name="dash_submit">
+							<input type="submit" value="Go" class="form__submit input__container--dash" name="dash_submit">
 						</div>
 					</form>
 
