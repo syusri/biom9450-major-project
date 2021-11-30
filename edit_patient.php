@@ -42,10 +42,10 @@
 		?>
 		<!-- Actual form -->
 		<div class="form__container--mini">
-			<form class="form--dashboard" onSubmit="return validInfo()" action="edit_success.php" method="POST">
+			<form class="form--dashboard" onSubmit="return validInfo()" action="edit_success.php" method="POST" align="center">
 				
 				<!-- Patient Details -->
-				<h3>Patient Information</h3>
+				<h3><br>Patient Information</h3>
 				<?php
 					// Grab the patient ID from the summary page 
 					if (!$_POST["submit_edit_patient_ID"]) {
@@ -130,7 +130,7 @@
 				<br></br>
 
 				<!-- Emergency Contact Information -->
-				<h3>Emergency Contact</h3>
+				<h3><br>Emergency Contact</h3>
 				<?php 
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
@@ -175,7 +175,7 @@
 				<br></br>
 
 				<!-- Medicare Details -->
-				<h3>Medicare Information</h3>
+				<h3><br>Medicare Information</h3>
 				<?php 
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
