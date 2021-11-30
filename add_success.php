@@ -94,25 +94,28 @@
 				while (odbc_fetch_row($rs)) {
 					$contact_id = odbc_result($rs, "ContactID");
 				}
-				if(!$rs) {
-					exit("Error in SQL get contact"); 
-				}
+				if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
+                }
 				//get medicare id
 				$sql_get_id = "SELECT MedicareID FROM Medicare WHERE MedicareNumber='$medicare'";
 				$rs = odbc_exec($conn, $sql_get_id);
 				odbc_fetch_row($rs);
 				$medicare_id = odbc_result($rs,"MedicareID");
-				if(!$rs) {
-					exit("Error in SQL get med id"); 
-				}
+				if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
+                }
 				//get dietregime id 
 				$sql_get_id = "SELECT DietRegimeID FROM DietRegime WHERE DietName='$diet'";
 				$rs = odbc_exec($conn, $sql_get_id);
 				odbc_fetch_row($rs);
 				$diet_id = odbc_result($rs,"DietRegimeID");
-				if(!$rs) {
-					exit("Error in SQL get diet id"); 
-				}
+				if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
+                }
 				//get ID of current practitioner
 				$prac_id = $practitioner_number;
 				if ($prac_id != 1 || $prac_id != 2) {
@@ -152,9 +155,10 @@
 				VALUES ('$firstName', '$lastName', '$gender', '$roomNumber', '00$prac_id', '$contact_id', '$newDate', 'default', '$weight',
 				'00$diet_id', '$medicare_id', '$notes')";
 				$add = odbc_exec($conn, $sql_insert_patient);
-				if(!$add) {
-					exit("Error in SQL insert patient"); 
-				}
+				if(!$add){
+                    // Error checking for SQL
+                    header("Location:error.php");
+                }
 				
 				//check it added properly
 				$sql_test = "SELECT FirstName, LastName FROM Patient";

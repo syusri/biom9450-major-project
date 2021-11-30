@@ -34,7 +34,10 @@
 			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
 			$rs = odbc_exec($conn,$sql);
 			// Finds the practitioner that is logged in
-
+			if(!$rs){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 			// Get the practitioner name that is logged in
 			while ($row = odbc_fetch_array($rs)){
 				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
@@ -49,14 +52,14 @@
 							//connect to database
 							$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 							if ($conn->connect_error) {
-								echo "$conn->connect_error";
-								die("Connection Failed\n");
+								header("Location:error.php");
 							}
 							//get full name of patients
 							$sql_PATIENT = "SELECT PatientID, FirstName, LastName FROM Patient";
 							$rs = odbc_exec($conn, $sql_PATIENT);
-							if(!$rs) {
-								exit("Error in SQL"); 
+							if(!$rs){
+								// Error checking for SQL
+								header("Location:error.php");
 							}
 							
 							//print practitioners

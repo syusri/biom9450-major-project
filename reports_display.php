@@ -34,7 +34,10 @@
 			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
 			$rs = odbc_exec($conn,$sql);
 			// Finds the practitioner that is logged in
-
+			if(!$rs){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 			// Get the practitioner name that is logged in
 			while ($row = odbc_fetch_array($rs)){
 				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
@@ -44,15 +47,15 @@
 			//connect to database
 			$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 			if ($conn->connect_error) {
-				echo "$conn->connect_error";
-				die("Connection Failed\n");
+				header("Location:error.php");
 			}
 
 			//sql to determine how many patient there are
 			$SQL_count = "SELECT Count(FirstName) AS P_COUNT FROM Patient";
 			$rs = odbc_exec($conn, $SQL_count);
-			if(!$rs) {
-				exit("Error in SQL"); 
+			if(!$rs){
+				// Error checking for SQL
+				header("Location:error.php");
 			}
 			//save each patient's value
 			$counter = "1";
@@ -106,8 +109,7 @@
 			//connect to database
 			$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 			if ($conn->connect_error) {
-				echo "$conn->connect_error";
-				die("Connection Failed\n");
+				header("Location:error.php");
 			}
 			//first we want to get the list of patients
 			//sql to determine patient names
@@ -117,8 +119,9 @@
 			INNER JOIN Practitioner ON Patient.PractitionerID = Practitioner.PractitionerID
 			ORDER BY Patient.PractitionerID, Patient.PatientID";
 			$aa = odbc_exec($conn, $SQL_patient);
-			if(!$aa) {
-				exit("Error in SQL_patient"); 
+			if(!$aa){
+				// Error checking for SQL
+				header("Location:error.php");
 			}
 			while (odbc_fetch_row($aa)) {
 				$first = odbc_result($aa,"FirstName");
@@ -173,8 +176,9 @@
 									$SQL_meals_last = "SELECT Meal, DateOfMeal FROM Meal
 									WHERE DietRegimeID=$meal_id";
 									$ls = odbc_exec($conn, $SQL_meals_last);
-									if(!$ls) {
-										exit("Error in SQL_meals_last"); 
+									if(!$ls){
+										// Error checking for SQL
+										header("Location:error.php");
 									}
 									while (odbc_fetch_row($ls)) {
 										$Meal = odbc_result($ls,"Meal");
@@ -219,8 +223,9 @@
 									$SQL_meals_this = "SELECT Meal, DateOfMeal FROM Meal
 									WHERE DietRegimeID=$meal_id";
 									$ts = odbc_exec($conn, $SQL_meals_this);
-									if(!$ts) {
-										exit("Error in SQL_meals_this"); 
+									if(!$ts){
+										// Error checking for SQL
+										header("Location:error.php");
 									}
 									$j = 1;
 									while (odbc_fetch_row($ts)) {
@@ -264,8 +269,9 @@
 								INNER JOIN Medications ON PatientMedications.MedicationID=Medications.MedicationID
 								WHERE PatientID=$patient_id";
 								$med = odbc_exec($conn, $SQL_medication);
-								if(!$med) {
-									exit("Error in SQL_patient"); 
+								if(!$med){
+									// Error checking for SQL
+									header("Location:error.php");
 								}
 								$cur_date = New DateTime('2021-11-21');
 								while (odbc_fetch_row($med)) {
@@ -365,8 +371,9 @@
 								INNER JOIN Medications ON PatientMedications.MedicationID=Medications.MedicationID
 								WHERE PatientID=$patient_id";
 								$med = odbc_exec($conn, $SQL_medication);
-								if(!$med) {
-									exit("Error in SQL_patient"); 
+								if(!$med){
+									// Error checking for SQL
+									header("Location:error.php");
 								}
 								while (odbc_fetch_row($med)) {
 									$Med_Name = odbc_result($med, "MedicationName");
