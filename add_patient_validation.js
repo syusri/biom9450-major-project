@@ -40,15 +40,20 @@ function Last_Name() {
 function DOB() {
     dob = document.getElementById("dateofbirth").value;
     dob = new Date(dob);
-    date_compare = new Date("2000");
-    //patient must be older than 18
+        //patient must be older than 18
+    date_compare = new Date("2003");
+    //patient must be younger than 121
+    date_compare_2 = new Date("1921");
     if (date_compare < dob) {
         document.getElementById("error_dateofbirth").innerHTML="Patient must be older than 18";
         return false;
-    } else {
-        document.getElementById("error_dateofbirth").innerHTML="Success";
-        return true;
-    }
+    } 
+    if (date_compare_2 > dob) {
+        document.getElementById("error_dateofbirth").innerHTML="Patient must be younger than 121";
+        return false;
+    } 
+    document.getElementById("error_dateofbirth").innerHTML="Success";
+    return true;
 }
 
 function Weight() {
@@ -96,11 +101,11 @@ function Last_Name_Contact() { //lastName_contact
       //check whether the last name has only allowed characters
       //We can compare "last" to a regular expression
     if (!regex.test(last)) {
-        document.getElementById("error_lastName").innerHTML="Last name should contain only letters, apostrophes, spaces and hyphens";
+        document.getElementById("error_last_contact").innerHTML="Last name should contain only letters, apostrophes, spaces and hyphens";
         return false;
     //We also need to make sure last name is not empty
     } else if (last == "") {
-        document.getElementById("error_lastName").innerHTML="Please enter a last name";
+        document.getElementById("error_last_contact").innerHTML="Please enter a last name";
         return false;
     //If we get to here, then the other tests have passed
     } else {
