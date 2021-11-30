@@ -26,7 +26,10 @@
 		</div>
 		<?php 
 			$conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
-
+			if(!$conn){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 			session_start();
 			$practitioner_number = $_SESSION["session_practitioner"];
 			$practitioner_name = $_SESSION["session_practitioner_name"];
@@ -34,7 +37,10 @@
 			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
 			$rs = odbc_exec($conn,$sql);
 			// Finds the practitioner that is logged in
-
+			if(!$rs){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 			// Get the practitioner name that is logged in
 			while ($row = odbc_fetch_array($rs)){
 				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];

@@ -35,7 +35,10 @@
 				$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
 				$rs = odbc_exec($conn,$sql);
 				// Finds the practitioner that is logged in
-
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
+                }
 				// Get the practitioner name that is logged in
 				while ($row = odbc_fetch_array($rs)){
 					$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
@@ -47,8 +50,9 @@
                 //sql statement to see if anything has changed
                 $sql_patient = "SELECT * FROM Patient WHERE PatientID={$patient_id}";
                 $rs = odbc_exec($conn, $sql_patient);
-                if (!$rs) {
-                    exit ("Error in SQL patient");
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
                 }
                 while (odbc_fetch_row($rs)) {
                     $first_data = odbc_result($rs,"FirstName");
@@ -66,16 +70,18 @@
                 }
                 $sql_diet = "SELECT DietName FROM DietRegime WHERE DietRegimeID=$diet_id_data";
                 $ds = odbc_exec($conn, $sql_diet);
-                if (!$ds) {
-                    exit ("Error in SQL diet");
+                if(!$ds){
+                    // Error checking for SQL
+                    header("Location:error.php");
                 }
                 odbc_fetch_row($ds);
                 $diet_name_data = odbc_result($ds, "DietName");
 
                 $sql_CONTACT = "SELECT * FROM EmergencyContact WHERE ContactID=$contact_data";
                 $rs = odbc_exec($conn, $sql_CONTACT);
-                if(!$rs) {
-                    exit("Error in SQL"); 
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
                 }
                 while (odbc_fetch_row($rs)) {
                     $first_contact_data = odbc_result($rs,"FirstName");
@@ -87,8 +93,9 @@
 
                 $sql_MEDICARE = "SELECT * FROM Medicare WHERE MedicareID=$medicare_data";
                 $rs = odbc_exec($conn, $sql_MEDICARE);
-                if (!$rs) {
-                    exit ("Error in SQL");
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php");
                 }
                 while (odbc_fetch_row($rs)) {
                     $medicare_number_data = odbc_result($rs, "MedicareNumber");
@@ -105,12 +112,17 @@
                         $sql_update = "UPDATE Patient SET FirstName='$firstName' WHERE PatientID={$patient_id}";
 
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update first"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT FirstName FROM Patient WHERE PatientID={$patient_id}";
                         $rs = odbc_exec($conn, $sql_check);
+                        if(!$rs){
+                            // Error checking for SQL
+                            header("Location:error.php");
+                        }
                         while (odbc_fetch_row($rs)) {
                             $First_check = odbc_result($rs, "FirstName");
                             echo "First name has been changed to: $First_check<br>";
@@ -125,8 +137,9 @@
                         $sql_update = "UPDATE Patient SET LastName='$lastName' WHERE PatientID={$patient_id}";
 
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update last"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT LastName FROM Patient WHERE PatientID={$patient_id}";
@@ -183,14 +196,16 @@
                     $rs = odbc_exec($conn, $sql_get_id);
                     odbc_fetch_row($rs);
                     $new_diet_id = odbc_result($rs, "DietRegimeID");
-                    if(!$rs) {
-                        exit("Error in SQL get diet id"); 
+                    if(!$rs){
+                        // Error checking for SQL
+                        header("Location:error.php");
                     }
                     if (strcmp(strtolower($diet), strtolower($diet_name_data)) != 0) { //update
                         $sql_update = "UPDATE Patient SET DietRegimeID='00$new_diet_id' WHERE PatientID={$patient_id}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update diet"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT DietRegimeID FROM Patient WHERE PatientID={$patient_id}";
@@ -212,15 +227,17 @@
                     if (strcmp($notes, $notes_data) != 0) { //update
                         $sql_update = "UPDATE Patient SET Notes='$notes' WHERE PatientID={$patient_id}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update notes"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         //to fix: not printing update message, but still updates
                         $sql_check = "SELECT Notes FROM Patient WHERE PatientID={$patient_id}";
                         $rs = odbc_exec($conn, $sql_check);
-                        if (!$rs) {
-                            exit("Error in SQL check notes");
+                        if(!$rs){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         while (odbc_fetch_row($rs)) {
                             $Notes_check = odbc_result($rs, "Notes");
@@ -235,8 +252,9 @@
                     if (strcmp($first_contact_data, $firstName_contact) != 0) { //update
                         $sql_update = "UPDATE EmergencyContact SET FirstName='$firstName_contact' WHERE ContactID={$contact_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update first_contact"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT FirstName FROM EmergencyContact WHERE ContactID={$contact_data}";
@@ -254,8 +272,9 @@
                     if (strcmp($last_contact_data, $lastName_contact) != 0) { //update
                         $sql_update = "UPDATE EmergencyContact SET LastName='$lastName_contact' WHERE ContactID={$contact_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update last_contact"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT LastName FROM EmergencyContact WHERE ContactID={$contact_data}";
@@ -273,8 +292,9 @@
                     if (strcmp($phone_contact_data, $phone) != 0) { //update
                         $sql_update = "UPDATE EmergencyContact SET PhoneNumber='$phone' WHERE ContactID={$contact_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update phone_contact"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT PhoneNumber FROM EmergencyContact WHERE ContactID={$contact_data}";
@@ -292,8 +312,9 @@
                     if (strcmp($email_contact_data, $email_contact) != 0) { //update
                         $sql_update = "UPDATE EmergencyContact SET Email='$email_contact' WHERE ContactID={$contact_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update email_contact"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT Email FROM EmergencyContact WHERE ContactID={$contact_data}";
@@ -311,8 +332,9 @@
                     if (strcmp($relationship_contact_data, $relationship) != 0) { //update
                         $sql_update = "UPDATE EmergencyContact SET Relationship='$relationship' WHERE ContactID={$contact_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update relationship_contact"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT Relationship FROM EmergencyContact WHERE ContactID={$contact_data}";
@@ -331,15 +353,17 @@
                     if (strcmp($medicare_number_data, $number) != 0) { //update
                         $sql_update = "UPDATE Medicare SET MedicareNumber='$number' WHERE MedicareID={$medicare_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update medicare_num"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         //fix not printing output
                         $sql_check = "SELECT MedicareNumber FROM Medicare WHERE MedicareID={$medicare_data} ";
                         $test = odbc_exec($conn, $sql_check);
-                        if (!$test) {
-                            exit ("Error in number check");
+                        if(!$test){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         while (odbc_fetch_row($test)) {
                             $med_check = odbc_result($test, "MedicareNumber");
@@ -353,14 +377,16 @@
                     if (strcmp($medicare_reference_data, $IRN) != 0) { //update
                         $sql_update = "UPDATE Medicare SET MedicareReference='$IRN' WHERE MedicareID={$medicare_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update medicare_irn"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT MedicareReference FROM Medicare WHERE MedicareID={$medicare_data}";
                         $test = odbc_exec($conn, $sql_check);
-                        if (!$test) {
-                            exit ("Error in irn check");
+                        if(!$test){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         while (odbc_fetch_row($test)) {
                             $irn_check = odbc_result($test, "MedicareReference");
@@ -389,14 +415,16 @@
                     if (strcmp($ex, $new_Date) != 0) { //update
                         $sql_update = "UPDATE Medicare SET Expiry='$new_Date' WHERE MedicareID={$medicare_data}";
                         $update = odbc_exec($conn, $sql_update);
-                        if(!$update) {
-                            exit("Error in SQL update medicare_expiry"); 
+                        if(!$update){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         //verify
                         $sql_check = "SELECT Expiry FROM Medicare WHERE MedicareID={$medicare_data}";
                         $test = odbc_exec($conn, $sql_check);
-                        if (!$test) {
-                            exit ("Error in expiry check");
+                        if(!$test){
+                            // Error checking for SQL
+                            header("Location:error.php");
                         }
                         while (odbc_fetch_row($test)) {
                             $expiry_check = odbc_result($test, "Expiry");

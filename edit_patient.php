@@ -34,7 +34,10 @@
 			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
 			$rs = odbc_exec($conn,$sql);
 			// Finds the practitioner that is logged in
-
+			if(!$rs){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 			// Get the practitioner name that is logged in
 			while ($row = odbc_fetch_array($rs)){
 				$practitioner_name_loggedin = $row["FirstName"]." ".$row["LastName"];
@@ -58,14 +61,15 @@
 					echo "<input type='hidden' name='patient_id' value=$patient_number>";
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
-						echo "$conn->connect_error";
-						die("Connection Failed\n");
+						// Error checking for SQL
+						header("Location:error.php");
 					}
 					//get full name of practitioners
 					$sql_PATIENT = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
 					$rs = odbc_exec($conn, $sql_PATIENT);
-					if(!$rs) {
-						exit("Error in SQL"); 
+					if(!$rs){
+						// Error checking for SQL
+						header("Location:error.php");
 					}
 					while (odbc_fetch_row($rs)) {
 						$first = odbc_result($rs,"FirstName");
@@ -83,8 +87,9 @@
 					
 					$sql_diet = "SELECT DietName FROM DietRegime WHERE DietRegimeID=$diet_id";
 					$ds = odbc_exec($conn, $sql_diet);
-					if (!$ds) {
-						exit ("Error in SQL diet");
+					if(!$ds){
+						// Error checking for SQL
+						header("Location:error.php");
 					}
 					odbc_fetch_row($ds);
 					$diet_name = odbc_result($ds, "DietName");
@@ -134,14 +139,14 @@
 				<?php 
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
-						echo "$conn->connect_error";
-						die("Connection Failed\n");
+						header("Location:error.php");
 					}
 					//get full name of practitioners
 					$sql_CONTACT = "SELECT * FROM EmergencyContact WHERE ContactID=$contact";
 					$rs = odbc_exec($conn, $sql_CONTACT);
-					if(!$rs) {
-						exit("Error in SQL"); 
+					if(!$rs){
+						// Error checking for SQL
+						header("Location:error.php");
 					}
 					while (odbc_fetch_row($rs)) {
 						$first = odbc_result($rs,"FirstName");
@@ -179,14 +184,14 @@
 				<?php 
 					$conn = odbc_connect('z5254640', '', '', SQL_CUR_USE_ODBC);
 					if ($conn->connect_error) {
-						echo "$conn->connect_error";
-						die("Connection Failed\n");
+						header("Location:error.php");
 					}
 					//get full name of practitioners
 					$sql_MEDI = "SELECT * FROM Medicare WHERE MedicareID=$medicare";
 					$rs = odbc_exec($conn, $sql_MEDI);
-					if(!$rs) {
-						exit("Error in SQL"); 
+					if(!$rs){
+						// Error checking for SQL
+						header("Location:error.php");
 					}
 					while (odbc_fetch_row($rs)) {
 						$number = odbc_result($rs,"MedicareNumber");
