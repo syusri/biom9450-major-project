@@ -983,10 +983,14 @@ form.search_patients::after {
   filter: drop-shadow(4px 4px 4px #00000025);
 }
 
-.diet_table{
+.diet_table {
   font-size: 10px;
 }
 
 .patient_report_picture {
   width: 100%;
+}
+
+input[type="checkbox"] {
+  transform: scale(1);
 }
