@@ -25,7 +25,7 @@
 				<p><span class="page--current">Generate Report</span></p>
 		</div>
 		<?php 
-			$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+			$conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
 
 			session_start();
 			$practitioner_number = $_SESSION["session_practitioner"];

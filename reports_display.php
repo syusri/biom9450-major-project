@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/style_sheet_new.css">
 	<script src=""></script>
 </head>
-
+<!-- If no records returned - print a message-->
 <body>
 	<?php
 		include 'index2.html';
@@ -25,7 +25,7 @@
 				<p><a href="reports_generate.php" class="page--previous">Generate Report</a> > <span class="page--current">Display Report</span></p>
 		</div>
 		<?php 
-			$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+			$conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
 
 			session_start();
 			$practitioner_number = $_SESSION["session_practitioner"];
@@ -111,7 +111,7 @@
 			}
 			//first we want to get the list of patients
 			//sql to determine patient names
-			$SQL_patient = "SELECT Patient.PatientID, Patient.FirstName, Patient.LastName, Patient.DietRegimeID,
+			$SQL_patient = "SELECT Patient.PatientID, Patient.FirstName, Patient.RoomNumber, Patient.LastName, Patient.DietRegimeID,
 			Practitioner.FirstName AS PR_First, Practitioner.LastName AS PR_Last
 			FROM Patient
 			INNER JOIN Practitioner ON Patient.PractitionerID = Practitioner.PractitionerID
@@ -128,13 +128,19 @@
 				$dr_first = odbc_result($aa, "PR_First");
 				$dr_last = odbc_result($aa, "PR_Last");
 				$dr_full = ($dr_first . ' ' . $dr_last);
+				$room = odbc_result($aa, "RoomNumber");
 				//check if each patient was ticked or not
 				if ($p["$patient_id"] == "1") { //on
 					echo "<div class='patient__container--highlight'>";
 						echo "<div class='patient__highlight'>";
 							//insert image of patient
 							echo "<figure class='patient__highlight--box patient__picture--mask'>";
-								echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
+								if ($patient_id < 10) {
+									echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
+								}
+								else {
+									echo "<img src='images/default.jpg' class='patient__picture' alt='Picture of patient'>";
+								}
 							echo "</figure>";
 							//header for patient name
 							echo "<h2 class='patient__highlight--box patient__name'>$first $last</h2>";
@@ -146,6 +152,7 @@
 							echo "<p class='patient__highlight--box patient__number--number'><br><br>Dr. $dr_full</p>";
 						echo "</div>";
 					echo "</div>";
+					
 					$check = new DateTime('2021-11-28');
 					if ($Diet == 1) { //on
 						$i = 1;
