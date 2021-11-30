@@ -22,48 +22,15 @@
 				<p><a href="dashboard.php" class="page--previous">Dashboard</a> > <span class="page--current">Medication and Diet Regime</span></p>
 		</div>
 
-		<!-- Actual form -->
-		<div class="form__container--mini">
-			<form class="" method="POST">
-				<!-- Date -->
-					<label for="date" type="date">Date</label>
-					<input name="inputDate" type="date" value="<?php echo $_SESSION["inputDate"] ?>"  min="2021-11-22" max="2021-12-05" class="input__container--small">
-				<!-- Dropdown List of Time of Day -->
-					<label for="time">Time of Day</label>
-					<select name="dropdown--time" id="dropdown--time" class="input__container--small">
-						<option id="Morning" value="Morning">Morning</option>
-						<option id="Afternoon" value="Afternoon">Afternoon</option>
-						<option id="Evening" value="Evening">Evening</option>
-					</select>
-				<!-- Dropdown List of Patients -->
-					<label for="patient">Patient</label>
-					<select name="dropdown--patients" id="dropdown--patients" class="input__container--small">
-						<!-- Obtain list of patients from database -->
-						<?php 
-							getPatientList();
-							// ob_clean();
-						?>
-					</select>
-					<input type="submit" value="Go" class="form__submit input__container--small" name="page_submit">
-			</form>
-		</div>
-
-		<!-- Bring information to results.php with PHP after form submission -->
-		<?php
-			if (isset($_POST["page_submit"])) {
-				$_SESSION["inputDate"] = $_POST["inputDate"]; 
-				$_SESSION["time"] = $_POST["dropdown--time"];
-				$_SESSION["patient"] = $_POST["dropdown--patients"];
-			}
-		?>
-
 		<!-- Summary of what the user just input -->
-		<?php
-			// echo "<p>Date: ", $_SESSION['inputDate'], "</p>";
-			// echo "<p>Time of Day: ", $_SESSION["time"], "</p>";
-			// echo "<p>Patient: ", $_SESSION["patient"], "</p>";
-			echo "<br><h2>Showing result for: ", $_SESSION["patient"], ", ", $_SESSION["time"], ", ", $_SESSION['inputDate'], "</h2>"
-		?>
+		<br>
+		<div class="result__container">
+			<h2>
+			<?php
+				echo "Showing result for: ", $_SESSION["patient"], ", ", $_SESSION["time"], ", ", date_create($_SESSION['inputDate'])->format('d-m-Y'), "</h2>"
+			?>
+			</h2>
+		</div>
 
 		<!-- Patient Summary -->
 		<section id="patient">
