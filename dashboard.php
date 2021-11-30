@@ -16,9 +16,17 @@
 			session_start();
 			if(!isset($_SESSION["session_practitioner"])) { header("Location:login.php");}
 			$practitioner_number = $_SESSION["session_practitioner"];
-			$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+			$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+			if(!$conn){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 			$sql = "SELECT * FROM Practitioner WHERE PractitionerID={$practitioner_number}";
 			$rs = odbc_exec($conn,$sql);
+			if(!$rs){
+				// Error checking for SQL
+				header("Location:error.php");
+			}
 
 			while ($row = odbc_fetch_array($rs)){
 				$_SESSION["session_practitioner_name"] = $row["FirstName"]." ".$row["LastName"];
@@ -54,7 +62,12 @@
 									ob_start();
 									$prac = $_SESSION["session_practitioner"];
 									$sql = "SELECT * FROM Patient WHERE PractitionerID=$prac";
+									
 									$rs = odbc_exec($conn,$sql);
+									if(!$rs){
+										// Error checking for SQL
+										header("Location:error.php");
+									}
 									while ($row = odbc_fetch_array($rs)) {
 										$name = $row["FirstName"]." ".$row["LastName"];
 										$_SESSION[$name] = $row["PatientID"]; 
@@ -70,6 +83,7 @@
 
 					<!-- Bring information to results.php with PHP after form submission -->
 					<?php
+					
 						if (isset($_POST["dash_submit"])) {
 							$_SESSION["inputDate"] = $_POST["inputDate"]; 
 							$_SESSION["time"] = $_POST["dropdown--time"];

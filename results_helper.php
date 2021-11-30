@@ -2,12 +2,22 @@
 	session_start();
 
 	ob_start();
-	$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+	$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+
+	if(!$conn){
+		// Error checking for SQL
+		header("Location:error.php");
+	}
 	$patientID = $_SESSION[$_SESSION["patient"]];
 	
 	// Get all patient details immediately available in Patient table
 	$sql = "SELECT * FROM Patient WHERE PatientID={$patientID}";
 	$rs = odbc_exec($conn,$sql);
+
+	if(!$rs){
+		// Error checking for SQL
+		header("Location:error.php");
+	}
 	while ($row = odbc_fetch_array($rs)){
 		$gender = $row["Gender"];
 		$room = $row["RoomNumber"];
@@ -23,7 +33,11 @@
 	// Get patient's practitioner
 	function getPrac() {
 		$patientID = $_SESSION[$_SESSION["patient"]];
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$sql2 = 
 		"SELECT pr.PractitionerID, pr.FirstName, pr.LastName 
 		FROM Practitioner AS pr
@@ -32,6 +46,10 @@
 		WHERE pa.PatientID={$patientID}
 		";
 		$rs2 = odbc_exec($conn,$sql2);
+		if(!$rs2){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		while ($row = odbc_fetch_array($rs2)){
 			$practitioner = $row["FirstName"]." ".$row["LastName"];
 		} 
@@ -40,9 +58,17 @@
 
 	// Get list of patients
 	function getPatientList() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$sql = "SELECT * FROM Patient";
 		$rs = odbc_exec($conn,$sql);
+		if(!$rs){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		while ($row = odbc_fetch_array($rs)) {
 			$name = $row["FirstName"]." ".$row["LastName"];
 			if ($name == $_SESSION["patient"]) {
@@ -154,7 +180,11 @@
 
 	// Get patient medication details
 	function getPatientMeds() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$time=$_SESSION["time"];
 		$date = $_SESSION['inputDate'];
 		$patientID = $_SESSION[$_SESSION["patient"]];
@@ -172,6 +202,12 @@
 		AND pm.Date=#$date#);
 		";
 		$rs3 = odbc_exec($conn,$sql3);
+
+		if(!$rs3){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
+
 		while ($row = odbc_fetch_array($rs3)){
 			// $timeOfDay = $row["TimeOfDay"];
 			$medName = $row["MedicationName"];
@@ -201,7 +237,11 @@
 	}
 	
 	function submitMeds($medIDArray, $submit) {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$patientID = $_SESSION[$_SESSION["patient"]];
@@ -241,7 +281,11 @@
 	}
 
 	function submitMeal($mealID, $submit) {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$patientID = $_SESSION[$_SESSION["patient"]];
@@ -250,7 +294,7 @@
 			// Update packed status
 			(isset($_POST["mealPacked"])) ? $mealPacked = 'TRUE': $mealPacked = 'FALSE';
 			$sql_update = "UPDATE Meal 
-			SET MealPacked=$mealPacked
+			SET Packed=$mealPacked
 			WHERE MealID={$mealID}";
 			$add = odbc_exec($conn, $sql_update);
 			if(!$add) {
@@ -264,7 +308,11 @@
 
 	// Get details for patient's meals
 	function getDietRegime() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$sql4 = 
 		"SELECT d.* 
@@ -288,13 +336,17 @@
 
 	// Get the actual meal
 	function getMeal() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$dietRegimeID = $_SESSION["DietRegimeID"];
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$sql4 = 
-		"SELECT m.Meal, m.MealPacked, m.MealID
+		"SELECT m.Meal, m.Packed, m.MealID
 		FROM Meal m
 		INNER JOIN Patient pa
 		ON pa.DietRegimeID = m.DietRegimeID			
@@ -303,16 +355,21 @@
 		AND DateOfMeal=#$date#
 		AND TimeOfDay='$time'
 		";
+		
 		$rs4 = odbc_exec($conn,$sql4);
+		if(!$rs4){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		while ($row = odbc_fetch_array($rs4)){
 			$mealID = $row["MealID"];
 			$meal = $row["Meal"];
 			// $mealPacked = $row["MealPacked"] == 1 ? "checked" : "";
-			$mealPacked = $row["MealPacked"];
+			$mealPacked = $row["Packed"];
 
 			echo "<div><p>$meal</p></div>";
 			// echo "<div><p>$mealPacked</p></div>";
-			$row["MealPacked"] == 1
+			$row["Packed"] == 1
 			? $mealPacked = "<div style=checkbox--center><p><input type='checkbox' id='mealPacked' name='mealPacked' checked></p></div>"
 			: $mealPacked = "<div style=checkbox--center><p><input type='checkbox' id='mealPacked' name='mealPacked' ></p></div>";
 			echo $mealPacked;
@@ -321,7 +378,11 @@
 
 	// Get the meal ID
 	function getMealID() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$dietRegimeID = $_SESSION["DietRegimeID"];
 		$date = $_SESSION['inputDate'];
@@ -337,6 +398,12 @@
 		AND TimeOfDay='$time'
 		";
 		$rs4 = odbc_exec($conn,$sql4);
+
+		if(!$rs4){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
+
 		while ($row = odbc_fetch_array($rs4)){
 			$mealID = $row["MealID"];
 		} 
@@ -345,7 +412,11 @@
 	}
 
 	function getMedIDs() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		if(!$conn){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
 		$time=$_SESSION["time"];
 		$date = $_SESSION['inputDate'];
 		$patientID = $_SESSION[$_SESSION["patient"]];
@@ -363,6 +434,12 @@
 		AND pm.Date=#$date#);
 		";
 		$rs3 = odbc_exec($conn,$sql3);
+
+		if(!$rs3){
+			// Error checking for SQL
+			header("Location:error.php");
+		}
+
 		while ($row = odbc_fetch_array($rs3)){
 			array_push($medIDArray, $row["PatientMedID"]);
 		} 
