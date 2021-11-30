@@ -53,8 +53,9 @@
 	}
 	
 	// Get list of medication statuses
-	function getMedStatus($medStatus) {
-		echo "<select name='medStatus' id='select__med--status'>";
+	function getMedStatus($medStatus, $patientMedID) {
+		$name = 'medStatus'.$patientMedID;
+		echo "<select name='$name' id='select__med--status'>";
 		switch ($medStatus) {
 			case 'Given':
 				echo "<option selected id='Given' value='Given'>Given</option>";
@@ -156,6 +157,7 @@
 		$time=$_SESSION["time"];
 		$date = $_SESSION['inputDate'];
 		$patientID = $_SESSION[$_SESSION["patient"]];
+		// $medIDArray = array();
 		$sql3 = 
 		"SELECT m.MedicationName, pm.TimeOfDay, m.RecommendedDosage, m.Route, m.InstructionsForUse,
 		pa.FirstName,pm.Date, pm.MedicationPacked, pm.StatusOfMedication, pm.PatientMedID
@@ -176,7 +178,7 @@
 			$route = $row["Route"];
 			$instructions = $row["InstructionsForUse"];
 			// $medPacked = $row["MedicationPacked"] == 1 ? "Yes" : "No";
-			$medPacked = $row["MedicationPacked"];
+			// $medPacked = $row["MedicationPacked"];
 			$medStatus = $row["StatusOfMedication"];
 			$patientMedID = $row["PatientMedID"];
 			
@@ -185,41 +187,67 @@
 			echo "<div><p>$dosage</p></div>";
 			echo "<div><p>$route</p></div>";
 			echo "<div><p>$instructions</p></div>";
-			echo "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name='medPacked' checked=$medPacked></p></div>";
-			getMedStatus($medStatus);
-			// echo "<div><p>$medStatus</p></div>";
-
+			// echo "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name=$patientMedID checked=$medPacked></p></div>";
+			$row["MedicationPacked"] == 1
+			? $medPacked = "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name='$patientMedID' checked></p></div>"
+			: $medPacked = "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name='$patientMedID' ></p></div>";
+			echo "<div><p>$medPacked</p></div>";
+			
+			getMedStatus($medStatus, $patientMedID);
+			// array_push($medIDArray, $row["PatientMedID"]);
+			// echo "<div><p>$patientMedID</p></div>";
 		} 
 	}
 	
-	function submitMeds() {
+	function submitMeds($medIDArray) {
 		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		if (isset($_POST["med_submit"])) {
-			// Update packed status
-			$medPacked = $_POST['medPacked'];
-			$sql_update = "UPDATE PatientMedications SET
-			MedicationPacked='$medPacked'
-			WHERE PatientID={$patientID}
-			AND Date=#$date#
-			AND TimeOfDay='$time'";
-			$add = odbc_exec($conn, $sql_update);
-			if(!$add) {
-				exit("Error in SQL update first"); 
+			// $medPacked = $_POST['medPacked'];
+			foreach($medIDArray as $medID) {
+				// Update packed status
+				// $checkName = $medID.".Packed";
+				// echo "checkname is ", $checkName;
+				(isset($_POST["$medID"])) ? $medPacked = 'TRUE': $medPacked = 'FALSE';
+				echo $medID, " ";
+				echo $medPacked, "\n";
+				$sql_update = "UPDATE PatientMedications SET
+				MedicationPacked=$medPacked
+				WHERE PatientMedID={$medID}";
+				$add = odbc_exec($conn, $sql_update);
+				if(!$add) {
+					exit("Error in SQL update medication packed status"); 
+				}
+				// Update medication status
+				$name = 'medStatus'.$medID;
+				if (isset($_POST["$name"])) {
+					$medStatus = $_POST["$name"];
+					echo $medStatus;
+					$sql_update = "UPDATE PatientMedications SET
+					StatusOfMedication='$medStatus'
+					WHERE PatientMedID={$medID}";
+					$add = odbc_exec($conn, $sql_update);
+					if(!$add) {
+						exit("Error in SQL update medication packed status"); 
+					}
+				}
 			}
-			// Update medication status
-			$medStatus = $_POST['medStatus'];
-			$sql_update = "UPDATE PatientMedications SET
-			StatusOfMedication='$medStatus'
-			WHERE PatientID=$patientID
-			AND Date=#$date#
-			AND TimeOfDay='$time'";
-			$add = odbc_exec($conn, $sql_update);
-			if(!$add) {
-				exit("Error in SQL update first"); 
-			}
+			// // Update medication status
+			// $medStatus = $_POST['medStatus'];
+			// $sql_update = "UPDATE PatientMedications SET
+			// StatusOfMedication='$medStatus'
+			// WHERE PatientID=$patientID
+			// AND Date=#$date#
+			// AND TimeOfDay='$time'";
+			// $add = odbc_exec($conn, $sql_update);
+			// if(!$add) {
+			// 	exit("Error in SQL update first"); 
+			// }
+			// foreach($medIDArray as $medID) {
+
+			// }
 		}
 	}
 
@@ -325,6 +353,31 @@
 		} 
 
 		return $mealID;
+	}
+
+	function getMedIDs() {
+		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$time=$_SESSION["time"];
+		$date = $_SESSION['inputDate'];
+		$patientID = $_SESSION[$_SESSION["patient"]];
+		$medIDArray = array();
+		$sql3 = 
+		"SELECT m.MedicationName, pm.TimeOfDay, m.RecommendedDosage, m.Route, m.InstructionsForUse,
+		pa.FirstName,pm.Date, pm.MedicationPacked, pm.StatusOfMedication, pm.PatientMedID
+		FROM (PatientMedications pm
+		INNER JOIN Patient pa
+		ON pm.PatientID = pa.PatientID) 
+		INNER JOIN Medications m
+		ON pm.MedicationID = m.MedicationID
+		WHERE (pa.PatientID={$patientID} 
+		AND pm.TimeOfDay='{$time}'
+		AND pm.Date=#$date#);
+		";
+		$rs3 = odbc_exec($conn,$sql3);
+		while ($row = odbc_fetch_array($rs3)){
+			array_push($medIDArray, $row["PatientMedID"]);
+		} 
+		return $medIDArray;
 	}
 
 ?>

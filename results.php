@@ -40,19 +40,19 @@
 					<select name="dropdown--patients" id="dropdown--patients" class="input__container--small">
 						<!-- Obtain list of patients from database -->
 						<?php 
-							// getPatientList(); 
+							getPatientList(); 
 							// $conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
 							// ob_start();
-							$sql = "SELECT * FROM Patient";
-							$rs = odbc_exec($conn,$sql);
-							while ($row = odbc_fetch_array($rs)) {
-								$name = $row["FirstName"]." ".$row["LastName"];
-								if ($name == $_SESSION["patient"]) {
-									echo "<option value='$name' selected>$name</option>";
-								} else {
-									echo "<option value='$name'>$name</option>";
-								}
-							}
+							// $sql = "SELECT * FROM Patient";
+							// $rs = odbc_exec($conn,$sql);
+							// while ($row = odbc_fetch_array($rs)) {
+							// 	$name = $row["FirstName"]." ".$row["LastName"];
+							// 	if ($name == $_SESSION["patient"]) {
+							// 		echo "<option value='$name' selected>$name</option>";
+							// 	} else {
+							// 		echo "<option value='$name'>$name</option>";
+							// 	}
+							// }
 							// ob_end_flush();
 						?>
 					</select>
@@ -136,7 +136,7 @@
 				<input type='submit' value='Save' class='form__submit input__container--small' name='med_submit'>
 			</form>
 			<?php 
-			submitMeds();
+			submitMeds(getMedIDs());
 			?>
 		</section>
 		<!-- Diet Regime -->
