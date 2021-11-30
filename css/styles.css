@@ -441,6 +441,10 @@ input:hover, select:hover, ::-webkit-calendar-picker-indicator:hover {
     grid-auto-flow: row;
 }
 
+.mealForm {
+    display: block;
+}
+
 /* Form at the top */
 /* Form Checkboxes */
 .multiselect {

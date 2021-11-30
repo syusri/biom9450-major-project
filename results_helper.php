@@ -175,7 +175,8 @@
 			$dosage = $row["RecommendedDosage"];
 			$route = $row["Route"];
 			$instructions = $row["InstructionsForUse"];
-			$medPacked = $row["MedicationPacked"] == 1 ? "Yes" : "No";
+			// $medPacked = $row["MedicationPacked"] == 1 ? "Yes" : "No";
+			$medPacked = $row["MedicationPacked"];
 			$medStatus = $row["StatusOfMedication"];
 			$patientMedID = $row["PatientMedID"];
 			
@@ -184,7 +185,7 @@
 			echo "<div><p>$dosage</p></div>";
 			echo "<div><p>$route</p></div>";
 			echo "<div><p>$instructions</p></div>";
-			echo "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name='medPacked' value=$medPacked></p></div>";
+			echo "<div style=checkbox--center><p><input type='checkbox' id='$patientMedID' name='medPacked' checked=$medPacked></p></div>";
 			getMedStatus($medStatus);
 			// echo "<div><p>$medStatus</p></div>";
 
@@ -222,6 +223,28 @@
 		}
 	}
 
+	function submitMeal($mealID) {
+		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$date = $_SESSION['inputDate'];
+		$time=$_SESSION["time"];
+		$patientID = $_SESSION[$_SESSION["patient"]];
+		if (isset($_POST["meal_submit"])) {
+			
+			// Update packed status
+			(isset($_POST["mealPacked"])) ? $mealPacked = 'TRUE': $mealPacked = 'FALSE';
+			$sql_update = "UPDATE Meal 
+			SET MealPacked=$mealPacked
+			WHERE MealID={$mealID}";
+			$add = odbc_exec($conn, $sql_update);
+			if(!$add) {
+				exit("Error in SQL update - mealPacked"); 
+			}
+			echo $sql_update;
+			$mealPacked == 'TRUE' ? $test = "yes" : $test = "no";
+			echo " ", $test;
+		}
+	}
+
 	// Get details for patient's meals
 	function getDietRegime() {
 		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
@@ -254,7 +277,7 @@
 		$date = $_SESSION['inputDate'];
 		$time=$_SESSION["time"];
 		$sql4 = 
-		"SELECT m.Meal, m.MealPacked
+		"SELECT m.Meal, m.MealPacked, m.MealID
 		FROM Meal m
 		INNER JOIN Patient pa
 		ON pa.DietRegimeID = m.DietRegimeID			
@@ -265,13 +288,43 @@
 		";
 		$rs4 = odbc_exec($conn,$sql4);
 		while ($row = odbc_fetch_array($rs4)){
+			$mealID = $row["MealID"];
 			$meal = $row["Meal"];
-			$mealPacked = $row["MealPacked"] == 1 ? "Yes" : "No";
+			// $mealPacked = $row["MealPacked"] == 1 ? "checked" : "";
+			$mealPacked = $row["MealPacked"];
 
 			echo "<div><p>$meal</p></div>";
 			// echo "<div><p>$mealPacked</p></div>";
-			echo "<div style=checkbox--center><p><input type='checkbox' id='mealPacked' name='mealPacked' value=$mealPacked></p></div>";
+			$row["MealPacked"] == 1
+			? $mealPacked = "<div style=checkbox--center><p><input type='checkbox' id='mealPacked' name='mealPacked' checked></p></div>"
+			: $mealPacked = "<div style=checkbox--center><p><input type='checkbox' id='mealPacked' name='mealPacked' ></p></div>";
+			echo $mealPacked;
 		} 
+	}
+
+	// Get the meal ID
+	function getMealID() {
+		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$patientID = $_SESSION[$_SESSION["patient"]];
+		$dietRegimeID = $_SESSION["DietRegimeID"];
+		$date = $_SESSION['inputDate'];
+		$time=$_SESSION["time"];
+		$sql4 = 
+		"SELECT m.MealID
+		FROM Meal m
+		INNER JOIN Patient pa
+		ON pa.DietRegimeID = m.DietRegimeID			
+		WHERE pa.PatientID={$patientID}
+		AND pa.DietRegimeID = {$dietRegimeID}
+		AND DateOfMeal=#$date#
+		AND TimeOfDay='$time'
+		";
+		$rs4 = odbc_exec($conn,$sql4);
+		while ($row = odbc_fetch_array($rs4)){
+			$mealID = $row["MealID"];
+		} 
+
+		return $mealID;
 	}
 
 ?>

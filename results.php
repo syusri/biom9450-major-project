@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>AgedCare</title>
 	<link rel="stylesheet" href="css/styles.css">
-	<!-- <script src="js/main.js"></script> -->
+	<!-- <script src="js/results.js"></script> -->
 </head>
 
 <body>
@@ -42,6 +42,7 @@
 						<?php 
 							// getPatientList(); 
 							// $conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+							// ob_start();
 							$sql = "SELECT * FROM Patient";
 							$rs = odbc_exec($conn,$sql);
 							while ($row = odbc_fetch_array($rs)) {
@@ -52,6 +53,7 @@
 									echo "<option value='$name'>$name</option>";
 								}
 							}
+							// ob_end_flush();
 						?>
 					</select>
 					<input type="submit" value="Go" class="form__submit input__container--small" name="page_submit">
@@ -134,7 +136,7 @@
 				<input type='submit' value='Save' class='form__submit input__container--small' name='med_submit'>
 			</form>
 			<?php 
-			// submitMeds();
+			submitMeds();
 			?>
 		</section>
 		<!-- Diet Regime -->
@@ -158,16 +160,21 @@
 				<h2 class="subheading">Meal</h2>
 				<p class="section__heading--edit">Edit</p>
 			</div>
-			<form class='' method='POST'>
-				<div class="section__container">
+			<form class='mealForm' method='POST'  onsubmit='displayMeal()'>
+				<div class="section__container" id='mealForm'>
 					<div class="meal__table">
-						<div class="section__table--heading"><p>Diet Regime</p></div>
+						<div class="section__table--heading"><p>Meal</p></div>
 						<div class="section__table--heading"><p>Packed?</p></div>
 						<?php getMeal(); ?>
 					</div>
 				</div>
 				<input type='submit' value='Save' class='form__submit input__container--small' name='meal_submit'>
 			</form>
+			<!-- Bring information to results.php with PHP after form submission -->
+			<?php
+				submitMeal(getMealID());
+				// onsubmit="location.reload(true)
+			?>
 		</section>
 	</div>
 	<!-- JavaScript to change PHP template -->
