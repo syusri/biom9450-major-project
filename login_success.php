@@ -75,7 +75,7 @@
 						// Test the image
 						$patient_number = "001";
 		
-						$conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+						$conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
 						$sql = "SELECT * FROM Patient WHERE PatientID={$patient_number}";
 
 						//Used to check the connection to the database was successful								

@@ -33,7 +33,7 @@
 			</div>
             <?php
                 //Connecting to the database 
-                $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+                $conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
 
                 //Used to check the connection to the database was successful, direct to error page if issue                            
                 if(!$conn){
@@ -333,7 +333,7 @@
 				<div class="section__container--medications">
                     <?php
                         // Connect to the database to gather information on the medications specific to this patient 
-                        $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+                        $conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
 
                         if(!$conn){
                             // Error checking for SQL

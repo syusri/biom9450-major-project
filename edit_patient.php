@@ -46,7 +46,7 @@
 		<!-- Actual form -->
 		<div class="form__container--mini">
 			<form class="form--dashboard" onSubmit="return validInfo()" action="edit_success.php" method="POST" align="center">
-				
+			<div class='section__container--report'>
 				<!-- Patient Details -->
 				<h3><br>Patient Information</h3>
 				<?php
@@ -223,6 +223,7 @@
 				<!-- Submit Button-->
 				<div class="error" id="submit_check"></div>
 				<input type="submit" value="Go" class="form__submit input__container--small">
+			</div>	
 			</form>
 		</div>
 	</div>

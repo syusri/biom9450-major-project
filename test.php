@@ -27,7 +27,7 @@
                             $patient_number = "001";
                             echo "<br> <p align=\"center\"> Patient ID is PA".$patient_number." </p> <br>";
 
-                            $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+                            $conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
                             // echo "Hello";
 
                             $sql = "SELECT * FROM Patient WHERE PatientID={$patient_number}";

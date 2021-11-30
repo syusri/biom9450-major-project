@@ -1,6 +1,6 @@
 <?php 
 
-    $conn = odbc_connect('z5165306', '', '',SQL_CUR_USE_ODBC);
+    $conn = odbc_connect('z5254640', '', '',SQL_CUR_USE_ODBC);
 
     odbc_close($conn);
     
