@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+	$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 	$patientID = $_SESSION[$_SESSION["patient"]];
 	
 	// Get all patient details immediately available in Patient table
@@ -33,7 +33,7 @@
 	
 	// Get patient medication details
 	function getPatientMeds($timee) {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		// $time=$_SESSION["time"];
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$sql3 = 
@@ -70,7 +70,7 @@
 
 	// Get details for patient's meals
 	function getDietRegime() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$sql4 = 
 		"SELECT d.* 
@@ -94,7 +94,7 @@
 
 	// Get the actual meal
 	function getMeal() {
-		$conn = odbc_connect('z5205391','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		$patientID = $_SESSION[$_SESSION["patient"]];
 		$dietRegimeID = $_SESSION["DietRegimeID"];
 		$sql4 = 

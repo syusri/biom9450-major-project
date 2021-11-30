@@ -16,7 +16,7 @@
 			session_start();
 			if(!isset($_SESSION["session_practitioner"])) { header("Location:login.php");}
 			$practitioner_number = $_SESSION["session_practitioner"];
-			$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+			$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 			if(!$conn){
 				// Error checking for SQL
 				header("Location:error.php");

@@ -2,7 +2,7 @@
 	session_start();
 
 	ob_start();
-	$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+	$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 
 	if(!$conn){
 		// Error checking for SQL
@@ -33,7 +33,7 @@
 	// Get patient's practitioner
 	function getPrac() {
 		$patientID = $_SESSION[$_SESSION["patient"]];
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -58,7 +58,7 @@
 
 	// Get list of patients
 	function getPatientList() {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -180,7 +180,7 @@
 
 	// Get patient medication details
 	function getPatientMeds() {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -237,7 +237,7 @@
 	}
 	
 	function submitMeds($medIDArray, $submit) {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -281,7 +281,7 @@
 	}
 
 	function submitMeal($mealID, $submit) {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -308,7 +308,7 @@
 
 	// Get details for patient's meals
 	function getDietRegime() {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -336,7 +336,7 @@
 
 	// Get the actual meal
 	function getMeal() {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -378,7 +378,7 @@
 
 	// Get the meal ID
 	function getMealID() {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");
@@ -412,7 +412,7 @@
 	}
 
 	function getMedIDs() {
-		$conn = odbc_connect('z5165306','','',SQL_CUR_USE_ODBC);
+		$conn = odbc_connect('z5254640','','',SQL_CUR_USE_ODBC);
 		if(!$conn){
 			// Error checking for SQL
 			header("Location:error.php");

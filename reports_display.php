@@ -138,7 +138,7 @@
 						echo "<div class='patient__highlight'>";
 							//insert image of patient
 							echo "<figure class='patient__highlight--box patient__picture--mask'>";
-								if ($patient_id < 10) {
+								if ($patient_id <= 10) {
 									echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
 								}
 								else {
