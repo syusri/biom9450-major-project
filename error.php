@@ -26,7 +26,7 @@
 		<div class="main">
             <br><br><br><br><br><br><br>
             <h2 align="center"> Oops! There seems to be an error with the database connection... </h2>
-            <h2 align="center"> Please contact admin for support or direct to a different page using the naviagtion bar. </h2>
+            <h2 align="center"> Please contact admin for support or direct to a different page using the navigation bar. </h2>
 		</div>
 
         <!-- Footer -->
