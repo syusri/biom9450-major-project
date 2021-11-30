@@ -42,10 +42,10 @@
 		?>
 		<!-- Actual form -->
 		<div class="form__container--mini">
-			<form action="add_success.php" onSubmit="return validInfo()" method="POST">
+			<form action="add_success.php" onSubmit="return validInfo()" method="POST" align="center">
 				<div class='section__container--report'>
 					<!-- Patient Details -->
-					<h3>Patient Information</h3>
+					<h3><br>Patient Information</h3>
 					<p>
 						<div class="error" id="error_firstName"></div>
 						First Name: <input type="text" id="firstName" name="firstName" value="" 
@@ -106,7 +106,7 @@
 
 				<!-- Emergency Contact Information -->
 				<div class='section__container--report'>
-					<h3>Emergency Contact</h3>
+					<h3><br>Emergency Contact</h3>
 					<p>
 					<div class="error" id="error_first_contact"></div>
 					First Name: <input type="text" id="firstName_contact" name="firstName_contact" value="" 
@@ -140,7 +140,7 @@
 				</div>
 				<div class='section__container--report'>
 					<!-- Medicare Details -->
-					<h3>Medicare Information</h3>
+					<h3><br>Medicare Information</h3>
 					<p>
 					<div class="error" id="error_medicare"></div>
 					Medicare Number: <input type="number" id="medicare" name="medicare" value=""
