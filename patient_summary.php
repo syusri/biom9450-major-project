@@ -121,11 +121,17 @@
                     
                 } 
 
+                // //Emergency contact details and Medicare together to avoid super long SQL queries 
+                // $sql = "SELECT EmergencyContact.FirstName AS ECFirstName, EmergencyContact.LastName AS ECLastName, EmergencyContact.Relationship AS ECRelation, 
+                // EmergencyContact.PhoneNumber AS ECNumber, EmergencyContact.Email AS ECEmail, Medicare.MedicareNumber AS MedicareNumber, 
+                // Medicare.MedicareReference AS MedicareReference, Medicare.Expiry AS MedicareExpiry FROM ((Patient 
+                // INNER JOIN EmergencyContact ON Patient.ContactID=EmergencyContact.ContactID) INNER JOIN Medicare ON Patient.MedicareID=Medicare.MedicareID) 
+                // WHERE PatientID={$patient_number}";
+
                 //Emergency contact details and Medicare together to avoid super long SQL queries 
                 $sql = "SELECT EmergencyContact.FirstName AS ECFirstName, EmergencyContact.LastName AS ECLastName, EmergencyContact.Relationship AS ECRelation, 
-                EmergencyContact.PhoneNumber AS ECNumber, EmergencyContact.Email AS ECEmail, Medicare.MedicareNumber AS MedicareNumber, 
-                Medicare.MedicareReference AS MedicareReference, Medicare.Expiry AS MedicareExpiry FROM ((Patient 
-                INNER JOIN EmergencyContact ON Patient.ContactID=EmergencyContact.ContactID) INNER JOIN Medicare ON Patient.MedicareID=Medicare.MedicareID) 
+                EmergencyContact.PhoneNumber AS ECNumber, EmergencyContact.Email AS ECEmail FROM (Patient 
+                INNER JOIN EmergencyContact ON Patient.ContactID=EmergencyContact.ContactID) 
                 WHERE PatientID={$patient_number}";
 
                 //Executing the sql command and getting the result in rs
@@ -143,6 +149,32 @@
                     $EC_Relation = $row["ECRelation"];
                     $EC_Number = $row["ECNumber"];
                     $EC_Email = $row["ECEmail"];
+                    // //Medicare Details
+                    // $Medicare_Number = $row["MedicareNumber"];
+                    // $Medicare_Reference = $row["MedicareReference"];
+                    // $Medicare_Expiry = $row["MedicareExpiry"]; 
+                } 
+
+                //Emergency contact details and Medicare together to avoid super long SQL queries 
+                $sql = "SELECT Medicare.MedicareNumber AS MedicareNumber, Medicare.MedicareReference AS MedicareReference, Medicare.Expiry AS MedicareExpiry FROM (Patient 
+                INNER JOIN Medicare ON Patient.MedicareID=Medicare.MedicareID) 
+                WHERE PatientID={$patient_number}";
+
+                //Executing the sql command and getting the result in rs
+                $rs = odbc_exec($conn,$sql);
+
+                if(!$rs){
+                    // Error checking for SQL
+                    header("Location:error.php"); 
+                } 
+
+                //While loop to grab the results
+                while ($row = odbc_fetch_array($rs)){
+                    //Emergency Contact Details
+                    // $EC_Name_db = $row["ECFirstName"]." ".$row["ECLastName"];
+                    // $EC_Relation = $row["ECRelation"];
+                    // $EC_Number = $row["ECNumber"];
+                    // $EC_Email = $row["ECEmail"];
                     //Medicare Details
                     $Medicare_Number = $row["MedicareNumber"];
                     $Medicare_Reference = $row["MedicareReference"];
