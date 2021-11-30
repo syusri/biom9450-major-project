@@ -92,7 +92,7 @@
 				$sql_get_id = "SELECT ContactID FROM EmergencyContact WHERE FirstName='$firstName_contact'";
 				$rs = odbc_exec($conn, $sql_get_id);
 				while (odbc_fetch_row($rs)) {
-					echo "$contact_id";
+					$contact_id = odbc_result($rs, "ContactID");
 				}
 				if(!$rs) {
 					exit("Error in SQL get contact"); 
@@ -146,9 +146,10 @@
 					$gender = "M";
 				}
 				//add new patient
+				
 				$sql_insert_patient = "INSERT INTO Patient (FirstName, LastName, Gender, RoomNumber, PractitionerID,
 				ContactID, DOB, Image, Weight, DietRegimeID, MedicareID, Notes)
-				VALUES ('$firstName', '$lastName', '$gender', '$roomNumber', '00$prac_id', '00$contact_id', '$newDate', 'default', '$weight',
+				VALUES ('$firstName', '$lastName', '$gender', '$roomNumber', '00$prac_id', '$contact_id', '$newDate', 'default', '$weight',
 				'00$diet_id', '$medicare_id', '$notes')";
 				$add = odbc_exec($conn, $sql_insert_patient);
 				if(!$add) {
