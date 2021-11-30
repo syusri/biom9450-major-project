@@ -133,28 +133,9 @@
 				if ($p["$patient_id"] == "1") { //on
 					echo "<div class='patient__container--highlight'>";
 						echo "<div class='patient__highlight'>";
-							echo "<figure class='patient__highlight--box patient__picture--mask'>";
-								if ($patient_id <= 5) {
-									echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
-								}
-								else {
-									echo "<img src='images/default.jpg' class='patient__picture' alt='Picture of patient'>";
-								}
-							echo "</figure>";
-							echo "<h2 class='patient__highlight--box patient__name'>";
-								echo $first $last;
-							echo "</h2>";
-							echo "<p class='patient__highlight--box patient__room--label'>Room Number</p>";
-							echo "<p class='patient__highlight--box patient__room--number'>$room</p>";
-							echo "<p class='patient__highlight--box patient__prac--label'>Practitioner</p>";
-							echo "<p class='patient__highlight--box patient__prac--name'>Dr. $dr_full</p>";
-						echo "</div>";
-					echo "</div>";
-					echo "<div class='patient__container--highlight'>";
-						echo "<div class='patient__highlight'>";
 							//insert image of patient
 							echo "<figure class='patient__highlight--box patient__picture--mask'>";
-								if ($patient_id <= 5) {
+								if ($patient_id < 10) {
 									echo "<img src='images/PA00$patient_id.jpg' class='patient__picture' alt='Picture of patient'>";
 								}
 								else {
@@ -171,6 +152,7 @@
 							echo "<p class='patient__highlight--box patient__number--number'><br><br>Dr. $dr_full</p>";
 						echo "</div>";
 					echo "</div>";
+					
 					$check = new DateTime('2021-11-28');
 					if ($Diet == 1) { //on
 						$i = 1;
